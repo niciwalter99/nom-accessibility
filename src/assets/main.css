@@ -1,3 +1,118 @@
+@import "tailwindcss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+p, {
+    font-size: 20px;
+}
+
+a {
+    cursor: pointer;
+}
+
+
+@layer base {
+    body {
+        @apply text-mgrey-darken-4;
+        /* or any custom color like text-mblue-darken-1 */
+    }
+}
+
+@layer utilities {
+    .lg\:grid-cols-article {
+        @apply lg:grid-cols-[1fr_4fr_1fr];
+    }
+}
+
+@theme {
+    /* MBlue */
+    --color-mblue-darken-4: #142834;
+    --color-mblue-darken-3: #1A3645;
+    --color-mblue-darken-2: #275068;
+    --color-mblue-darken-1: #346B8A;
+    --color-mblue-base: #4186AD;
+    --color-mblue-lighten-1: #679EBD;
+    --color-mblue-lighten-2: #8DB6CE;
+    --color-mblue-lighten-3: #B3CFDE;
+    --color-mblue-lighten-4: #D9E7EF;
+    --color-mblue-lighten-5: #F5FBFD;
+    --color-mblue-lighten-6: #F9FDFE;
+
+    /* MGrey */
+    --color-mgrey-darken-4: #383630;
+    --color-mgrey-darken-3: #383630E5;
+    --color-mgrey-darken-2: #383630CC;
+    --color-mgrey-darken-1: #383630B2;
+    --color-mgrey-base: #38363099;
+    --color-mgrey-lighten-1: #38363073;
+    --color-mgrey-lighten-2: #3836304D;
+    --color-mgrey-lighten-3: #38363029;
+    --color-mgrey-lighten-4: #38363017;
+    --color-mgrey-lighten-5: #38363014;
+    --color-mgrey-lighten-6: #3836300F;
+    --color-mgrey-lighten-7: #3836300A;
+    --color-mgrey-lighten-8: #38363005;
+
+    /* MRed */
+    --color-mred-darken-4: #7B344C;
+    --color-mred-darken-3: #9E3F56;
+    --color-mred-darken-2: #B4445B;
+    --color-mred-darken-1: #CA4A60;
+    --color-mred-base: #DA4F64;
+    --color-mred-lighten-1: #E05E78;
+    --color-mred-lighten-2: #E7758F;
+    --color-mred-lighten-3: #EE9AAE;
+    --color-mred-lighten-4: #F5C0CD;
+    --color-mred-lighten-5: #FAE6EB;
+    --color-mred-lighten-6: #FEF7F9;
+
+    /* MBeige */
+    --color-mbeige-darken-4: #949188;
+    --color-mbeige-darken-3: #ADA99E;
+    --color-mbeige-darken-2: #DED9CB;
+    --color-mbeige-darken-1: #F7F1E2;
+    --color-mbeige-base: #FAF5F0;
+    --color-mbeige-lighten-1: #F9F4E8;
+    --color-mbeige-lighten-2: #FAF7EE;
+    --color-mbeige-lighten-3: #FCF9F3;
+
+    /* MGreen */
+    --color-mgreen-darken-4: #071516;
+    --color-mgreen-darken-3: #0A1F21;
+    --color-mgreen-darken-2: #19484C;
+    --color-mgreen-darken-1: #205D62;
+    --color-mgreen-base: #23676D;
+    --color-mgreen-lighten-1: #4F858A;
+    --color-mgreen-lighten-2: #7BA4A7;
+    --color-mgreen-lighten-3: #A7C2C5;
+    --color-mgreen-lighten-4: #D3E1E2;
+    --color-mgreen-lighten-5: #E9F0F0;
+
+    /* MYellow */
+    --color-myellow-darken-4: #633306;
+    --color-myellow-darken-3: #8A4C0A;
+    --color-myellow-darken-2: #B06A15;
+    --color-myellow-darken-1: #D68C24;
+    --color-myellow-base: #FDB237;
+    --color-myellow-lighten-1: #FFC861;
+    --color-myellow-lighten-2: #FFDA8A;
+    --color-myellow-lighten-3: #FFE9B3;
+    --color-myellow-lighten-4: #FFF6DB;
+    --color-myellow-lighten-5: #FFFCF0;
+    --color-myellow-lighten-6: #FFFEFB;
+
+    /* MGreyNO */
+    --color-mgreyno-lighten-4: #EDEDEC;
+    --color-mgreyno-lighten-6: #f9f9f9;
+}
