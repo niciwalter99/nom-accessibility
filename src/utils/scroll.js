@@ -1,7 +1,7 @@
 export const scrollToPosition = (targetPosition) => {
     const currentPosition = window.scrollY;
     const distance = targetPosition - currentPosition;
-    const duration = 200;
+    const duration = 500;
     const startTime = performance.now();
 
     const scrollStep = (currentTime) => {

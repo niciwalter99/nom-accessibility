@@ -7,17 +7,33 @@
 
 h1 {
     font-size: 30px;
+    @apply font-bold;
 }
 
 h2 {
     font-size: 24px;
+    @apply font-bold;
 }
 
-p, {
+h3 {
+    @apply font-bold text-xl;
+}
+
+p,div {
     font-size: 20px;
 }
 
 a {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 1.5em;
+}
+
+button {
     cursor: pointer;
 }
 

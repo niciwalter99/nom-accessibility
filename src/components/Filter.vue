@@ -22,18 +22,19 @@
             'bg-white border-mblue-lighten-3 border  hover:border-mblue-base'
         ]"
       >
-        <div v-if="option.selected" class="absolute top-2 right-2">
-          <img
-              src="@/assets/icons/selected.svg"
-              class="w-5 h-5"
-              aria-hidden="true"
-          >
-
-        </div>
-        <div class="text-2xl">{{ option.icon }}</div>
-        <div>
-          <div class="font-semibold text-mgrey-darken-4">{{ t(`filter.options.${option.label}`) }}</div>
-          <div v-if="option.subtext" class="text-xs text-mgrey-darken-2">
+        <div class="relative group">
+          <div v-if="option.selected" class="absolute top-1 right-1">
+            <img
+                src="@/assets/icons/selected.svg"
+                class="w-5 h-5"
+                aria-hidden="true"
+            >
+          </div>
+          <div class="text-2xl">{{ option.icon }}</div>
+          <div>
+            <div class="font-semibold text-mgrey-darken-4">{{ t(`filter.options.${option.label}`) }}</div>
+          </div>
+          <div v-if="option.subtext" class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 hidden group-hover:block bg-mgrey-darken-4 text-white text-xs rounded px-2 py-1">
             {{ t(`filter.options.${option.label}Subtext`) }}
           </div>
         </div>

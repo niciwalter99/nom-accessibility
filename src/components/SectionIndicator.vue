@@ -19,23 +19,52 @@
       </div>
       <ul class="nav-list">
         <li class="nav-item"
-            :class="currentSectionID === 'introduction' ? 'font-bold' : 'text-mgrey-darken-2'"
-        ><a @click="scrollToSection($event, 'introduction')">{{
-            t('sectionIndicator.beforeYouVisit')
-          }}</a></li>
+            :class="currentSectionID === 'before-visit' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'before-visit')">{{
+              t('sectionIndicator.beforeYouVisit')
+            }}
+          </button>
+        </li>
         <li
             class="nav-item list"
-            :class="currentSectionID === 'content' ? 'font-bold' : 'text-mgrey-darken-2'"
-        ><a @click="scrollToSection($event, 'content')">{{
-            t('sectionIndicator.reachingTheMuseum')
-          }}</a></li>
-        <li class="nav-item"
-            :class="currentSectionID === 'end' ? 'font-bold' : 'text-mgrey-darken-2'"
-        ><a @click="scrollToSection($event, 'end')">{{ t('sectionIndicator.movingAround') }}</a>
+            :class="currentSectionID === 'reaching-the-museum' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'reaching-the-museum')">{{
+              t('sectionIndicator.reachingTheMuseum')
+            }}
+          </button>
         </li>
-        <li class="nav-item">{{ t('sectionIndicator.experienceTheExhibition') }}</li>
-        <li class="nav-item">{{ t('sectionIndicator.faq') }}</li>
-        <li class="nav-item">{{ t('sectionIndicator.visitorStories') }}</li>
+        <li class="nav-item"
+            :class="currentSectionID === 'moving-around' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'moving-around')">{{ t('sectionIndicator.movingAround') }}</button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'navigating-the-museum' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'navigating-the-museum')">Navigating the museum</button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'experience-the-exhibition' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'experience-the-exhibition')">
+            {{ t('sectionIndicator.experienceTheExhibition') }}
+          </button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'faq' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'faq')">{{ t('sectionIndicator.faq') }}</button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'visitor-stories' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'visitor-stories')">{{
+              t('sectionIndicator.visitorStories')
+            }}
+          </button>
+        </li>
       </ul>
     </div>
   </aside>
@@ -48,32 +77,48 @@ import {computed, onMounted, onUnmounted, ref} from "vue";
 import {scrollToPosition} from "@/utils/scroll.js";
 
 const {t} = useI18n();
+const observedElements = new Set();
 
 let mutationObserver;
+let observer = null;
+
+const observeSections = () => {
+  if (observer) observer.disconnect();
+
+  const beforeVisit = document.getElementById('before-visit');
+  const reachingMuseum = document.getElementById('reaching-the-museum');
+  const movingAround = document.getElementById('moving-around');
+  const navigatingMuseum = document.getElementById('navigating-the-museum');
+  const experienceExhibition = document.getElementById('experience-the-exhibition');
+  const faq = document.getElementById('faq');
+  const visitorStories = document.getElementById('visitor-stories');
+
+  if (beforeVisit && reachingMuseum && movingAround && navigatingMuseum && faq && visitorStories && experienceExhibition) {
+    console.log('observe');
+    observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              console.log('intersecting', entry.target.id);
+              currentSectionID.value = entry.target.id;
+            }
+          });
+        },
+        {root: null, threshold: 0.3}
+    );
+
+    observer.observe(beforeVisit);
+    observer.observe(reachingMuseum);
+    observer.observe(movingAround);
+    observer.observe(navigatingMuseum);
+    observer.observe(experienceExhibition);
+    observer.observe(faq);
+    observer.observe(visitorStories);
+  }
+};
+
 onMounted(() => {
-  const observeSections = () => {
-    const intro = document.getElementById('introduction');
-    const content = document.getElementById('content');
-    const end = document.getElementById('end');
-
-    if (intro && content && end) {
-      const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                console.log('intersect', entry.target.id);
-                currentSectionID.value = entry.target.id;
-              }
-            });
-          },
-          {root: null, threshold: 0.2}
-      );
-
-      observer.observe(intro);
-      observer.observe(content);
-      observer.observe(end);
-    }
-  };
+  observeSections();
 
   mutationObserver = new MutationObserver(() => {
     observeSections();
@@ -87,20 +132,26 @@ onUnmounted(() => {
 
 });
 
-const currentSectionID = ref("introduction");
+const currentSectionID = ref("before-visit");
 
 const indicatorBarStyle = computed(() => {
   let offset = 0;
   const navItemHeight = 37;
 
-  if (currentSectionID.value === 'introduction') {
+  if (currentSectionID.value === 'before-visit') {
     offset = 0;
-  } else if (currentSectionID.value === 'content') {
+  } else if (currentSectionID.value === 'reaching-the-museum') {
     offset = navItemHeight;
-  } else if (currentSectionID.value === 'end') {
+  } else if (currentSectionID.value === 'moving-around') {
     offset = navItemHeight * 2;
+  } else if (currentSectionID.value === 'navigating-the-museum') {
+    offset = navItemHeight * 3;
+  } else if (currentSectionID.value === 'experience-the-exhibition') {
+    offset = navItemHeight * 4;
+  } else if (currentSectionID.value === 'faq') {
+    offset = navItemHeight * 5;
   } else {
-    offset = 37 * 3;
+    offset = 37 * 6;
   }
 
 
@@ -113,10 +164,14 @@ const indicatorBarStyle = computed(() => {
 });
 
 
-
 const scrollToSection = (event, id) => {
   event.preventDefault();
   const target = document.getElementById(id);
+  observer.disconnect();
+  setTimeout(() => {
+    observeSections(); // Re-observe all sections
+  }, 600);
+  currentSectionID.value = id;
   const offset = 80;
   const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
 

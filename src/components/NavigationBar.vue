@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 z-20 h-20 flex justify-between items-center px-6 bg-white ">
+  <div class="sticky top-0 z-20 h-20 flex justify-between items-center px-6 bg-white border border-white border-b-mgrey-lighten-3 ">
         <div class="flex items-center space-x-2">
           <img
               src="@/assets/images/logo.png"

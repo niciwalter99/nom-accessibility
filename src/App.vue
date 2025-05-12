@@ -21,7 +21,7 @@
 
     <section class="mx-auto mt-10 w-full max-w-[1420px] px-8 sm:px-16">
       <div class=" grid grid-cols-1 items-start gap-x-8 lg:grid-cols-article">
-        <section-indicator class="sticky top-24 mt-2 hidden w-[260px] lg:block"></section-indicator>
+        <section-indicator class="sticky top-24 mt-2 hidden w-[260px] lg:block" aria-hidden="true"></section-indicator>
         <Content
             class=" mx-auto w-full max-w-[650px] antialiased"
         @highlight-filter="highlightFilter"
@@ -55,10 +55,6 @@ const highlightFilter = () => {
 
 
 <style scoped>
-
-.article {
-  grid-template-columns: 1fr 4fr 1fr;
-}
 
 .image-header {
   font-size: 24px;
