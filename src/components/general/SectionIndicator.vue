@@ -1,0 +1,438 @@
+<template>
+  <aside aria-hidden="true">
+    <div class="search-box">
+      <img
+          v-if="searchTerm !== ''"
+          @click="deleteSearchTerm"
+          src="@/assets/icons/close.svg"
+           class="ml-1 hover:bg-mgrey-lighten-2 p-1 rounded-sm w-[24px]">
+      <input
+          v-model="searchTerm"
+          @input="onSearchInput"
+          class="search-input" type="text" placeholder="Search for a keyword"/>
+      <p v-if="searchTerm !== ''" class="search-items"> {{ foundSearchTerms }} hits</p>
+      <img v-if="searchTerm !== '' && foundSearchTerms > 0" src="@/assets/icons/arrow-right.svg"
+           class="next-item"
+           @click="goToNextWord"
+      >
+      <div style="width: 0.4rem"></div>
+    </div>
+    <div v-if="showKeyWordSearchHits" class="not-found">
+      <p class="not-found-item">
+        {{ completeWordBaseTerms }} results found without filters.
+      </p>
+      <button class="show-all"
+              @click="showAllInformation"
+      > Show
+      </button>
+    </div>
+
+    <h2 class="nav-heading">
+      <img
+          src="@/assets/icons/list.svg"
+          class="h-[12px] w-auto mr-2"
+      />
+      <span>On this page </span>
+    </h2>
+    <div class="nav-section">
+      <div class="bg-neutral-200" style="flex: 0 0 2px; border-radius: 1px; margin-right: 12px;">
+        <div class="bg-neutral-800 font-medium"
+             :style="indicatorBarStyle"></div>
+      </div>
+      <ul class="nav-list">
+        <li class="nav-item"
+            :class="currentSectionID === 'before-visit' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'before-visit')">{{
+              t('sectionIndicator.beforeYouVisit')
+            }}
+          </button>
+        </li>
+        <li
+            class="nav-item list"
+            :class="currentSectionID === 'reaching-the-museum' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'reaching-the-museum')">{{
+              t('sectionIndicator.reachingTheMuseum')
+            }}
+          </button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'moving-around' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'moving-around')">{{ t('sectionIndicator.movingAround') }}</button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'experience-the-exhibition' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'experience-the-exhibition')">
+            {{ t('sectionIndicator.experienceTheExhibition') }}
+          </button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'faq' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'faq')">{{ t('sectionIndicator.faq') }}</button>
+        </li>
+        <li class="nav-item"
+            :class="currentSectionID === 'visitor-stories' ? 'font-bold' : 'text-mgrey-darken-2'"
+        >
+          <button @click="scrollToSection($event, 'visitor-stories')">{{
+              t('sectionIndicator.visitorStories')
+            }}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </aside>
+</template>
+
+<script setup>
+
+import {useI18n} from "vue-i18n";
+import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
+import {scrollToPosition} from "@/utils/scroll.js";
+import {filter} from "@/storage.js";
+import {useColorMode} from "@vueuse/core";
+
+const {t, locale, messages} = useI18n();
+const observedElements = new Set();
+
+let mutationObserver;
+let observer = null;
+const searchTerm = ref("");
+const foundSearchTerms = ref(0);
+const completeWordBaseTerms = ref(0);
+const scrollToTermOccurence = ref(0);
+
+const observeSections = () => {
+  if (observer) observer.disconnect();
+
+  const beforeVisit = document.getElementById('before-visit');
+  const reachingMuseum = document.getElementById('reaching-the-museum');
+  const movingAround = document.getElementById('moving-around');
+  const experienceExhibition = document.getElementById('experience-the-exhibition');
+  const faq = document.getElementById('faq');
+  const visitorStories = document.getElementById('visitor-stories');
+
+  if (beforeVisit && reachingMuseum && movingAround && faq && visitorStories && experienceExhibition) {
+    observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              currentSectionID.value = entry.target.id;
+            }
+          });
+        },
+        {root: null, threshold: 0.3}
+    );
+
+    observer.observe(beforeVisit);
+    observer.observe(reachingMuseum);
+    observer.observe(movingAround);
+    observer.observe(experienceExhibition);
+    observer.observe(faq);
+    observer.observe(visitorStories);
+  }
+};
+
+onMounted(() => {
+  observeSections();
+
+  mutationObserver = new MutationObserver(() => {
+    observeSections();
+  });
+
+  mutationObserver.observe(document.body, {childList: true, subtree: true});
+});
+
+onUnmounted(() => {
+  mutationObserver.disconnect();
+
+});
+
+const currentSectionID = ref("before-visit");
+
+const indicatorBarStyle = computed(() => {
+  let offset = 0;
+  const navItemHeight = 37;
+
+  if (currentSectionID.value === 'before-visit') {
+    offset = 0;
+  } else if (currentSectionID.value === 'reaching-the-museum') {
+    offset = navItemHeight;
+  } else if (currentSectionID.value === 'moving-around') {
+    offset = navItemHeight * 2;
+  } else if (currentSectionID.value === 'experience-the-exhibition') {
+    offset = navItemHeight * 3;
+  } else if (currentSectionID.value === 'faq') {
+    offset = navItemHeight * 4;
+  } else {
+    offset = navItemHeight * 5;
+  }
+
+
+  return {
+    height: "24px",
+    borderRadius: "1px",
+    transition: "transform 0.2s ease-in-out, height 0.2s ease-in-out",
+    transform: `translateY(${offset}px)`,
+  };
+});
+
+
+const scrollToSection = (event, id) => {
+  event.preventDefault();
+  const target = document.getElementById(id);
+  observer.disconnect();
+  setTimeout(() => {
+    observeSections(); // Re-observe all sections
+  }, 600);
+  currentSectionID.value = id;
+  const offset = 80;
+  const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+
+  scrollToPosition(targetPosition);
+};
+
+const allFilterSelected = computed(() => {
+  return filter.value.blind && filter.value.deaf && filter.value.mobility && filter.value.cognitive;
+})
+
+const showKeyWordSearchHits = computed(() => {
+  return !allFilterSelected.value && searchTerm.value !== '' && completeWordBaseTerms.value > foundSearchTerms.value
+})
+
+function onSearchInput() {
+  const content = document.getElementById("content");
+
+  removeHighlights(content);
+
+  if (!searchTerm.value) return;
+
+  const regex = new RegExp(searchTerm.value, 'gi');
+  const walker = document.createTreeWalker(
+      content,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: node => {
+          return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      },
+      false
+  );
+
+  const nodesToProcess = [];
+  while (walker.nextNode()) {
+    nodesToProcess.push(walker.currentNode);
+  }
+
+  nodesToProcess.forEach((textNode, index) => {
+    const frag = document.createDocumentFragment();
+    let lastIndex = 0;
+    const text = textNode.nodeValue;
+
+    text.replace(regex, (match, offset) => {
+      const before = text.slice(lastIndex, offset);
+      if (before) frag.appendChild(document.createTextNode(before));
+
+      const highlight = document.createElement("span");
+      if(index === 0) {
+        highlight.className = "highlight keyword-focus";
+      } else {
+        highlight.className = "highlight";
+      }
+      highlight.textContent = match;
+      frag.appendChild(highlight);
+
+      lastIndex = offset + match.length;
+    });
+
+    const after = text.slice(lastIndex);
+    if (after) frag.appendChild(document.createTextNode(after));
+
+    textNode.parentNode.replaceChild(frag, textNode);
+  });
+
+
+  const firstMatch = content.querySelector('.highlight');
+  foundSearchTerms.value = content.querySelectorAll('.highlight').length;
+
+  completeWordBaseTerms.value = searchWordBase(searchTerm.value);
+
+  if (firstMatch) {
+    scrollToTermOccurence.value = 0;
+    firstMatch.scrollIntoView({behavior: 'smooth', block: 'center'});
+  }
+}
+
+function goToNextWord() {
+  const content = document.getElementById("content");
+  const spans = content.querySelectorAll('span.keyword-focus');
+  spans.forEach(span => {
+    span.classList.remove('keyword-focus');
+  });
+
+  const words = content.querySelectorAll('.highlight');
+  scrollToTermOccurence.value += 1;
+  scrollToTermOccurence.value %= words.length;
+  const nextWord = words[scrollToTermOccurence.value];
+  if (nextWord) {
+    nextWord.scrollIntoView({behavior: 'smooth', block: 'center'});
+    nextWord.className = "highlight keyword-focus";
+  }
+
+}
+
+function searchWordBase(keyword) {
+  const currentTranslations = messages.value[locale.value];
+  const results = [];
+  const excludedKeys = ['navBar', 'sectionIndicator', 'filter', 'insideMuseumSteps', 'carSteps', 'trainSteps'];
+
+  function search(obj, prefix = '') {
+    Object.entries(obj).forEach(([key, value]) => {
+      const path = prefix ? `${prefix}.${key}` : key;
+      if (excludedKeys.includes(key)) {
+        return;
+      }
+
+      if (typeof value === 'string') {
+        const matches = (value.match(new RegExp(keyword, 'gi')) || []).length;
+        if (matches > 0) {
+          results.push({key: path, value, count: matches});
+        }
+      } else if (typeof value === 'object' && value !== null) {
+        search(value, path);
+      }
+    });
+  }
+
+  search(currentTranslations);
+
+  const totalOccurrences = results.reduce((sum, entry) => sum + entry.count, 0);
+  console.log(results);
+
+  return totalOccurrences;
+}
+
+const deleteSearchTerm = () => {
+  searchTerm.value = '';
+  foundSearchTerms.value = 0;
+  completeWordBaseTerms.value = 0;
+  scrollToTermOccurence.value = 0;
+
+  const content = document.getElementById("content");
+  removeHighlights(content);
+}
+
+function removeHighlights(root) {
+  const highlights = root.querySelectorAll('span.highlight');
+  highlights.forEach(span => {
+    const textNode = document.createTextNode(span.textContent);
+    span.replaceWith(textNode);
+    root.normalize();
+  });
+}
+
+
+
+const showAllInformation = () => {
+  filter.value.blind = true;
+  filter.value.deaf = true;
+  filter.value.mobility = true;
+  filter.value.cognitive = true;
+
+  nextTick(() => {
+    onSearchInput();
+  })
+}
+</script>
+
+<style scoped>
+@reference "@/assets/main.css";
+
+.search-box {
+  display: flex;
+
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+
+  .search-input {
+    width: 100%;
+    padding: 8px 12px;
+
+    font-size: 14px;
+  }
+
+  .next-item {
+    @apply hover:bg-mgrey-lighten-2 rounded-sm;
+
+    width: 20px;
+    height: 20px;
+    padding: 0.2rem;
+    margin-left: 0.4rem;
+    cursor: pointer;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: inherit;
+    box-shadow: none;
+  }
+
+  .search-items {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+}
+
+.not-found {
+  display: flex;
+  @apply text-mgrey-darken-2;
+  margin-top: 0.5rem;
+
+  .not-found-item {
+    font-size: 14px;
+  }
+
+  .show-all {
+    margin-left: 0.1rem;
+    text-decoration: underline;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
+
+
+.nav-section {
+  color: #1a1a1a;
+  display: flex;
+}
+
+.nav-heading {
+  @apply flex items-center text-mgrey-darken-2;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item:first-child {
+  padding: 0 0 8px 0;
+}
+
+.nav-item {
+  padding: 8px 0;
+  font-size: 14px;
+  cursor: default;
+}
+
+</style>

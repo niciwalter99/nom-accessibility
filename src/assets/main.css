@@ -22,6 +22,11 @@ h3 {
 p,div {
     font-size: 20px;
 }
+@media (max-width: 1024px) {
+    p, div {
+        font-size: 18px;
+    }
+}
 
 a {
     cursor: pointer;
@@ -41,8 +46,14 @@ button {
 @layer base {
     body {
         @apply text-mgrey-darken-4;
-        /* or any custom color like text-mblue-darken-1 */
     }
+}
+
+.highlight {
+    @apply bg-mgrey-lighten-3
+}
+.keyword-focus {
+    background-color: yellow;
 }
 
 @layer utilities {

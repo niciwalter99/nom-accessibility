@@ -1,10 +1,18 @@
 <template>
   <div v-if="hasActiveFilter">
+<!--    <quick-filter
+        v-if="showQuickFilter"
+        class="fixed top-20  transition-transform duration-300"
+        :style="{ zIndex: 10, transform: showQuickFilter ? 'translateY(0)' : 'translateY(-100%)' }"
+    ></quick-filter>-->
     <BeforeVisit></BeforeVisit>
     <ReachingTheMuseum></ReachingTheMuseum>
-    <MovingAround></MovingAround>
-    <NavigatingTheMuseum></NavigatingTheMuseum>
-    <experience-the-exhibition></experience-the-exhibition>
+    <MovingAround
+    :filter="filter"
+    ></MovingAround>
+    <experience-the-exhibition
+        :filter="filter"
+    ></experience-the-exhibition>
     <f-a-q></f-a-q>
     <visitor-stories></visitor-stories>
   </div>
@@ -35,6 +43,12 @@
 </template>
 
 <script setup>
+defineProps({
+  showQuickFilter: {
+    type: Boolean,
+    default: false,
+  }
+})
 
 import BeforeVisit from "@/components/ContentSections/BeforeVisit.vue";
 import {computed} from "vue";
@@ -44,10 +58,10 @@ import {scrollToPosition} from "@/utils/scroll.js";
 import {filter} from '@/storage.js'
 import ReachingTheMuseum from "@/components/ContentSections/ReachingTheMuseum.vue";
 import MovingAround from "@/components/ContentSections/MovingAround.vue";
-import NavigatingTheMuseum from "@/components/ContentSections/NavigatingTheMuseum.vue";
 import ExperienceTheExhibition from "@/components/ContentSections/ExperienceTheExhibition.vue";
 import FAQ from "@/components/ContentSections/FAQ.vue";
 import VisitorStories from "@/components/ContentSections/VisitorStories.vue";
+import QuickFilter from "@/components/general/QuickFilter.vue";
 
 const hasActiveFilter = computed(() => {
   return filter.value.blind || filter.value.deaf || filter.value.mobility || filter.value.cognitive;

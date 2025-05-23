@@ -1,38 +1,42 @@
 <template>
-  <section id="faq" class="max-w-[650px] p-4">
-    <h1>Frequently asked questions (FAQ) </h1>
-    <section aria-labelledby="faq-heading">
-      <h2 id="faq-heading">Häufig gestellte Fragen (FAQ)</h2>
+  <section id="faq" class="max-w-[650px]">
+    <h1 class="my-4">{{ t('faq.title') }}</h1>
+    <div class="flex flex-col gap-4">
       <details>
-        <summary><b>Kann ich Tickets online kaufen?</b></summary>
-        <p>Nein, Tickets sind nur am Eingang erhältlich. Online-Verkäufe werden derzeit nicht angeboten.</p>
+        <summary><b>{{ t('faq.questions.purchaseTickets') }}</b></summary>
+        <p>{{ t('faq.answers.purchaseTickets') }}</p>
       </details>
 
       <details>
-        <summary><b>Gibt es eine zeitliche Begrenzung für den Besuch?</b></summary>
-        <p>Nein, Sie können während der Öffnungszeiten so lange bleiben, wie Sie möchten.</p>
+        <summary><b>{{ t('faq.questions.timeLimit') }}</b></summary>
+        <p>{{ t('faq.answers.timeLimit') }}</p>
       </details>
 
       <details>
-        <summary><b>Gibt es etwas zu essen im Museum und ist der Bereich zugänglich?</b></summary>
-        <p>Ja, im ersten Obergeschoss befindet sich eine Cafeteria in zentraler Lage. Sie ist rollstuhlgerecht und mit taktiler Leitführung ausgestattet. Der Platz ist jedoch begrenzt, und es kann voll werden.</p>
+        <summary><b>{{ t('faq.questions.audioGuide') }}</b></summary>
+        <p>{{ t('faq.answers.audioGuide') }}</p>
       </details>
 
       <details>
-        <summary><b>Wo sind die Toiletten, und sind sie barrierefrei?</b></summary>
-        <p>Toiletten befinden sich im Erdgeschoss direkt hinter der Treppe sowie im Obergeschoss in der Nähe der Cafeteria. Eine barrierefreie Toilette ist im Erdgeschoss vorhanden und kann mit einem Euro-Key genutzt werden. Falls Sie keinen eigenen Schlüssel haben, erhalten Sie einen an der Information.</p>
+        <summary><b>{{ t('faq.questions.cafeteria') }}</b></summary>
+        <p>{{ t('faq.answers.cafeteria') }}</p>
       </details>
 
       <details>
-        <summary><b>Gibt es inklusive Führungen?</b></summary>
-        <p>Ja, wir bieten inklusive Führungen für blinde und gehörlose Personen an. Für gehörlose Besucher:innen gibt es Führungen in Gebärdensprache. Für blinde Besucher:innen bieten wir beschreibende Sprache und tastbare Elemente. Führungen für schwerhörige Personen mit technischen Hörhilfen (z. B. Mikrofon oder Lautsprechersystem) werden derzeit nicht angeboten.</p>
+        <summary><b>{{ t('faq.questions.restrooms') }}</b></summary>
+        <p>{{ t('faq.answers.restrooms') }}</p>
       </details>
 
       <details>
-        <summary><b>Darf ich im Museum fotografieren?</b></summary>
-        <p>Ja, das Fotografieren ist erlaubt. Bitte verzichten Sie jedoch auf Blitzlicht – insbesondere in den Bereichen mit lebenden Tieren.</p>
+        <summary><b>{{ t('faq.questions.guidedTours') }}</b></summary>
+        <p>{{ t('faq.answers.guidedTours') }}</p>
       </details>
-    </section>
+
+      <details>
+        <summary><b>{{ t('faq.questions.photography') }}</b></summary>
+        <p>{{ t('faq.answers.photography') }}</p>
+      </details>
+    </div>
   </section>
 </template>
 
@@ -43,6 +47,29 @@ const {t} = useI18n();
 </script>
 
 <style scoped>
+details summary {
+  position: relative;
+  cursor: pointer;
+  padding-right: 2rem;
+  list-style: none;
+  appearance: none;
+  display: flex;
+  align-items: flex-start;
+}
+details summary::-webkit-details-marker {
+  display:none;
+}
+
+details summary::after {
+  content: url('@/assets/icons/arrow-up.svg');
+  position: absolute;
+  right: 0;
+  transition: transform 0.2s ease;
+}
+
+details[open] summary::after {
+  transform: rotate(180deg); /* Rotate icon when expanded */
+}
 
 
 </style>
