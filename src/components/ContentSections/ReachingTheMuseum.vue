@@ -28,13 +28,13 @@
           @click="isCarTravelOpen = true"
       />
       <Dialog v-model:modelValue="isCarTravelOpen"
-      class="_dialog">
-        <SocialStory :forkedSteps="carSteps" start-path="start" />
+              class="_dialog">
+        <SocialStory :forkedSteps="carSteps" start-path="start"/>
 
       </Dialog>
       <Dialog v-model:modelValue="isTrainTravelOpen"
               class="_dialog">
-        <SocialStory :forkedSteps="trainSteps" />
+        <SocialStory :forkedSteps="trainSteps"/>
       </Dialog>
       <DetailedDescription
           :title="t('reachingTheMuseum.detailedDescription.byTrain.title')"
@@ -43,13 +43,20 @@
           @click="isTrainTravelOpen = true"
       />
     </div>
-    <h3>{{ t('reachingTheMuseum.lockers.title') }}</h3>
-    <p>{{ t('reachingTheMuseum.lockers.description') }}</p>
+    <div class="my-4">
+      <div class="flex">
+        <h3>{{ t('reachingTheMuseum.lockers.title') }}</h3>
+        <AdditionalImage
+        :img-src="Locker"
+        ></AdditionalImage>
+      </div>
+      <p>{{ t('reachingTheMuseum.lockers.description') }}</p>
+    </div>
   </section>
 </template>
 
 <script setup>
-import { useI18n } from "vue-i18n";
+import {useI18n} from "vue-i18n";
 import DetailedDescription from "@/components/general/DetailedDescription.vue";
 import Dialog from "@/components/general/Dialog.vue";
 import carTravel from "@/assets/icons/carTravel.png";
@@ -96,11 +103,13 @@ import ME3 from "@/assets/images/SocialStory/ME3.svg";
 import ME4 from "@/assets/images/SocialStory/ME4.svg";
 import ME5 from "@/assets/images/SocialStory/ME5.svg";
 import ME6 from "@/assets/images/SocialStory/ME6.svg";
+import Locker from "@/assets/images/Locker.png"
 
 
 import SocialStory from "@/components/general/SocialStory.vue";
+import AdditionalImage from "@/components/general/AdditionalImage.vue";
 
-const { t } = useI18n();
+const {t} = useI18n();
 const isTrainTravelOpen = ref(false);
 const isCarTravelOpen = ref(false);
 
@@ -256,7 +265,6 @@ const trainSteps = {
 
 
 </script>
-
 
 
 <style scoped>

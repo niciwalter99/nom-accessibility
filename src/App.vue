@@ -62,10 +62,8 @@ onMounted(() => {
   observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) {
-        console.log('show filter');
         showFilter.value = true;
       } else {
-        console.log('hide filter');
         showFilter.value = false;
       }
     });
@@ -73,7 +71,6 @@ onMounted(() => {
 
   if (filter.value) {
     observer.observe(filter.value.$el);
-    console.log('observe filter', filter.value.$el);
   }
 });
 onUnmounted(() => {

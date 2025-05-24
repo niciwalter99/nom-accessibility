@@ -56,6 +56,22 @@ button {
     background-color: yellow;
 }
 
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.additional-img {
+    @apply ml-2 hover:bg-mgrey-lighten-2 p-1 rounded-sm
+}
+
 @layer utilities {
     .lg\:grid-cols-article {
         @apply lg:grid-cols-[1fr_4fr_1fr];

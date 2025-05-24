@@ -20,6 +20,7 @@
       <details>
         <summary><b>{{ t('faq.questions.cafeteria') }}</b></summary>
         <p>{{ t('faq.answers.cafeteria') }}</p>
+        <img src="@/assets/images/Cafeteria.JPG" aria-hidden="true" class="w-full h-auto mb-2">
       </details>
 
       <details>

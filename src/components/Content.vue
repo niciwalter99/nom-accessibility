@@ -64,7 +64,7 @@ import VisitorStories from "@/components/ContentSections/VisitorStories.vue";
 import QuickFilter from "@/components/general/QuickFilter.vue";
 
 const hasActiveFilter = computed(() => {
-  return filter.value.blind || filter.value.deaf || filter.value.mobility || filter.value.cognitive;
+  return filter.value.blind || filter.value.deaf || filter.value.mobility || filter.value.cognitive || (filter.value.keywords != null  && filter.value.keywords.length > 0);
 });
 
 const scrollToFilter = () => {

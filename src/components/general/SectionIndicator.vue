@@ -186,7 +186,7 @@ const scrollToSection = (event, id) => {
   const target = document.getElementById(id);
   observer.disconnect();
   setTimeout(() => {
-    observeSections(); // Re-observe all sections
+    observeSections();
   }, 600);
   currentSectionID.value = id;
   const offset = 80;
@@ -216,8 +216,22 @@ function onSearchInput() {
       NodeFilter.SHOW_TEXT,
       {
         acceptNode: node => {
-          return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-        }
+          if (!regex.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+
+          let parent = node.parentNode;
+          while (parent && parent !== content) {
+            if (
+                parent.classList?.contains('sr-only') ||
+                parent.classList?.contains('screen-reader-only') ||
+                parent.getAttribute?.('aria-hidden') === 'true' ||
+                parent.getAttribute?.('role') === 'presentation'
+            ) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            parent = parent.parentNode;
+          }
+
+          return NodeFilter.FILTER_ACCEPT;        }
       },
       false
   );
@@ -231,6 +245,10 @@ function onSearchInput() {
     const frag = document.createDocumentFragment();
     let lastIndex = 0;
     const text = textNode.nodeValue;
+    console.log(textNode);
+ /*   if(textNode.Key.contains('sensoryPlan')) {
+      return;
+    }*/
 
     text.replace(regex, (match, offset) => {
       const before = text.slice(lastIndex, offset);
@@ -277,7 +295,13 @@ function goToNextWord() {
   scrollToTermOccurence.value += 1;
   scrollToTermOccurence.value %= words.length;
   const nextWord = words[scrollToTermOccurence.value];
+  console.log(nextWord);
+  console.log(nextWord.closest('details'));
   if (nextWord) {
+    const detailsParent = nextWord.closest('details');
+    if (detailsParent && !detailsParent.open) {
+      detailsParent.open = true;
+    }
     nextWord.scrollIntoView({behavior: 'smooth', block: 'center'});
     nextWord.className = "highlight keyword-focus";
   }
@@ -287,7 +311,7 @@ function goToNextWord() {
 function searchWordBase(keyword) {
   const currentTranslations = messages.value[locale.value];
   const results = [];
-  const excludedKeys = ['navBar', 'sectionIndicator', 'filter', 'insideMuseumSteps', 'carSteps', 'trainSteps'];
+  const excludedKeys = ['navBar', 'sectionIndicator', 'filter', 'insideMuseumSteps', 'carSteps', 'trainSteps', 'sensoryPlan', 'visitorActivity'];
 
   function search(obj, prefix = '') {
     Object.entries(obj).forEach(([key, value]) => {

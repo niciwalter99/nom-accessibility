@@ -25,6 +25,17 @@ export default {
             deafHardHearing: 'Deaf or hard of hearing',
             cognitiveDifferences: 'Cognitive differences',
             cognitiveDifferencesSubtext: 'Neurodiverse people, learning disabilities, etc.'
+        },
+        "keywords": {
+            "crowd": "Crowd",
+            "wayfindingSupport": "Wayfinding support",
+            "lighting": "Lighting",
+            "accessibleExhibitionContent": "Accessible Exhibition content",
+            "interactiveElements": "Interactive Elements",
+            "qrCodes": "QR-Codes",
+            "museumLayout": "Museum Layout",
+            "seating": "Seating",
+            "accessibleRestrooms": "Accessible Restrooms"
         }
     },
     beforeVisit: {
@@ -40,7 +51,8 @@ export default {
         },
         admission: {
             title: 'Admission & Entry',
-            description: 'Visitors with a valid disability ID receive reduced admission. One accompanying person is admitted free of charge. A designated, step-free entrance is available to all visitors.'
+            description: 'All visitors with a valid disability ID receive reduced admission, regardless of the degree of disability.\n' +
+                'If the ID includes the designation “B” or “H”, one accompanying person is granted free entry. A designated, step-free entrance is available to all visitors.'
         },
         support: {
             title: 'Need support during your visit?',
@@ -59,7 +71,7 @@ export default {
             title: 'Special services',
             silentHours: {
                 title: 'Silent hours',
-                description: 'We offer silent hours for all visitors who prefer a calmer museum experience. During these times, we limit the number of guests allowed in the museum to reduce noise and crowding. Silent hours are ideal for anyone seeking a more relaxed visit such as individuals with sensory sensitivities or families. You can find upcoming Silent hours listed in our',
+                description: 'We offer silent hours for all visitors who prefer a calmer museum experience. During these times, we limit the number of guests allowed in the museum to reduce noise and crowding. Silent hours are ideal for anyone seeking a more relaxed visit. You can find upcoming Silent hours listed in our',
                 link: 'event calendar'
             },
             guidedTours: {
@@ -107,7 +119,7 @@ export default {
         },
         lockers: {
             title: "Lockers",
-            description: "We offer lockers near the entrance beneath the entry, where you can safely store your personal belongings during your visit. To use them you need a 1€ coin. Please remember to empty them the same day, as the museum is not responsible for valuables left inside."
+            description: "We offer lockers near the entrance beneath the entry, where you can safely store your personal belongings during your visit. To use them you need a 1€ coin. They can be used from a wheelchair position. Please remember to empty them the same day, as the museum is not responsible for valuables left inside."
         }
     },
     insideMuseumSteps: {
@@ -158,10 +170,10 @@ export default {
     trainSteps: {
         fork: {
             option1: {
-                caption: "I exit at the station <strong>Marktplatz</strong><br>(Lines S1/S11, S2, S5, Tram 1)."
+                caption: "I exit at the station Marktplatz (Lines S1/S11, S2, S5, Tram 1)."
             },
             option2: {
-                caption: "I exit at the station <strong>Etllinger Tor / Staatstheater</strong><br>(Lines S1/S11, S4, S52, S7, S8, Tram 2)."
+                caption: "I exit at the station Etllinger Tor / Staatstheater (Lines S1/S11, S4, S52, S7, S8, Tram 2)."
             }
         },
         pathA: {
@@ -223,7 +235,7 @@ export default {
             },
             accessibleRestrooms: {
                 title: "Accessible restrooms",
-                description: "An accessible restroom is available on the ground floor and can be opened with a Euro key. A key is also available at the front desk upon request. Additionally, a care room with a medical couch, changing table, and sink is located on the ground floor."
+                description: "An accessible restroom is available on the ground floor and can be opened with a Euro key. A key is also available at the front desk upon request for everyone. Additionally, a care room with a medical couch, changing table, and sink is located on the ground floor."
             }
         },
         navigatingTheMuseum: {
@@ -238,7 +250,7 @@ export default {
             },
             supportForBlindOrLowVisionVisitors: {
                 title: "Navigation for blind or low-vision visitors",
-                description: "Tactile navigation markers are available in the entrance hall and cafeteria to assist with orientation. Handrails are marked with braille and relief to indicate floor levels, and elevators include tactile buttons. Some exhibition areas offer limited tactile navigation features, but overall tactile guidance in the museum is minimal. Because of the inconsistency in the tactile guidance system blind or low-vision visitor may consider to visit with a companion or booking a guided tour for additional support during your visit."
+                description: "Tactile navigation markers are available in the entrance hall and cafeteria to assist with orientation. Handrails are marked with braille and relief to indicate floor levels, and elevators include tactile buttons but have no speech signals. Some exhibition areas offer limited tactile navigation features, but overall tactile guidance in the museum is minimal. Because of the inconsistency in the tactile guidance system blind or low-vision visitor may consider to visit with a companion or booking a guided tour for additional support during your visit."
             }
         }
     },
@@ -391,5 +403,27 @@ export default {
                 otherAreas: "Most other sections on this floor are usually quieter and less crowded."
             }
         }
+    },
+    visitorActivity: {
+        title: "Alternative Text View: Daily Visitor Activity",
+        closed: "Closed",
+        days: {
+            monday: "Monday",
+            tuesday: "Tuesday",
+            wednesday: "Wednesday",
+            thursday: "Thursday",
+            friday: "Friday",
+            saturday: "Saturday",
+            sunday: "Sunday"
+        },
+        levels: {
+            veryQuiet: "Very quiet",
+            quiet: "Quiet",
+            moderate: "Moderate",
+            busy: "Busy",
+            veryBusy: "Very busy",
+            peakCrowded: "Peak crowded"
+        }
     }
+
 };

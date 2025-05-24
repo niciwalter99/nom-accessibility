@@ -9,23 +9,29 @@
       <a :href="'mailto: nkm@karlsruhe.de' ">nkm@karlsruhe.de</a>.
       {{ t('beforeVisit.voiceCalls') }}
     </div>
-    <div class="my-2">
+    <div class="my-4">
       <h2 class="my-2">{{ t('beforeVisit.generalInfo.title') }}</h2>
       <p>{{ t('beforeVisit.generalInfo.description') }}</p>
     </div>
-    <div class="my-2">
+    <div class="my-4">
+      <div class="flex">
       <h3>{{ t('beforeVisit.admission.title') }}</h3>
+        <AdditionalImage
+        :img-src="EntryDesk"
+        ></AdditionalImage>
+
+      </div>
       <p>{{ t('beforeVisit.admission.description') }}</p>
     </div>
-    <div class="my-2">
+    <div class="my-4">
       <h3>{{ t('beforeVisit.support.title') }}</h3>
       <p>{{ t('beforeVisit.support.description') }}</p>
     </div>
-    <div class="my-2">
+    <div class="my-4">
       <h3>{{ t('beforeVisit.assistance.title') }}</h3>
       <p>{{ t('beforeVisit.assistance.description') }}</p>
     </div>
-    <div class="my-2">
+    <div class="my-4">
       <h3>{{ t('beforeVisit.visitorVolume.title') }}</h3>
       <p>
         {{ t('beforeVisit.visitorVolume.description') }}
@@ -33,7 +39,7 @@
       </p>
     </div>
     <activity-chart></activity-chart>
-    <div class="my-2">
+    <div class="my-4">
       <h3>{{ t('beforeVisit.specialServices.silentHours.title') }}</h3>
       <p>
         {{ t('beforeVisit.specialServices.silentHours.description') }}
@@ -45,6 +51,8 @@
 
 <script setup>
 
+import AdditionalImage from "@/components/general/AdditionalImage.vue";
+
 defineProps({
   filter: {
     type: Array,
@@ -53,6 +61,7 @@ defineProps({
 });
 
 import ActivityChart from "@/components/ContentSections/ActivityChart.vue";
+import EntryDesk from "@/assets/images/EntryDesk.JPG"
 import {useI18n} from "vue-i18n";
 
 const {t} = useI18n();
@@ -62,6 +71,8 @@ const {t} = useI18n();
 <style scoped>
 @import "@/assets/main.css";
 @reference "@/assets/main.css";
+
+
 
 
 </style>
