@@ -1,5 +1,5 @@
 <template>
-  <div class="testimonial-card">
+  <div class="testimonial-card high-contrast:border">
     <img :src="image" :alt="`Photo of ${name}`" class="testimonial-image"/>
     <div class="testimonial-content">
       <div class="quote-icon">❝</div>
@@ -71,7 +71,7 @@ defineProps({
   margin-left: 1rem;
   margin-bottom: 1rem;
   line-height: 1.5;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 

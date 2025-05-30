@@ -1,6 +1,6 @@
 <template>
-  <div aria-hidden="true" class="relative group" ref="tooltipContainer">
-    <img class="additional-img" src="@/assets/icons/images.svg" alt="Additional Info">
+  <button aria-hidden="true" class="relative group" ref="tooltipContainer">
+    <img class="additional-img" :src="icon" alt="Additional Info">
     <div
         ref="tooltip"
         :class="[
@@ -10,11 +10,12 @@
     >
       <img :src="imgSrc">
     </div>
-  </div>
+  </button>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, computed} from 'vue';
+import {useThemeDetection} from "@/composables/useThemeDetection.js";
 
 const tooltip = ref(null);
 const tooltipContainer = ref(null);
@@ -43,5 +44,18 @@ onMounted(() => {
   adjustTooltipPosition();
   window.addEventListener('scroll', adjustTooltipPosition);
 
+});
+
+const { theme } = useThemeDetection()
+const icon = computed(() => {
+  if (theme.value === 'high-contrast') {
+    return new URL(`@/assets/icons/images-hc.svg`, import.meta.url).href
+  }
+
+  if (theme.value === 'color-blind') {
+    return new URL(`@/assets/icons/images-cb.svg`, import.meta.url).href
+  }
+
+  return new URL(`@/assets/icons/images.svg`, import.meta.url).href
 });
 </script>

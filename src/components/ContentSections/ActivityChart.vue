@@ -87,13 +87,13 @@
   </div>
 
   <div class="my-4">
-    <div class="bg-mbeige-base flex  flex-col items-center p-6 rounded-xl mx-auto">
+    <div class="bg-mbeige-base flex  flex-col items-center p-6 rounded-xl mx-auto high-contrast:border">
       <div class="flex space-x-6 mb-6">
         <button
             v-for="day in days"
             :key="day"
             @click="(selectedDay = day)"
-            class="text-gray-800 relative pb-1 cursor-pointer"
+            class="text-gray-800 relative pb-1"
             :class="{
     'font-semibold underline': selectedDay === day,
     'text-gray-500': selectedDay !== day,
@@ -115,7 +115,7 @@
           >
             <div class="flex-1 flex items-end">
               <div
-                  class="bg-gray-500 w-3 rounded-md"
+                  class=" bg-gray-500 w-3 rounded-md hc-exception high-contrast:bg-yellow-300"
                   :style="{ height: height + 'px' }"
               ></div>
             </div>

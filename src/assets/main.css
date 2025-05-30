@@ -6,12 +6,12 @@
 
 
 h1 {
-    font-size: 30px;
+    font-size: 1.875rem;
     @apply font-bold;
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 1.5rem;
     @apply font-bold;
 }
 
@@ -19,42 +19,33 @@ h3 {
     @apply font-bold text-xl;
 }
 
-p,div {
-    font-size: 20px;
+p, div {
+    font-size: 1.25rem;
 }
+
 @media (max-width: 1024px) {
     p, div {
-        font-size: 18px;
+        font-size: 1.125rem;
     }
 }
 
-a {
-    cursor: pointer;
-    text-decoration: underline;
-}
+
 
 ul {
     list-style-type: disc;
     padding-left: 1.5em;
 }
 
-button {
-    cursor: pointer;
-}
-
-
-@layer base {
-    body {
-        @apply text-mgrey-darken-4;
-    }
-}
 
 .highlight {
-    @apply bg-mgrey-lighten-3
+    @apply bg-mgrey-lighten-3 high-contrast:bg-yellow-300 high-contrast:text-black;
 }
+
 .keyword-focus {
-    background-color: yellow;
+    @apply bg-yellow-300 high-contrast:text-black;
 }
+
+
 
 .sr-only {
     position: absolute !important;
@@ -76,6 +67,89 @@ button {
     .lg\:grid-cols-article {
         @apply lg:grid-cols-[1fr_4fr_1fr];
     }
+
+    .color-blind * {
+        @apply !text-black !bg-yellow-50;
+    }
+
+    .color-blind a {
+        @apply underline text-blue-700;
+    }
+
+    .high-contrast * :not(.hc-exception){
+        @apply !bg-black !text-yellow-300 !border-yellow-300;
+    }
+
+    .high-contrast a {
+        @apply underline text-yellow-400;
+    }
+
+    .cursor-large .cc-pointer {
+        cursor: url('@/assets/icons/cc-pointer.png') 25 2, pointer;
+    }
+
+
+    .cursor-large button {
+        cursor: url('@/assets/icons/cc-pointer.png') 25 2, pointer;
+    }
+    .cursor-large a {
+        cursor: url('@/assets/icons/cc-pointer.png') 25 2, pointer;
+    }
+       .cursor-large .cc-default {
+        cursor: url('@/assets/icons/cc-default-cursor.png') 14 2, auto;
+    }
+
+
+    .cursor-large.high-contrast .cc-default {
+        cursor: url('@/assets/icons/cc-default-white.png') 14 2, auto;
+    }
+    .cursor-large.high-contrast .cc-pointer {
+        cursor: url('@/assets/icons/cc-pointer-white.png') 25 2, auto;
+    }
+    .cursor-large.high-contrast button {
+        cursor: url('@/assets/icons/cc-pointer-white.png') 25 2, pointer;
+    }
+    .cursor-large.high-contrast a {
+        cursor: url('@/assets/icons/cc-pointer-white.png') 25 2, pointer;
+    }
+
+
+}
+
+a {
+    text-decoration: underline;
+}
+
+
+
+@custom-variant high-contrast {
+    &:where(.high-contrast *) {
+        @slot;
+    }
+}
+@custom-variant cc {
+    &:where(.cursor-large *) {
+        @slot;
+    }
+}
+
+@custom-variant high-contrast-hover {
+    &:where(.high-contrast *):hover {
+        @slot;
+    }
+}
+
+body.cursor-large {
+    @apply text-mgrey-darken-4;
+    cursor: url('@/assets/icons/cc-default-cursor.png') 14 2, auto;
+}
+body.cursor-large.high-contrast {
+    @apply text-mgrey-darken-4;
+    cursor: url('@/assets/icons/cc-default-white.png') 14 2, auto;
+}
+
+html.large-text {
+    font-size: 150%;
 }
 
 @theme {

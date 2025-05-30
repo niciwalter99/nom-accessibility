@@ -1,7 +1,7 @@
 <template>
   <section id="before-visit" class="max-w-[650px]">
     <h1>{{ t('beforeVisit.title') }}</h1>
-    <div class="bg-mbeige-base rounded-md p-4">
+    <div class="bg-mbeige-base high-contrast:border rounded-md p-4">
       💡 <b>{{ t('beforeVisit.note') }}</b>
       {{ t('beforeVisit.description') }}
       <a :href="'tel:' + t('beforeVisit.phone')">{{ t('beforeVisit.phone') }}</a>
@@ -13,7 +13,7 @@
       <h2 class="my-2">{{ t('beforeVisit.generalInfo.title') }}</h2>
       <p>{{ t('beforeVisit.generalInfo.description') }}</p>
     </div>
-    <div class="my-4">
+    <div  class="my-4">
       <div class="flex">
       <h3>{{ t('beforeVisit.admission.title') }}</h3>
         <AdditionalImage
@@ -21,19 +21,22 @@
         ></AdditionalImage>
 
       </div>
-      <p>{{ t('beforeVisit.admission.description') }}</p>
+      <video v-if="settings.signLanguage" autoplay loop muted playsinline>
+        <source src="@/assets/SL/BeforeVisit.webm" type="video/webm">
+      </video>
+      <p v-if="!settings.signLanguage">{{ t('beforeVisit.admission.description') }}</p>
     </div>
-    <div class="my-4">
+    <div v-if="!settings.signLanguage" class="my-4">
       <h3>{{ t('beforeVisit.support.title') }}</h3>
       <p>{{ t('beforeVisit.support.description') }}</p>
     </div>
-    <div class="my-4">
+    <div v-if="!settings.signLanguage" class="my-4">
       <h3>{{ t('beforeVisit.assistance.title') }}</h3>
       <p>{{ t('beforeVisit.assistance.description') }}</p>
     </div>
-    <div class="my-4">
+    <div  class="my-4">
       <h3>{{ t('beforeVisit.visitorVolume.title') }}</h3>
-      <p>
+      <p v-if="!settings.signLanguage">
         {{ t('beforeVisit.visitorVolume.description') }}
         <a>{{ t('beforeVisit.visitorVolume.link') }}</a>
       </p>
@@ -41,9 +44,18 @@
     <activity-chart></activity-chart>
     <div class="my-4">
       <h3>{{ t('beforeVisit.specialServices.silentHours.title') }}</h3>
-      <p>
+      <p v-if="!settings.signLanguage">
         {{ t('beforeVisit.specialServices.silentHours.description') }}
         <a>{{ t('beforeVisit.specialServices.silentHours.link') }}</a>
+      </p>
+      <p v-else>
+<!--
+        // TODO change video
+-->
+        <video v-if="settings.signLanguage" autoplay loop muted playsinline>
+          <source src="@/assets/SL/silentHours.webm" type="video/webm">
+        </video>
+        <a>{{ t('beforeVisit.specialServices.silentHours.slText') }}</a>
       </p>
     </div>
   </section>
@@ -52,6 +64,8 @@
 <script setup>
 
 import AdditionalImage from "@/components/general/AdditionalImage.vue";
+import {settings} from "@/storage.js";
+
 
 defineProps({
   filter: {

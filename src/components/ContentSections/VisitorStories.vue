@@ -1,35 +1,36 @@
 <template>
   <section id="visitor-stories" class="max-w-[650px]">
     <h1 class="my-4">What other visitors say</h1>
-    <div class="testimonial-grid">
-      <TestimonialCard
-          :image="girl"
-          text="The museum was easy to get around in my wheelchair, and I loved spending time at the aquariums."
-          name="Ina Fake"
-      />
-      <TestimonialCard
-          :image="girl"
-          text="I appreciated the clear signage and helpful staff throughout the museum."
-          name="John Doe"
-      />
-      <TestimonialCard
-          :image="girl"
-          text="The audio guides were fantastic and made the experience very enjoyable."
-          name="Jane Smith"
-      />
-      <TestimonialCard
-          :image="girl"
-          text="The museum's accessibility features exceeded my expectations!"
-          name="Alex Johnson"
-      />
+    <div class="grid-wrapper">
+      <div class="testimonial-grid">
+        <TestimonialCard
+            :image="girl"
+            text="The museum was easy to get around in my wheelchair, and I loved spending time at the aquariums."
+            name="Ina Fake"
+        />
+        <TestimonialCard
+            :image="girl"
+            text="I appreciated the clear signage and helpful staff throughout the museum."
+            name="John Doe"
+        />
+        <TestimonialCard
+            :image="girl"
+            text="The audio guides were fantastic and made the experience very enjoyable."
+            name="Jane Smith"
+        />
+        <TestimonialCard
+            :image="girl"
+            text="The museum's accessibility features exceeded my expectations!"
+            name="Alex Johnson"
+        />
+      </div>
     </div>
-    <div class="bg-mbeige-base rounded-md p-4 my-4">
-      💡 <b>Note</b>
-      We are continuously working to improve the accessibility of our museum for all visitors. If you have any
-      questions, feedback, or suggestions for improvement, please don’t hesitate to contact us at
+    <div class="bg-mbeige-base high-contrast:border rounded-md p-4 cc-default">
+      💡 <b>{{ t('beforeVisit.note') }}</b>
+      {{ t('beforeVisit.description') }}
       <a :href="'tel:' + t('beforeVisit.phone')">{{ t('beforeVisit.phone') }}</a>
       {{ t('beforeVisit.or') }}
-      <a :href="'mailto: nkm@karlsruhe.de' ">nkm@karlsuhre.de</a>.
+      <a :href="'mailto: nkm@karlsruhe.de' " class="cc-pointer">nkm@karlsruhe.de</a>.
       {{ t('beforeVisit.voiceCalls') }}
     </div>
   </section>
@@ -46,8 +47,19 @@ const {t} = useI18n();
 <style scoped>
 .testimonial-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+  grid-template-columns: 1fr;
+  container-type: inline-size;
+}
+
+@container (min-width: 40rem) {
+  .testimonial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid-wrapper {
+  container-type: inline-size;
 }
 
 

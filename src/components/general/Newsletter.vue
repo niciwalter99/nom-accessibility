@@ -1,14 +1,14 @@
 <template>
   <div class="subscribe-container">
     <div class="subscribe-box">
-      <img src="@/assets/icons/mail.svg">
+      <img :src="mailIcon">
       <input
           v-model="email"
           type="email"
           :placeholder="$t('experienceTheExhibition.newsletter.email')"
           class="email-input"
       />
-      <button class="join-button">{{ t('experienceTheExhibition.newsletter.join') }}</button>
+      <button class="join-button hc-exception high-contrast:bg-black high-contrast:text-yellow-300 high-contrast:border high-contrast-hover:bg-yellow" >{{ t('experienceTheExhibition.newsletter.join') }}</button>
     </div>
     <a href=" https://www.instagram.com/naturkundemuseumkarlsruhe/" class="social-link">
       <img src="@/assets/icons/instagram.svg" alt="Instagram" class="instagram-icon" />
@@ -18,12 +18,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import { useI18n } from 'vue-i18n';
+import {useThemeDetection} from "@/composables/useThemeDetection.js";
 
 const {t} = useI18n();
 
 const email = ref('');
+
+const { theme } = useThemeDetection()
+
+const mailIcon = computed(() => {
+  if (theme.value === 'high-contrast') {
+    return new URL('@/assets/icons/mail-hc.svg', import.meta.url).href
+  }
+
+  if (theme.value === 'color-blind') {
+    return new URL('@/assets/icons/selected-color-blind.svg', import.meta.url).href
+  }
+
+  return new URL('@/assets/icons/mail.svg', import.meta.url).href
+});
 </script>
 
 <style scoped>
@@ -61,12 +76,10 @@ const email = ref('');
 }
 
 .join-button {
-  @apply bg-mblue-base;
+  @apply bg-mblue-base high-contrast:bg-black high-contrast:text-yellow-300 high-contrast:border high-contrast-hover:bg-yellow-300 high-contrast-hover:text-black;
   color: white;
-  border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 8px;
-  cursor: pointer;
   font-size: 16px;
   margin-left: 0.5rem;
 }

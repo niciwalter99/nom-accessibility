@@ -1,18 +1,18 @@
 <template>
-  <div v-if="show" class="modal-overlay">
-    <div class="modal-content">
+  <div v-if="show" class="modal-overlay hc-exception">
+    <div class="modal-content high-contrast:border-2">
       <h2>Include selected keywords:</h2>
       <div class="keywords">
         <button
             v-for="(keyword, index) in keywords"
             :key="index"
-            :class="['keyword-pill', { selected: selectedSet.includes(keyword) }]"
+            :class="['hc-exception','keyword-pill', 'high-contrast:border',  selectedSet?.includes(keyword)? 'selected' : '']"
             @click.prevent="toggleKeyword(keyword)"
         >
           {{ keyword }}
         </button>
       </div>
-      <button class="close-button" @click.prevent="emitClose">Close</button>
+      <button class="close-button high-contrast:border" @click.prevent="emitClose">Close</button>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ import { defineEmits, computed} from 'vue';
 const emit = defineEmits(['close']);
 
 import {filter} from '@/storage.js'
-const selectedSet = computed(() => filter.value.keywords);
+const selectedSet = computed(() => filter.value.keywords ?? []);
 
 function toggleKeyword(keyword) {
   const index = selectedSet.value.indexOf(keyword);
@@ -51,7 +51,9 @@ function emitClose(event) {
 </script>
 
 <style scoped>
+@reference "@/assets/main.css";
 .modal-overlay {
+  @apply high-contrast:bg-black/80;
   position: fixed;
   top: 0;
   left: 0;
@@ -68,7 +70,7 @@ function emitClose(event) {
   background: white;
   border-radius: 12px;
   padding: 2rem;
-  max-width: 450px;
+  max-width: 28rem;
   width: 100%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
@@ -81,29 +83,25 @@ function emitClose(event) {
 }
 
 .keyword-pill {
+  @apply high-contrast:bg-black text-black high-contrast:border-yellow-300
+  border high-contrast:text-yellow-300;
   padding: 10px 20px;
-  border: 1px solid #ccc;
   border-radius: 24px;
-  background: #f9f9f9;
-  font-size: 14px;
-  cursor: pointer;
-  color: #333;
+  font-size: 0.875rem;
   transition: background 0.2s, color 0.2s;
-  border: none;
 }
 
 .keyword-pill.selected {
-  background: #317aa7;
+  @apply bg-mblue-base high-contrast:bg-yellow-300 high-contrast:text-black;
   color: white;
 }
 
 .close-button {
+  margin-top: 1rem;
   background: #317aa7;
   color: white;
-  border: none;
   border-radius: 12px;
   padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
+  font-size: 0.875rem;
 }
 </style>

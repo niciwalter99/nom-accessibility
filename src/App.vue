@@ -72,6 +72,7 @@ onMounted(() => {
   if (filter.value) {
     observer.observe(filter.value.$el);
   }
+
 });
 onUnmounted(() => {
   if (observer) {
@@ -79,23 +80,24 @@ onUnmounted(() => {
   }
 });
 
+
+
+
 </script>
 
 
 <style scoped>
 
 .image-header {
-  font-size: 24px;
+  font-size: 1.5rem;
   margin-bottom: 0.4rem;
 }
 
 .image-desc {
-  font-size: 30px;
+  font-size: 1.875rem;
   max-width: 34rem;
 }
 
-._quick-filter {
 
-}
 
 </style>

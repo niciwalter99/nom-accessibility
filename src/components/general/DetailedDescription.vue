@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full border-1 border-mgrey-lighten-3 rounded-lg cursor-pointer hover:bg-mgrey-lighten-4"
+  <button class="w-full border-1 border-mgrey-lighten-3 rounded-lg hover:bg-mgrey-lighten-4"
        @mouseenter="isHovered = true"
        @mouseleave="isHovered = false"
   >
@@ -15,18 +15,13 @@
     <div class="rounded-b-lg p-4 flex flex-col justify-center"
          :class="[isHovered ? 'bg-mgreyno-lighten-6' : 'bg-white']"
     >
-      <h3 class="title mb-2">{{ title }}</h3>
-      <p class="text-sm mb-2">{{ description }}</p>
+      <h3 class="text-left title mb-2">{{ title }}</h3>
+      <p class="text-left text-sm mb-2">{{ description }}</p>
       <button class="font-bold flex items-center hover:bg-mgrey-lighten-4 rounded-lg p-2">
-        <p class="underline">See more</p>
-        <img
-            class="h-4 w-4 ml-2"
-            src="@/assets/icons/arrowRight.svg"
-            alt="Arrow right"
-        >
+        <p class="underline">See more →</p>
       </button>
     </div>
-  </div>
+  </button>
 </template>
 
 <script setup>

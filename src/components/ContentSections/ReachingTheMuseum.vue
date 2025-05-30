@@ -2,7 +2,13 @@
   <section id="reaching-the-museum" class="max-w-[650px]">
     <h1>{{ t('reachingTheMuseum.title') }}</h1>
     <h2>{{ t('reachingTheMuseum.gettingToMuseum.title') }}</h2>
-    <p>{{ t('reachingTheMuseum.gettingToMuseum.description') }}</p>
+    <p v-if="!settings.signLanguage">{{ t('reachingTheMuseum.gettingToMuseum.description') }}</p>
+    <!--
+        // TODO change video
+-->
+    <video v-if="settings.signLanguage" autoplay loop muted playsinline>
+      <source src="@/assets/SL/reachingMuseum.webm" type="video/webm">
+    </video>
     <h3>{{ t('reachingTheMuseum.byTrain.title') }}</h3>
     <p>{{ t('reachingTheMuseum.byTrain.description') }}</p>
     <ul>
@@ -50,7 +56,10 @@
         :img-src="Locker"
         ></AdditionalImage>
       </div>
-      <p>{{ t('reachingTheMuseum.lockers.description') }}</p>
+      <p v-if="!settings.signLanguage">{{ t('reachingTheMuseum.lockers.description') }}</p>
+      <video v-else autoplay loop muted playsinline>
+        <source src="@/assets/SL/Locker.webm" type="video/webm">
+      </video>
     </div>
   </section>
 </template>
@@ -112,6 +121,7 @@ import AdditionalImage from "@/components/general/AdditionalImage.vue";
 const {t} = useI18n();
 const isTrainTravelOpen = ref(false);
 const isCarTravelOpen = ref(false);
+import {settings} from "@/storage.js";
 
 
 const insideMusemSteps = [

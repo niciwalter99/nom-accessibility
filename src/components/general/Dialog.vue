@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modelValue" class="modal-overlay" @click.self="close">
+  <div v-if="modelValue" class="hc-exception modal-overlay" @click.self="close">
     <div class="modal-content">
       <button class="close-btn" @click="close">×</button>
       <slot />
@@ -23,7 +23,10 @@ const close = () => {
 </script>
 
 <style scoped>
+@reference "@/assets/main.css";
+
 .modal-overlay {
+  @apply high-contrast:bg-black/80;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
@@ -34,6 +37,7 @@ const close = () => {
 }
 
 .modal-content {
+  @apply high-contrast:border;
   background: white;
   padding: 2rem;
   border-radius: 8px;
@@ -47,6 +51,5 @@ const close = () => {
   background: none;
   border: none;
   font-size: 1.5rem;
-  cursor: pointer;
 }
 </style>

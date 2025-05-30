@@ -7,20 +7,21 @@
   </div>
 
 
-  <div class="map-viewer" ref="mapContainer" aria-hidden="true">
-
-    <div class="_inner">
+  <div class="map-viewer high-contrast:border" ref="mapContainer" aria-hidden="true">
+    <div class="_inner ">
       <button class="fullscreen-btn" @click="toggleFullscreen">
-        <img class="icon" src="@/assets/icons/full-screen.svg">
+        <img class="icon" :src="fullScreenIcon">
       </button>
       <div class="controls">
         <div v-if="showLegend" class="_legend">
           <div
               v-for="(item, index) in legendLabels"
               :key="index"
-              class="_legend-item"
+              class="_legend-item hc-exception"
           >
-            <div :class="[item.color, 'w-4 h-4 rounded-sm']"/>
+            <img class="w-4 h-4 my-2 bg-white rounded-sm hc-exception"
+            :src="item.color"
+            />
             <p class="_label">{{ item.label }}</p>
           </div>
         </div>
@@ -48,7 +49,7 @@
             <button
                 v-for="type in infoTypes"
                 :key="type"
-                :class="{ active: selectedInfo === type }"
+                :class="selectedInfo === type? 'active high-contrast:border-5' : ''"
                 @click="selectedInfo = type"
             >
               {{ type }}
@@ -66,8 +67,10 @@
           </div>
         </template>
       </div>
-      <div class="map-image">
-        <img :src="currentImage" :alt="`Map showing ${selectedInfo} on ${selectedFloor}`"/>
+      <div class="map-image high-contrast:rounded-lg">
+        <img
+            class="hc-exception bg-white high-contrast:p-4 high-contrast:rounded-lg"
+            :src="currentImage" :alt="`Map showing ${selectedInfo} on ${selectedFloor}`"/>
       </div>
     </div>
   </div>
@@ -77,6 +80,7 @@
 import {ref, computed} from 'vue';
 import {useScreenSize} from '@/composables/screenSize.js';
 import {info} from "autoprefixer";
+import {useThemeDetection} from "@/composables/useThemeDetection.js";
 
 // Props
 const props = defineProps({
@@ -124,18 +128,23 @@ const currentImage = computed(() => {
   return props.images?.[selectedInfo.value]?.[selectedFloor.value] || '';
 });
 
+import blue from '@/assets/images/blue.svg';
+import dots from '@/assets/images/dots.svg';
+import lines from '@/assets/images/lines.png';
+import red from '@/assets/images/red.svg';
+
 const legendLabels = computed(() => {
   if (selectedInfo.value === 'Noises') {
     return [
-      {color: 'bg-mred-lighten-4', label: 'Crowded'},
-      {color: 'color', label: 'Less crowded'},
-      {color: 'bg-mgreen-lighten-3', label: 'Least crowded'}
+      {color: red, label: 'Crowded'},
+      {color: lines, label: 'Less crowded'},
+      {color: dots, label: 'Least crowded'}
     ];
   } else if (selectedInfo.value === 'Lighting') {
     return [
-      {color: 'bg-mblue-lighten-4', label: 'Natural light'},
-      {color: 'bg-mgreen-lighten-3', label: 'Natural & Artificial light'},
-      {color: 'color', label: 'Artificial Light'}
+      {color: blue, label: 'Natural light'},
+      {color: dots, label: 'Natural & Artificial light'},
+      {color: lines, label: 'Artificial Light'}
     ];
   }
   return [];
@@ -160,6 +169,20 @@ const toggleFullscreen = () => {
   }
 };
 
+const { theme } = useThemeDetection()
+
+const fullScreenIcon = computed(() => {
+  if (theme.value === 'high-contrast') {
+    return new URL('@/assets/icons/full-screen-hc.svg', import.meta.url).href
+  }
+
+  if (theme.value === 'color-blind') {
+    return new URL('@/assets/icons/selected-color-blind.svg', import.meta.url).href
+  }
+
+  return new URL('@/assets/icons/full-screen.svg', import.meta.url).href
+});
+
 </script>
 
 <style scoped>
@@ -168,7 +191,7 @@ const toggleFullscreen = () => {
 
 
 .p {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .fullscreen-btn {
@@ -176,7 +199,6 @@ const toggleFullscreen = () => {
   top: 0;
   right: 0;
   border: none;
-  cursor: pointer;
   box-sizing: border-box;
   width: auto;
 
@@ -207,7 +229,7 @@ const toggleFullscreen = () => {
 
   ._label {
     width: 100px;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
 
@@ -232,7 +254,7 @@ const toggleFullscreen = () => {
 
 .controls {
   display: block;
-  width: 200px;
+  width: 100%;
   margin-right: 1rem;
 }
 
@@ -272,11 +294,11 @@ button {
   padding: 0.4rem 0.8rem;
   margin-bottom: 0.5rem;
   width: 6rem;
-  cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 button.active {
+  @apply high-contrast:border-5;
   background-color: #eee;
   font-weight: bold;
 }

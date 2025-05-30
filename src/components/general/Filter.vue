@@ -1,7 +1,7 @@
 <template>
   <div
       id="filterContainer"
-      class="p-6 bg-mblue-lighten-4 rounded-lg max-w-3xl">
+      class="p-6 bg-mblue-lighten-4 high-contrast:border rounded-lg max-w-3xl">
     <p class="mb-2">
       {{ t('filter.pickTopics') }}
     </p>
@@ -9,28 +9,31 @@
       {{ t('filter.filterInfo') }}
     </p>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 ">
       <div
           v-for="option in options"
           :key="option.label"
           :id="option.label"
           @click="option.toggle"
           :class="[
-          'relative w-[230px] h-[100px] cursor-pointer rounded-lg p-2 items-start hover:bg-mgreyno-lighten-6 transition',
+          'relative w-[230px]  cc-pointer rounded-lg p-2 ' +
+           'items-start hover:bg-mgreyno-lighten-6 transition ' +
+            'hc-exception high-contrast:bg-black  high-contrast:border-yellow-300 ' +
+             'high-contrast-hover:bg-yellow-300 ',
           option.selected
-            ? 'bg-white border-mblue-base border-2':
+            ? 'bg-white border-mblue-base high-contrast:border-5 border-2':
             'bg-white border-mblue-lighten-3 border  hover:border-mblue-base'
         ]"
       >
         <div class="relative group">
           <div v-if="option.selected" class="absolute top-1 right-1">
             <img
-                src="@/assets/icons/selected.svg"
+                :src=selectedIcon
                 class="w-5 h-5"
                 aria-hidden="true"
             >
           </div>
-          <div class="text-2xl">{{ option.icon }}</div>
+          <span class="text-2xl hc-exception high-contrast:bg-yellow-300">{{ option.icon }}</span>
           <div>
             <div class="font-semibold text-mgrey-darken-4">{{ t(`filter.options.${option.label}`) }}</div>
           </div>
@@ -43,13 +46,14 @@
 
       <div
           :class="[
-          'relative w-[230px] h-[100px] cursor-pointer rounded-lg p-2 items-start hover:bg-mgreyno-lighten-6 transition',
-          KeywordsInFilter === ''? 'bg-white border-mblue-lighten-3 border': 'bg-white border-mblue-base border-2'
+          'relative w-[230px]  cc-pointer rounded-lg p-2 items-start hover:bg-mgreyno-lighten-6 transition' +
+           ' hc-exception high-contrast:bg-black  high-contrast:border-yellow-300 high-contrast-hover:bg-yellow-300 ',
+          KeywordsInFilter === ''? 'bg-white border-mblue-lighten-3 border': 'bg-white border-mblue-base high-contrast:border-5 border-2'
         ]"
           @click="handleKeyWordClick"
           id="addKeyword"
       >
-        <div class="text-2xl"> ➕</div>
+        <span class="text-2xl hc-exception high-contrast:bg-yellow-300"> ➕</span>
         <div>
           <button
               class="flex flex-col items-start font-semibold text-mgrey-darken-4"
@@ -76,6 +80,7 @@ const {t} = useI18n()
 import {filter} from '@/storage.js'
 import {scrollToPosition} from "@/utils/scroll.js";
 import KeywordModal from "@/components/general/KeywordModal.vue";
+import {useThemeDetection} from "@/composables/useThemeDetection.js";
 
 const showModal = ref(false);
 
@@ -92,18 +97,16 @@ const keywords = [
 ]
 
 function handleClose(selected) {
-  console.log('handleClose', selected);
   showModal.value = false;
   filter.value.keywords = selected;
 }
 
 const handleKeyWordClick = () => {
-  console.log('handleKeyWordClick');
   showModal.value = true;
 };
 
 const KeywordsInFilter = computed(() => {
-  const str = filter.value.keywords.length > 0 ? filter.value.keywords.join(', ') : '';
+  const str = (Array.isArray(filter.value.keywords) && filter.value.keywords.length > 0) ? filter.value.keywords.join(', ') : '';
   return str.length > 30 ? str.slice(0, 30) + '...' : str;
 });
 
@@ -142,13 +145,28 @@ const options = computed(() => [
   }
 ]);
 
+const { theme } = useThemeDetection()
+
+const selectedIcon = computed(() => {
+
+  if (theme.value === 'high-contrast') {
+    return new URL('@/assets/icons/selected-hc.svg', import.meta.url).href
+  }
+
+  if (theme.value === 'color-blind') {
+    return new URL('@/assets/icons/selected-color-blind.svg', import.meta.url).href
+  }
+
+  return new URL('@/assets/icons/selected.svg', import.meta.url).href
+})
+
 function highlightFilter() {
   const filterElements = [...options.value, {label: "addKeyword"}];
   for (const option of filterElements) {
     const filter = document.getElementById(option.label);
     if (filter) {
       filter.classList.remove('bg-white',)
-      filter.classList.add('bg-mblue-lighten-2', 'transition-all', 'duration-500');
+      filter.classList.add('bg-mblue-lighten-2', 'transition-all', 'duration-500', 'hc-exception');
       setTimeout(() => {
         filter.classList.remove('bg-mblue-lighten-2');
         filter.classList.add('bg-white');
@@ -158,9 +176,9 @@ function highlightFilter() {
   const filter = document.getElementById('filterContainer');
   if (filter) {
     filter.classList.remove('bg-mblue-lighten-4',)
-    filter.classList.add('bg-mblue-base', 'transition-all', 'duration-500');
+    filter.classList.add('bg-mblue-base', 'transition-all', 'duration-500', 'hc-exception', 'high-contrast:border-yellow-300', 'high-contrast:border-10', 'high-contrast:bg-yellow-300');
     setTimeout(() => {
-      filter.classList.remove('bg-mblue-base');
+      filter.classList.remove('bg-mblue-base', 'hc-exception',  'high-contrast:border-yellow-300', 'high-contrast:border-10');
       filter.classList.add('bg-mblue-lighten-4');
     }, 500);
   }

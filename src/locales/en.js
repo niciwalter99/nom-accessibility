@@ -4,6 +4,8 @@ export default {
         accessibilityMenu: 'Accessibility Menu',
         plainLanguage: 'Plain Language',
         accessibility: "Accessibility",
+        signLanguage: "Sign Language",
+        backToStart: "Back to english start page",
         imageDesc: "Plan your visit easily taking account of your access needs",
     },
     sectionIndicator: {
@@ -42,6 +44,7 @@ export default {
         title: 'Before you visit',
         note: 'Note:',
         description: 'We welcome disabled visitors to the Natural History museum in Karlsruhe. If you have any further questions or concerns, please call',
+        description2: "We are continuously working to improve the accessibility of our museum for all visitors. If you have any questions, feedback, or suggestions for improvement, please do not hesitate to contact us at",
         phone: '01234567',
         or: 'or email',
         voiceCalls: 'Voice calls are welcome.',
@@ -72,7 +75,8 @@ export default {
             silentHours: {
                 title: 'Silent hours',
                 description: 'We offer silent hours for all visitors who prefer a calmer museum experience. During these times, we limit the number of guests allowed in the museum to reduce noise and crowding. Silent hours are ideal for anyone seeking a more relaxed visit. You can find upcoming Silent hours listed in our',
-                link: 'event calendar'
+                link: 'event calendar',
+                slText: 'Show silent hours in our event calendar'
             },
             guidedTours: {
                 title: 'Inclusive guided tours',

@@ -1,20 +1,25 @@
 <template>
   <aside aria-hidden="true">
     <div class="search-box">
+      <button>
+
       <img
           v-if="searchTerm !== ''"
           @click="deleteSearchTerm"
-          src="@/assets/icons/close.svg"
-           class="ml-1 hover:bg-mgrey-lighten-2 p-1 rounded-sm w-[24px]">
+          :src="closeIcon"
+           class="ml-1 hover:bg-mgrey-lighten-2 p-0 rounded-sm w-[24px]">
+      </button>
       <input
           v-model="searchTerm"
           @input="onSearchInput"
-          class="search-input" type="text" placeholder="Search for a keyword"/>
+          class="search-input rounded-lg" type="text" placeholder="Search for a keyword"/>
       <p v-if="searchTerm !== ''" class="search-items"> {{ foundSearchTerms }} hits</p>
-      <img v-if="searchTerm !== '' && foundSearchTerms > 0" src="@/assets/icons/arrow-right.svg"
-           class="next-item"
-           @click="goToNextWord"
-      >
+      <button>
+        <img v-if="searchTerm !== '' && foundSearchTerms > 0" :src="nextIcon"
+             class="next-item"
+             @click="goToNextWord"
+        >
+      </button>
       <div style="width: 0.4rem"></div>
     </div>
     <div v-if="showKeyWordSearchHits" class="not-found">
@@ -29,21 +34,21 @@
 
     <h2 class="nav-heading">
       <img
-          src="@/assets/icons/list.svg"
+          :src="listIcon"
           class="h-[12px] w-auto mr-2"
       />
       <span>On this page </span>
     </h2>
     <div class="nav-section">
-      <div class="bg-neutral-200" style="flex: 0 0 2px; border-radius: 1px; margin-right: 12px;">
-        <div class="bg-neutral-800 font-medium"
+      <div class="hc-exception bg-neutral-200 high-contrast:bg-yellow-300 w-1" style="flex: 0 0 2px; justify-items: center; border-radius: 1px; margin-right: 12px;">
+        <div class="bg-neutral-800 hc-exception high-contrast:bg-yellow-300 w-[2px] high-contrast:w-3 high-contrast:border high-contrast:border-black font-medium"
              :style="indicatorBarStyle"></div>
       </div>
       <ul class="nav-list">
         <li class="nav-item"
             :class="currentSectionID === 'before-visit' ? 'font-bold' : 'text-mgrey-darken-2'"
         >
-          <button @click="scrollToSection($event, 'before-visit')">{{
+          <button   @click="scrollToSection($event, 'before-visit')">{{
               t('sectionIndicator.beforeYouVisit')
             }}
           </button>
@@ -65,7 +70,7 @@
         <li class="nav-item"
             :class="currentSectionID === 'experience-the-exhibition' ? 'font-bold' : 'text-mgrey-darken-2'"
         >
-          <button @click="scrollToSection($event, 'experience-the-exhibition')">
+          <button class="text-left" @click="scrollToSection($event, 'experience-the-exhibition')">
             {{ t('sectionIndicator.experienceTheExhibition') }}
           </button>
         </li>
@@ -96,6 +101,7 @@ import {filter} from "@/storage.js";
 import {useColorMode} from "@vueuse/core";
 
 const {t, locale, messages} = useI18n();
+import {useThemeDetection} from "@/composables/useThemeDetection.js";
 const observedElements = new Set();
 
 let mutationObserver;
@@ -104,6 +110,19 @@ const searchTerm = ref("");
 const foundSearchTerms = ref(0);
 const completeWordBaseTerms = ref(0);
 const scrollToTermOccurence = ref(0);
+const { theme } = useThemeDetection()
+
+const listIcon = computed(() => {
+  if (theme.value === 'high-contrast') {
+    return new URL('@/assets/icons/list-hc.svg', import.meta.url).href
+  }
+
+  if (theme.value === 'color-blind') {
+    return new URL('@/assets/icons/selected-color-blind.svg', import.meta.url).href
+  }
+
+  return new URL('@/assets/icons/list.svg', import.meta.url).href
+});
 
 const observeSections = () => {
   if (observer) observer.disconnect();
@@ -114,17 +133,19 @@ const observeSections = () => {
   const experienceExhibition = document.getElementById('experience-the-exhibition');
   const faq = document.getElementById('faq');
   const visitorStories = document.getElementById('visitor-stories');
+  console.log(movingAround);
 
   if (beforeVisit && reachingMuseum && movingAround && faq && visitorStories && experienceExhibition) {
     observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
+            console.log("Observing sections for intersection changes", entry.target.id);
             if (entry.isIntersecting) {
               currentSectionID.value = entry.target.id;
             }
           });
         },
-        {root: null, threshold: 0.3}
+        {root: null, threshold: 0.05}
     );
 
     observer.observe(beforeVisit);
@@ -155,7 +176,7 @@ const currentSectionID = ref("before-visit");
 
 const indicatorBarStyle = computed(() => {
   let offset = 0;
-  const navItemHeight = 37;
+  const navItemHeight = 2.313;
 
   if (currentSectionID.value === 'before-visit') {
     offset = 0;
@@ -171,12 +192,11 @@ const indicatorBarStyle = computed(() => {
     offset = navItemHeight * 5;
   }
 
-
   return {
-    height: "24px",
+    height: "2.313rem",
     borderRadius: "1px",
     transition: "transform 0.2s ease-in-out, height 0.2s ease-in-out",
-    transform: `translateY(${offset}px)`,
+    transform: `translateY(${offset}rem)`,
   };
 });
 
@@ -189,7 +209,8 @@ const scrollToSection = (event, id) => {
     observeSections();
   }, 600);
   currentSectionID.value = id;
-  const offset = 80;
+  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const offset = 5 * rootFontSize;
   const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
 
   scrollToPosition(targetPosition);
@@ -256,9 +277,9 @@ function onSearchInput() {
 
       const highlight = document.createElement("span");
       if(index === 0) {
-        highlight.className = "highlight keyword-focus";
+        highlight.className = "hc-exception highlight keyword-focus";
       } else {
-        highlight.className = "highlight";
+        highlight.className = "hc-exception highlight";
       }
       highlight.textContent = match;
       frag.appendChild(highlight);
@@ -303,7 +324,7 @@ function goToNextWord() {
       detailsParent.open = true;
     }
     nextWord.scrollIntoView({behavior: 'smooth', block: 'center'});
-    nextWord.className = "highlight keyword-focus";
+    nextWord.className = "hc-exception highlight keyword-focus";
   }
 
 }
@@ -358,6 +379,29 @@ function removeHighlights(root) {
   });
 }
 
+const nextIcon = computed(() => {
+  if (theme.value === 'high-contrast') {
+    return new URL('@/assets/icons/arrow-right-hc.svg', import.meta.url).href
+  }
+
+  if (theme.value === 'color-blind') {
+    return new URL('@/assets/icons/selected-color-blind.svg', import.meta.url).href
+  }
+
+  return new URL('@/assets/icons/arrow-right.svg', import.meta.url).href
+});
+
+const closeIcon = computed(() => {
+  if (theme.value === 'high-contrast') {
+    return new URL('@/assets/icons/close-hc.svg', import.meta.url).href
+  }
+
+  if (theme.value === 'color-blind') {
+    return new URL('@/assets/icons/selected-color-blind.svg', import.meta.url).href
+  }
+
+  return new URL('@/assets/icons/close.svg', import.meta.url).href
+});
 
 
 const showAllInformation = () => {
@@ -386,7 +430,7 @@ const showAllInformation = () => {
     width: 100%;
     padding: 8px 12px;
 
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .next-item {
@@ -396,7 +440,7 @@ const showAllInformation = () => {
     height: 20px;
     padding: 0.2rem;
     margin-left: 0.4rem;
-    cursor: pointer;
+    margin-right: 0.6rem;
   }
 
   .search-input:focus {
@@ -408,7 +452,7 @@ const showAllInformation = () => {
   .search-items {
     display: inline-block;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
 
@@ -418,14 +462,13 @@ const showAllInformation = () => {
   margin-top: 0.5rem;
 
   .not-found-item {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .show-all {
     margin-left: 0.1rem;
     text-decoration: underline;
-    font-size: 14px;
-    cursor: pointer;
+    font-size: 0.875rem;
   }
 }
 
@@ -438,7 +481,7 @@ const showAllInformation = () => {
 .nav-heading {
   @apply flex items-center text-mgrey-darken-2;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.875rem;
   margin-top: 1.5rem;
   margin-bottom: 12px;
 }
@@ -449,14 +492,9 @@ const showAllInformation = () => {
   margin: 0;
 }
 
-.nav-item:first-child {
-  padding: 0 0 8px 0;
-}
-
 .nav-item {
-  padding: 8px 0;
-  font-size: 14px;
-  cursor: default;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
 }
 
 </style>

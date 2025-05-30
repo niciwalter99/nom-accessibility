@@ -3,10 +3,13 @@
     <h1 class="my-4">{{ t('movingAround.title') }}</h1>
     <h2 v-if="filter.mobility || filter.cognitive">
       {{ t('movingAround.environmentalConditions.title') }}</h2>
-    <div v-if="filter.cognitive || filter.keywords.includes($t('filter.keywords.crowd')) ||
-filter.keywords.includes($t('filter.keywords.lighting'))" class="_topic">
+    <div v-if="filter.cognitive || filter.keywords?.includes($t('filter.keywords.crowd')) ||
+filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <h3>{{ t('movingAround.environmentalConditions.lightingAndSensoryComfort.title') }}</h3>
-      <p>{{ t('movingAround.environmentalConditions.lightingAndSensoryComfort.description') }}</p>
+      <p v-if="!settings.signLanguage" class="mb-4">{{ t('movingAround.environmentalConditions.lightingAndSensoryComfort.description') }}</p>
+      <video v-else autoplay loop muted playsinline>
+        <source src="@/assets/SL/Locker.webm" type="video/webm">
+      </video>
       <MuseumMap
           :infoTypes="infoTypes"
           :floors="floors"
@@ -15,21 +18,21 @@ filter.keywords.includes($t('filter.keywords.lighting'))" class="_topic">
           :alt-text="lightingMapAlt"
       />
     </div>
-    <div v-if="filter.mobility || filter.keywords.includes($t('filter.keywords.museumLayout'))" class="_topic">
+    <div v-if="filter.mobility || filter.keywords?.includes($t('filter.keywords.museumLayout'))" class="_topic">
       <div class="flex">
         <h3>{{ t('movingAround.environmentalConditions.spaciousLayout.title') }}</h3>
         <AdditionalImage :img-src="Layout"></AdditionalImage>
       </div>
       <p>{{ t('movingAround.environmentalConditions.spaciousLayout.description') }}</p>
     </div>
-    <div v-if="filter.mobility || filter.cognitive  || filter.keywords.includes($t('filter.keywords.seating'))" class="_topic">
+    <div v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.seating'))" class="_topic">
       <div class="flex">
         <h3>{{ t('movingAround.environmentalConditions.accessibleSeating.title') }}</h3>
         <AdditionalImage :img-src="Seating"></AdditionalImage>
       </div>
       <p>{{ t('movingAround.environmentalConditions.accessibleSeating.description') }}</p>
     </div>
-    <div v-if="filter.mobility || filter.cognitive  || filter.keywords.includes($t('filter.keywords.accessibleRestrooms'))" class="_topic">
+    <div v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.accessibleRestrooms'))" class="_topic">
       <div class="flex">
         <h3>{{ t('movingAround.environmentalConditions.accessibleRestrooms.title') }}</h3>
         <AdditionalImage img-src="Restrooms"></AdditionalImage>
@@ -52,7 +55,7 @@ filter.keywords.includes($t('filter.keywords.lighting'))" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.title') }}</h3>
       <p>{{ t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.description') }}</p>
     </div>
-    <div v-if="filter.blind  || filter.keywords.includes($t('filter.keywords.wayfindingSupport'))" class="_topic">
+    <div v-if="filter.blind  || filter.keywords?.includes($t('filter.keywords.wayfindingSupport'))" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.title') }}</h3>
       <p>{{ t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.description') }}</p>
     </div>

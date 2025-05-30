@@ -7,25 +7,25 @@
       <h3>{{ t('experienceTheExhibition.learnInDifferentWays.title') }}</h3>
       <p>{{ t('experienceTheExhibition.learnInDifferentWays.description') }}</p>
     </div>
-    <div v-if="filter.deaf || filter.blind || filter.keywords.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
+    <div v-if="filter.deaf || filter.blind || filter.keywords?.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
       <div class="flex">
         <h3>{{ t('experienceTheExhibition.alternativeFormats.title') }}</h3>
         <additional-image :img-src="tactile"></additional-image>
       </div>
       <p>{{ t('experienceTheExhibition.alternativeFormats.description') }}</p>
     </div>
-    <div v-if="filter.cognitive || filter.blind || filter.hearing  || filter.keywords.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
+    <div v-if="filter.cognitive || filter.blind || filter.hearing  || filter.keywords?.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
       <div class="flex">
         <h3>{{ t('experienceTheExhibition.interactiveAndTactileElements.title') }}</h3>
         <additional-image img-src="EarthQuakeSimulator"></additional-image>
       </div>
       <p>{{ t('experienceTheExhibition.interactiveAndTactileElements.description') }}</p>
     </div>
-    <div v-if="filter.mobility  || filter.keywords.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
+    <div v-if="filter.mobility  || filter.keywords?.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
       <h3>{{ t('experienceTheExhibition.ergonomicPerceivableInformation.title') }}</h3>
       <p>{{ t('experienceTheExhibition.ergonomicPerceivableInformation.description') }}</p>
     </div>
-    <div v-if="filter.cognitive || filter.blind || filter.hearing  || filter.keywords.includes($t('filter.keywords.qrCodes'))" class="_topic">
+    <div v-if="filter.cognitive || filter.blind || filter.hearing  || filter.keywords?.includes($t('filter.keywords.qrCodes'))" class="_topic">
       <h3>{{ t('experienceTheExhibition.qrCodes.title') }}</h3>
       <p>{{ t('experienceTheExhibition.qrCodes.description') }}</p>
     </div>

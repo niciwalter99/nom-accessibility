@@ -9,21 +9,21 @@
       </p>
       <img src="@/assets/images/SocialStory/Start.png" alt="Social Story"/>
       <p class="title">I go to the museum by train</p>
-      <button
-          class="primary-button"
+      <NButton
           @click="nextStep"
+          variant="primary"
       >
-        <span>Next →</span>
-      </button>
+        Next →
+      </NButton>
     </template>
 
     <template v-else>
       <div class="image-wrapper" v-if="currentStepData.image">
         <img :src="currentStepData.image" :alt="'Step ' + (stepIndex + 1)"/>
-        <div class="map" v-if="currentStepData.map"
+        <div class="map hc-exception" v-if="currentStepData.map"
              @click="showMap(currentStepData.map)"
         >
-          <img :src="currentStepData.map" alt="Map"/>
+          <img :src="currentStepData.map" class="hc-exception" alt="Map"/>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
         <button
             v-for="(option, i) in currentStepData.options"
             :key="i"
-            class="option-button"
+            class="option-button hc-exception"
             @click="selectPath(option.pathKey)"
         >
           <img class='option-image' :src="option.image" alt="option image"/>
@@ -44,17 +44,16 @@
 
       <template v-else>
         <div class="controls">
-          <button @click="prevStep" class="nav-button">
+          <NButton  @click="prevStep" class="hc-exception nav-button">
             ← Before
-          </button>
+          </NButton>
 
-          <button
+          <NButton
               @click="nextStep"
               :disabled="stepIndex === currentPath.length - 1"
-              class="nav-button next"
           >
             Next →
-          </button>
+          </NButton>
         </div>
         <p class="step-indicator">
           Step {{ stepIndex + 1 }} of {{ currentPath.length }}</p>
@@ -65,6 +64,7 @@
 
 <script setup>
 import {ref, computed} from 'vue';
+import NButton from "@/components/general/NButton.vue";
 
 
 const props = defineProps({
@@ -100,6 +100,8 @@ const nextStep = () => {
 const prevStep = () => {
   if (stepIndex.value > 0) {
     stepIndex.value--;
+  } else if(currentPathKey.value === props.startPath) {
+    currentPathKey.value = '/';
   } else {
     currentPathKey.value = props.startPath;
   }
@@ -110,7 +112,7 @@ const prevStep = () => {
 @reference "@/assets/main.css";
 
 .title {
-  font-size: 30px;
+  font-size: 1.875rem;
   margin: 1rem;
 }
 
@@ -122,17 +124,8 @@ const prevStep = () => {
   height: 200px;
 }
 
-.primary-button {
-  @apply bg-mblue-base;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
 .step-navigator {
-  max-width: 500px;
+  max-width: 31.25rem;
   padding: 1rem;
   text-align: center;
   display: flex;
@@ -154,7 +147,6 @@ const prevStep = () => {
     top: 0.4rem;
     right: 0.4rem;
     transition: transform 0.3s ease;
-    cursor: pointer;
   }
 
   .map:hover {
@@ -164,7 +156,7 @@ const prevStep = () => {
 }
 
 .caption {
-  font-size: 20px;
+  font-size: 1.25rem;
   margin: 1rem 0;
 }
 
@@ -173,24 +165,6 @@ const prevStep = () => {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-}
-
-.nav-button {
-  @apply bg-mgrey-lighten-4;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.nav-button:hover {
-  @apply bg-mgrey-lighten-3;
-}
-
-.nav-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 
 .step-indicator {
@@ -211,18 +185,17 @@ const prevStep = () => {
 }
 
 .option-button {
+  @apply
+    bg-mgrey-lighten-3 hover:bg-mgrey-lighten-4
+  high-contrast:border high-contrast:bg-black high-contrast:border-yellow-300
+  high-contrast-hover:bg-yellow-300 high-contrast-hover:text-black;
   flex: 1 1 45%;
   padding: 1rem;
   background: #f9f9f9;
   border-radius: 8px;
   border: 2px solid #ccc;
-  cursor: pointer;
   text-align: center;
   transition: background-color 0.3s ease; /* Smooth transition */
-}
-
-.option-button:hover {
-  @apply bg-mgrey-lighten-4;
 }
 
 .option-button img {
