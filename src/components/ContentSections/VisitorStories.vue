@@ -25,9 +25,9 @@
         />
       </div>
     </div>
-    <div class="bg-mbeige-base high-contrast:border rounded-md p-4 cc-default">
+    <div class=" mt-4 bg-mbeige-base high-contrast:border rounded-md p-4 cc-default">
       💡 <b>{{ t('beforeVisit.note') }}</b>
-      {{ t('beforeVisit.description') }}
+      <p v-html=" t('beforeVisit.description2')"></p>
       <a :href="'tel:' + t('beforeVisit.phone')">{{ t('beforeVisit.phone') }}</a>
       {{ t('beforeVisit.or') }}
       <a :href="'mailto: nkm@karlsruhe.de' " class="cc-pointer">nkm@karlsruhe.de</a>.

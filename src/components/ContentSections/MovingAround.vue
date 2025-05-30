@@ -6,10 +6,17 @@
     <div v-if="filter.cognitive || filter.keywords?.includes($t('filter.keywords.crowd')) ||
 filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <h3>{{ t('movingAround.environmentalConditions.lightingAndSensoryComfort.title') }}</h3>
-      <p v-if="!settings.signLanguage" class="mb-4">{{ t('movingAround.environmentalConditions.lightingAndSensoryComfort.description') }}</p>
-      <video v-else autoplay loop muted playsinline>
-        <source src="@/assets/SL/Locker.webm" type="video/webm">
-      </video>
+      <p v-if="!settings.signLanguage" class="mb-4" v-html=" t('movingAround.environmentalConditions.lightingAndSensoryComfort.description') "></p>
+<!--
+      TODo change
+-->
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
+      <p v-if="settings.signLanguage" class="my-4"> Sensory Map</p>
       <MuseumMap
           :infoTypes="infoTypes"
           :floors="floors"
@@ -23,27 +30,64 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
         <h3>{{ t('movingAround.environmentalConditions.spaciousLayout.title') }}</h3>
         <AdditionalImage :img-src="Layout"></AdditionalImage>
       </div>
-      <p>{{ t('movingAround.environmentalConditions.spaciousLayout.description') }}</p>
+      <p v-if="!settings.signLanguage" v-html=" t('movingAround.environmentalConditions.spaciousLayout.description')"></p>
+      <!--
+      TODo change
+-->
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
     </div>
     <div v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.seating'))" class="_topic">
       <div class="flex">
         <h3>{{ t('movingAround.environmentalConditions.accessibleSeating.title') }}</h3>
         <AdditionalImage :img-src="Seating"></AdditionalImage>
       </div>
-      <p>{{ t('movingAround.environmentalConditions.accessibleSeating.description') }}</p>
+      <p v-if="!settings.signLanguage" v-html=" t('movingAround.environmentalConditions.accessibleSeating.description')"></p>
+      <!--
+      TODo change
+-->
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
     </div>
     <div v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.accessibleRestrooms'))" class="_topic">
       <div class="flex">
         <h3>{{ t('movingAround.environmentalConditions.accessibleRestrooms.title') }}</h3>
         <AdditionalImage img-src="Restrooms"></AdditionalImage>
       </div>
-      <p>{{ t('movingAround.environmentalConditions.accessibleRestrooms.description') }}</p>
+      <p v-if="!settings.signLanguage" v-html=" t('movingAround.environmentalConditions.accessibleRestrooms.description')"></p>
+      <!--
+      TODo change
+-->
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
     </div>
     <h2>{{ t('movingAround.navigatingTheMuseum.title') }}</h2>
     <div class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.museumLayout.title') }}</h3>
-      <p>{{ t('movingAround.navigatingTheMuseum.museumLayout.description') }}</p>
+      <p v-if="!settings.signLanguage" v-html=" t('movingAround.navigatingTheMuseum.museumLayout.description')"></p>
+      <!--
+      TODo change
+-->
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
     </div>
+    <p v-if="settings.signLanguage" class="my-4"> Museum Map</p>
     <MuseumMap
         :infoTypes="mapTypes"
         :floors="floors"
@@ -53,11 +97,29 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
     />
     <div v-if="filter.mobility" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.title') }}</h3>
-      <p>{{ t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.description') }}</p>
+      <p v-if="!settings.signLanguage" v-html=" t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.description')"></p>
+      <!--
+      TODo change
+-->
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
     </div>
     <div v-if="filter.blind  || filter.keywords?.includes($t('filter.keywords.wayfindingSupport'))" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.title') }}</h3>
-      <p>{{ t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.description') }}</p>
+      <p v-if="!settings.signLanguage" v-html=" t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.description') "></p>
+      <!--
+      TODo change
+-->
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
     </div>
   </section>
 </template>
@@ -66,6 +128,9 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
 import AdditionalImage from "@/components/general/AdditionalImage.vue";
 import Layout from "@/assets/images/Layout.JPG";
 import Seating from "@/assets/images/Seating.JPG";
+import {settings} from "@/storage.js";
+import lockerVideo from "@/assets/SL/Locker.webm";
+
 
 defineProps({
   filter: {
@@ -79,10 +144,12 @@ import MuseumMap from "@/components/ContentSections/MuseumMap.vue";
 
 import lightingFirst from '@/assets/images/lightingFirst.png';
 import lightingSec from '@/assets/images/lightingSec.png';
-import noisesFirst from '@/assets/images/noisesFirst.png';
+import noisesFirst from '@/assets/images/NoisesFirst.png';
 import noisesSec from '@/assets/images/noisesSec.png';
 import museumMapFirst from '@/assets/images/museumMapFirst.png';
 import museumMapSec from '@/assets/images/museumMapSec.png';
+import NVideo from "@/components/general/NVideo.vue";
+import videoSrc from "@/assets/SL/BeforeVisit.webm";
 
 const infoTypes = ['Noises', 'Lighting'];
 const floors = ['1st floor', '2nd floor'];

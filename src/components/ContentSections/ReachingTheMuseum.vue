@@ -2,22 +2,22 @@
   <section id="reaching-the-museum" class="max-w-[650px]">
     <h1>{{ t('reachingTheMuseum.title') }}</h1>
     <h2>{{ t('reachingTheMuseum.gettingToMuseum.title') }}</h2>
-    <p v-if="!settings.signLanguage">{{ t('reachingTheMuseum.gettingToMuseum.description') }}</p>
-    <!--
-        // TODO change video
--->
-    <video v-if="settings.signLanguage" autoplay loop muted playsinline>
-      <source src="@/assets/SL/reachingMuseum.webm" type="video/webm">
-    </video>
+    <p v-if="!settings.signLanguage" v-html=" t('reachingTheMuseum.gettingToMuseum.description') "</p>
+    <vue3-video-player
+        v-if="settings.signLanguage"
+        :src="reachingMuseumVideo"
+        :autoplay="true"
+        :controls="true"
+    />
     <h3>{{ t('reachingTheMuseum.byTrain.title') }}</h3>
     <p>{{ t('reachingTheMuseum.byTrain.description') }}</p>
     <ul>
       <li>{{ t('reachingTheMuseum.byTrain.stations.marktplatz') }}</li>
       <li>{{ t('reachingTheMuseum.byTrain.stations.ettlingerTor') }}</li>
     </ul>
-    <p>{{ t('reachingTheMuseum.byTrain.walkDescription') }}</p>
+    <p v-html=" t('reachingTheMuseum.byTrain.walkDescription') "></p>
     <h3>{{ t('reachingTheMuseum.byCar.title') }}</h3>
-    <p>{{ t('reachingTheMuseum.byCar.description') }}</p>
+    <p v-html=" t('reachingTheMuseum.byCar.description') "></p>
     <ul>
       <li>{{ t('reachingTheMuseum.byCar.parking.friedrichsplatz') }}</li>
       <li>{{ t('reachingTheMuseum.byCar.parking.landesbibliothek') }}</li>
@@ -53,13 +53,16 @@
       <div class="flex">
         <h3>{{ t('reachingTheMuseum.lockers.title') }}</h3>
         <AdditionalImage
-        :img-src="Locker"
+            :img-src="Locker"
         ></AdditionalImage>
       </div>
-      <p v-if="!settings.signLanguage">{{ t('reachingTheMuseum.lockers.description') }}</p>
-      <video v-else autoplay loop muted playsinline>
-        <source src="@/assets/SL/Locker.webm" type="video/webm">
-      </video>
+      <p v-if="!settings.signLanguage" v-html="t('reachingTheMuseum.lockers.description') "></p>
+      <vue3-video-player
+          v-if="settings.signLanguage"
+          :src="lockerVideo"
+          :autoplay="true"
+          :controls="true"
+      />
     </div>
   </section>
 </template>
@@ -72,7 +75,10 @@ import carTravel from "@/assets/icons/carTravel.png";
 import train from "@/assets/icons/train.png";
 import {ref} from "vue";
 
-import MS from "@/assets/images/SocialStory/ms.png";
+import reachingMuseumVideo from "@/assets/SL/reachingMuseum.webm";
+import lockerVideo from "@/assets/SL/Locker.webm";
+
+import MS from "@/assets/images/SocialStory/MS.png";
 import M3 from "@/assets/images/SocialStory/M3.png";
 import M4 from "@/assets/images/SocialStory/M4.png";
 import M1 from "@/assets/images/SocialStory/M1.png";
@@ -122,6 +128,7 @@ const {t} = useI18n();
 const isTrainTravelOpen = ref(false);
 const isCarTravelOpen = ref(false);
 import {settings} from "@/storage.js";
+import silentHoursSrc from "@/assets/SL/silentHours.webm";
 
 
 const insideMusemSteps = [

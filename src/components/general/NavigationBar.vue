@@ -18,14 +18,17 @@
       <button
           class="flex items-center space-x-2 hover:underline"
           aria-label="Read in plain language"
+          @click=changeToPlain
       >
         <img
+            v-if="!settings.plainLanguage"
             :src="plainLanguageIcon"
             alt=""
             class="h-5 w-5"
             aria-hidden="true"
         />
-        <span>{{ t('navBar.plainLanguage') }} </span>
+        <span v-if="settings.plainLanguage">{{ t('navBar.backToStart') }} </span>
+        <span v-else >{{ t('navBar.plainLanguage') }} </span>
       </button>
 
       <button
@@ -34,6 +37,7 @@
           @click="changeSL"
       >
         <img
+            v-if="!settings.signLanguage"
             :src="signLanguage"
             alt=""
             class="h-5 w-5"
@@ -54,7 +58,7 @@
             class="h-5 w-5"
             aria-hidden="true"
         />
-        <span>{{ convertedLanguage }}</span>
+        <span >{{ convertedLanguage }}</span>
       </button>
     </nav>
   </div>
@@ -63,26 +67,47 @@
 <script setup>
 
 import {useI18n} from "vue-i18n";
-import {computed} from "vue";
+import {computed, nextTick} from "vue";
 import AccessibilityMenu from "@/components/general/AccessibilityMenu.vue";
 import {useThemeDetection} from "@/composables/useThemeDetection.js";
 import {settings} from "@/storage.js";
+import {scrollToPosition} from "@/utils/scroll.js";
 
 const {t, locale} = useI18n();
-const convertedLanguage = computed(() => locale.value.toUpperCase());
+const convertedLanguage = computed(() => settings.value.language.toUpperCase());
 
 const changeLanguage = () => {
-  let newLang = "";
-  if (locale.value === "de") {
-    newLang = "en";
+  if (settings.value.language === "de") {
+    settings.value.language = 'en';
   } else {
-    newLang = "de";
+    settings.value.language = 'de';
+    const target = document.getElementById('filterContainer');
+    const offset = 80;
+    const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+
+    nextTick(() => {
+      scrollToPosition(targetPosition);
+    });
   }
-  locale.value = newLang;
 };
+
+const changeToPlain = () => {
+  settings.value.plainLanguage = !settings.value.plainLanguage;
+  locale.value = "enPlain";
+  if (settings.value.plainLanguage) {
+    settings.value.signLanguage = false;
+    locale.value = "enPlain";
+  }
+  else {
+    locale.value = 'en';
+  }
+}
 
 const changeSL = () => {
   settings.value.signLanguage = !settings.value.signLanguage;
+  if(settings.value.signLanguage) {
+    settings.value.plainLanguage = false;
+  }
 }
 
 const { theme } = useThemeDetection()
@@ -96,7 +121,7 @@ const plainLanguageIcon = computed(() => {
 
 const signLanguage = computed(() => {
   if (theme.value === 'high-contrast') {
-    return new URL('@/assets/icons/signLanguage.svg', import.meta.url).href
+    return new URL('@/assets/icons/signLanguage-hc.svg', import.meta.url).href
   }
 
   return new URL('@/assets/icons/signLanguage.svg', import.meta.url).href

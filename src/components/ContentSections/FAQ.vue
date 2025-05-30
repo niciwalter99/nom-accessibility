@@ -11,7 +11,7 @@
               aria-hidden="true"
           />
         </summary>
-        <p>{{ t(item.a) }}</p>
+        <p v-html=" t(item.a)"></p>
         <img
             v-if="item.img"
             :src="item.img"
