@@ -1,5 +1,5 @@
 <template>
-  <div class="subscribe-container">
+  <div class="flex flex-col lg:flex-row subscribe-container">
     <div class="subscribe-box">
       <img :src="mailIcon">
       <input
@@ -45,7 +45,6 @@ const mailIcon = computed(() => {
 @reference "@/assets/main.css";
 
 .subscribe-container {
-  display: flex;
   align-items: center;
   gap: 1.5rem;
   font-family: sans-serif;

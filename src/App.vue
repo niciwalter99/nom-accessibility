@@ -14,13 +14,23 @@
   </div>
   <main class="flex grow flex-col">
     <section class="mx-auto mt-10 ">
+
       <Filter
           :ref="(el) => {filter = el}"
       ></Filter>
+      <div v-if="settings.signLanguage" class="mt-3 max-w-3xl bg-mred-lighten-3 text-mred-darken-5 high-contrast:border rounded-md p-4">
+        ⚠️ <b>{{ t('beforeVisit.note') }}</b>
+        {{ t('beforeVisit.SLNote') }}
+      </div>
+      <div v-if="settings.language === 'de'"
+           class=" max-w-3xl my-2 bg-mred-lighten-3 text-mred-darken-5 high-contrast:border rounded-md p-4">
+        ⚠️ <b>{{ t('beforeVisit.note') }}</b>
+        {{ t('beforeVisit.languageNote') }}
+      </div>
 
     </section>
 
-    <section class="mx-auto mt-10 w-full max-w-[1420px] px-8 sm:px-16">
+    <section class="mx-auto mt-10 w-full h-full max-w-[1420px] px-2 lg:px-8">
       <div class=" grid grid-cols-1 items-start gap-x-8 lg:grid-cols-article">
         <section-indicator class="sticky top-24 mt-2 hidden w-[260px] lg:block" aria-hidden="true"></section-indicator>
 
@@ -44,6 +54,7 @@ import {useI18n} from "vue-i18n";
 import Filter from "@/components/general/Filter.vue";
 import {onMounted, onUnmounted, ref} from "vue";
 import QuickFilter from "@/components/general/QuickFilter.vue";
+import {settings} from "@/storage.js";
 
 const {t} = useI18n();
 

@@ -1,13 +1,5 @@
 <template>
-  <div v-if="settings.signLanguage" class="bg-mred-lighten-3 text-mred-darken-5 high-contrast:border rounded-md p-4">
-    ⚠️ <b>{{ t('beforeVisit.note') }}</b>
-    {{ t('beforeVisit.SLNote') }}
-  </div>
-  <div v-if="settings.language === 'de'"
-       class=" my-2 bg-mred-lighten-3 text-mred-darken-5 high-contrast:border rounded-md p-4">
-    ⚠️ <b>{{ t('beforeVisit.note') }}</b>
-    {{ t('beforeVisit.languageNote') }}
-  </div>
+
 
   <section id="before-visit" class="max-w-[650px]">
     <h1>{{ t('beforeVisit.title') }}</h1>
@@ -18,20 +10,16 @@
       {{ t('beforeVisit.or') }}
       <a :href="'mailto: nkm@karlsruhe.de' ">nkm@karlsruhe.de</a>.
       {{ t('beforeVisit.voiceCalls') }}
+<!--
       <p v-html=" t('beforeVisit.descriptionAppendix')"></p>
+-->
     </div>
     <div class="my-4">
       <h2 class="my-2">{{ t('beforeVisit.generalInfo.title') }}</h2>
       <p>{{ t('beforeVisit.generalInfo.description') }}</p>
     </div>
     <div class="my-4">
-      <div class="flex">
-        <h3>{{ t('beforeVisit.admission.title') }}</h3>
-        <AdditionalImage
-            :img-src="EntryDesk"
-        ></AdditionalImage>
-
-      </div>
+      <h3>{{ t('beforeVisit.admission.title') }}</h3>
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="videoSrc"
@@ -39,6 +27,9 @@
           :controls="true"
       />
       <p v-if="!settings.signLanguage" v-html="t('beforeVisit.admission.description') "></p>
+      <AdditionalImage
+          :img-src="EntryDesk"
+      ></AdditionalImage>
     </div>
     <div v-if="!settings.signLanguage" class="my-4">
       <h3>{{ t('beforeVisit.support.title') }}</h3>
@@ -52,9 +43,11 @@
       <h3>{{ t('beforeVisit.visitorVolume.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html="
         t('beforeVisit.visitorVolume.description') "></p>
-        <a>{{ t('beforeVisit.visitorVolume.link') }}</a>
+      <a>{{ t('beforeVisit.visitorVolume.link') }}</a>
     </div>
+<!--
     <activity-chart></activity-chart>
+-->
     <div class="my-4">
       <h3>{{ t('beforeVisit.specialServices.silentHours.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html="t('beforeVisit.specialServices.silentHours.description')"></p>

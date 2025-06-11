@@ -17,7 +17,7 @@ export default {
         visitorStories: "Visitor stories"
     },
     filter: {
-        pickTopics: 'Pick one or more topics that match your access requirements:',
+        pickTopics: 'Pick one or more categories that match your accessibility needs:',
         filterInfo: 'We filter the important information for you on the basis of your selection.',
         addKeyword: 'Add Keyword',
         enterKeyword: 'Enter a custom keyword:',
@@ -25,7 +25,7 @@ export default {
             limitedMobility: 'Limited mobility',
             blindLowVision: 'Blind or low vision',
             deafHardHearing: 'Deaf or hard of hearing',
-            cognitiveDifferences: 'Cognitive differences',
+            cognitiveDifferences: 'Cognitive differences & Neurodivergent',
             cognitiveDifferencesSubtext: 'Neurodiverse people, learning disabilities, etc.'
         },
         "keywords": {
@@ -103,7 +103,7 @@ export default {
         },
         byCar: {
             title: "By car",
-            description: "If you're arriving by car, take the B10 into the city center and continue into Kriegsstraße. At Ettlinger Tor, follow signs toward Stadtmitte (city center). Nearby parking garages that are also accessible with a wheelchair include:",
+            description: "If you're arriving by car, take the B10 into the city center and continue into Kriegsstraße. At Ettlinger Tor, follow signs toward Stadtmitte (city center). There are no parking spots on the street for disabled people nearby. The following nearby parking garages are accessible with a wheelchair:",
             parking: {
                 friedrichsplatz: "Friedrichsplatz (150 meter walk to the museum)",
                 landesbibliothek: "Landesbibliothek (150 meter walk to the museum)",
@@ -113,13 +113,12 @@ export default {
         },
         detailedDescription: {
             title: "Detailed description",
+            caption: "My visit to the museum in pictures",
             byCar: {
                 title: "My visit by car",
-                description: "My visit to the museum by car frame by frame"
             },
             byTrain: {
                 title: "My visit by train",
-                description: "My visit to the museum by train frame by frame"
             }
         },
         lockers: {
@@ -129,16 +128,16 @@ export default {
     },
     insideMuseumSteps: {
         step1: {
-            caption: "I see the natural history museum and head to the entry. A ramp for wheelchair access is on the right (blue arrow)."
+            caption: "I head to the entry. A ramp for wheelchair access is on the right."
         },
         step2: {
-            caption: "I walk into the entry hall and go the left to the entry desk. You can open the door normally or with the electric door opener on the right."
+            caption: "I walk into the entry hall. I go the left to the entry desk. I can open the door normally or with the electric door opener on the right."
         },
         step3: {
-            caption: "Here, I talk to the staff and ask for a ticket. I can give them my disability card if I have one, and then I pay. Usually the staff only speaks German."
+            caption: "Here, I talk to the staff and ask for a ticket. I can give them my disability card if I have one. Then I pay. Usually the staff only speaks German."
         },
         step4: {
-            caption: "When I want to store my belongings I head to the right and then straight to the lockers. There are also the restrooms."
+            caption: "When I want to store my belongings I go to the lockers. They are right next to the stairs. There are also the restrooms."
         },
         step5: {
             caption: "Here I can store my belongings. I need a 1 Euro key. The toilets are on the right."
@@ -146,6 +145,16 @@ export default {
         step6: {
             caption: "The elevator and accessible bathroom are around the corner."
         }
+    },
+    generalSteps: {
+        fork: {
+            option1: {
+                caption: "I exit at the station Marktplatz (Lines S1/S11, S2, S5, Tram 1)."
+            },
+            option2: {
+                caption: "I exit at the station Etllinger Tor / Staatstheater (Lines S1/S11, S4, S52, S7, S8, Tram 2)."
+            }
+        },
     },
     carSteps: {
         start: {
@@ -165,10 +174,13 @@ export default {
                 caption: "I go to the exit in the middle."
             },
             step6: {
-                caption: "I take the elevator on the right side."
+                caption: "Later I can use this device for paying. However, it is not easily accessible for wheelchair users. Normally there is a person behind a cash desk on the left who can help."
             },
             step7: {
-                caption: "When I step out of the elevator I can already see the natural history museum."
+                caption: "I take the elevator on the right side."
+            },
+            step8: {
+                caption: "I step out of the elevator. I can already see the natural history museum."
             }
         }
     },
@@ -186,10 +198,10 @@ export default {
                 caption: "I take the elevator direction ”Ausgang Kriegsstraße, Karl-Friedrichstr. / Ettlinger Tor Center ”."
             },
             step2: {
-                caption: "I step outside the elevator and take the next elevator to exit the station."
+                caption: "I step outside the elevator. I take the next elevator to exit the station."
             },
             step3: {
-                caption: "When I exit the station I go to the right and walk 70 meters to the roundabout."
+                caption: "I exit the elevator. I go to the right and walk 70 meters to the roundabout."
             },
             step4: {
                 caption: "In the roundabout I go to the left."
@@ -198,7 +210,7 @@ export default {
                 caption: "I walk down the street until the intersection (140 meter)."
             },
             step6: {
-                caption: "I cross the intersection where I can see the natural history museum on the left."
+                caption: "I cross the intersection. Now I can see the natural history museum on the left."
             }
         },
         pathB: {

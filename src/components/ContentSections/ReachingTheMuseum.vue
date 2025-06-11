@@ -27,36 +27,14 @@
 
     <h2 class="my-4">{{ t('reachingTheMuseum.detailedDescription.title') }}</h2>
     <div class="w-full flex gap-8 mb-4">
-      <DetailedDescription
-          :title="t('reachingTheMuseum.detailedDescription.byCar.title')"
-          :description="t('reachingTheMuseum.detailedDescription.byCar.description')"
-          :icon="carTravel"
-          @click="isCarTravelOpen = true"
-      />
-      <Dialog v-model:modelValue="isCarTravelOpen"
-              class="_dialog">
-        <SocialStory :forkedSteps="carSteps" start-path="start"/>
-
-      </Dialog>
-      <Dialog v-model:modelValue="isTrainTravelOpen"
-              class="_dialog">
-        <SocialStory :forkedSteps="trainSteps"/>
-      </Dialog>
-      <DetailedDescription
-          :title="t('reachingTheMuseum.detailedDescription.byTrain.title')"
-          :description="t('reachingTheMuseum.detailedDescription.byTrain.description')"
-          :icon="train"
-          @click="isTrainTravelOpen = true"
-      />
+      <SocialStory :forkedSteps="steps" start-path="start"/>
     </div>
     <div class="my-4">
-      <div class="flex">
-        <h3>{{ t('reachingTheMuseum.lockers.title') }}</h3>
-        <AdditionalImage
-            :img-src="Locker"
-        ></AdditionalImage>
-      </div>
+      <h3>{{ t('reachingTheMuseum.lockers.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html="t('reachingTheMuseum.lockers.description') "></p>
+      <AdditionalImage
+          :img-src="Locker"
+      ></AdditionalImage>
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -69,12 +47,6 @@
 
 <script setup>
 import {useI18n} from "vue-i18n";
-import DetailedDescription from "@/components/general/DetailedDescription.vue";
-import Dialog from "@/components/general/Dialog.vue";
-import carTravel from "@/assets/icons/carTravel.png";
-import train from "@/assets/icons/train.png";
-import {ref} from "vue";
-
 import reachingMuseumVideo from "@/assets/SL/reachingMuseum.webm";
 import lockerVideo from "@/assets/SL/Locker.webm";
 
@@ -119,14 +91,16 @@ import ME4 from "@/assets/images/SocialStory/ME4.svg";
 import ME5 from "@/assets/images/SocialStory/ME5.svg";
 import ME6 from "@/assets/images/SocialStory/ME6.svg";
 import Locker from "@/assets/images/Locker.png"
+import start from "@/assets/images/SocialStory/start.png";
+import train from "@/assets/images/SocialStory/train.png";
+import car from "@/assets/images/SocialStory/car.png";
+import automat from "@/assets/images/SocialStory/automat.png";
 
 
 import SocialStory from "@/components/general/SocialStory.vue";
 import AdditionalImage from "@/components/general/AdditionalImage.vue";
 
 const {t} = useI18n();
-const isTrainTravelOpen = ref(false);
-const isCarTravelOpen = ref(false);
 import {settings} from "@/storage.js";
 import silentHoursSrc from "@/assets/SL/silentHours.webm";
 
@@ -164,11 +138,11 @@ const insideMusemSteps = [
   }
 ];
 
-const carSteps = {
-  start: [
+const carTravel =  [
     {
       image: C1,
       caption: t('carSteps.start.step1.caption'),
+      backwardPathKey: 'carOrTrain',
     },
     {
       image: C2,
@@ -186,20 +160,46 @@ const carSteps = {
       image: C5,
       caption: t('carSteps.start.step5.caption'),
     },
+  {
+    image: automat,
+    caption: t('carSteps.start.step6.caption'),
+  },
     {
       image: C6,
-      caption: t('carSteps.start.step6.caption'),
+      caption: t('carSteps.start.step7.caption'),
     },
     {
       image: C7,
-      caption: t('carSteps.start.step7.caption'),
+      caption: t('carSteps.start.step8.caption'),
     },
     ...insideMusemSteps,
-  ]
-};
+];
 
-const trainSteps = {
-  fork: [
+const steps = {
+  start: [
+    {
+      image: start,
+      caption: t('reachingTheMuseum.detailedDescription.caption'),
+      jumpToPathKey: 'carOrTrain',
+    },
+  ],
+  carOrTrain: [
+    {
+      options: [
+        {
+          image: car,
+          caption: "I go there by car",
+          pathKey: 'carTravel',
+        },
+        {
+          image: train,
+          caption: "I go there by train",
+          pathKey: 'trainExit',
+        }
+      ]
+    }
+  ],
+  trainExit: [
     {
       options: [
         {
@@ -212,13 +212,16 @@ const trainSteps = {
           caption: t('trainSteps.fork.option2.caption'),
           pathKey: 'pathB',
         }
-      ]
+      ],
+      backwardPathKey: 'carOrTrain',
     }
   ],
+  carTravel: [...carTravel],
   pathA: [
     {
       image: ET1,
       caption: t('trainSteps.pathA.step1.caption'),
+      backwardPathKey: 'trainExit',
     },
     {
       image: ET2,
@@ -250,6 +253,7 @@ const trainSteps = {
     {
       image: TE1,
       caption: t('trainSteps.pathB.step1.caption'),
+      backwardPathKey: 'trainExit',
     },
     {
       image: TE2,

@@ -6,10 +6,11 @@
     <div v-if="filter.cognitive || filter.keywords?.includes($t('filter.keywords.crowd')) ||
 filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <h3>{{ t('movingAround.environmentalConditions.lightingAndSensoryComfort.title') }}</h3>
-      <p v-if="!settings.signLanguage" class="mb-4" v-html=" t('movingAround.environmentalConditions.lightingAndSensoryComfort.description') "></p>
-<!--
-      TODo change
--->
+      <p v-if="!settings.signLanguage" class="mb-4"
+         v-html=" t('movingAround.environmentalConditions.lightingAndSensoryComfort.description') "></p>
+      <!--
+            TODo change
+      -->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -26,11 +27,10 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       />
     </div>
     <div v-if="filter.mobility || filter.keywords?.includes($t('filter.keywords.museumLayout'))" class="_topic">
-      <div class="flex">
-        <h3>{{ t('movingAround.environmentalConditions.spaciousLayout.title') }}</h3>
-        <AdditionalImage :img-src="Layout"></AdditionalImage>
-      </div>
-      <p v-if="!settings.signLanguage" v-html=" t('movingAround.environmentalConditions.spaciousLayout.description')"></p>
+      <h3>{{ t('movingAround.environmentalConditions.spaciousLayout.title') }}</h3>
+      <p v-if="!settings.signLanguage"
+         v-html=" t('movingAround.environmentalConditions.spaciousLayout.description')"></p>
+      <AdditionalImage :img-src="Layout"></AdditionalImage>
       <!--
       TODo change
 -->
@@ -41,12 +41,12 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
           :controls="true"
       />
     </div>
-    <div v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.seating'))" class="_topic">
-      <div class="flex">
-        <h3>{{ t('movingAround.environmentalConditions.accessibleSeating.title') }}</h3>
-        <AdditionalImage :img-src="Seating"></AdditionalImage>
-      </div>
-      <p v-if="!settings.signLanguage" v-html=" t('movingAround.environmentalConditions.accessibleSeating.description')"></p>
+    <div v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.seating'))"
+         class="_topic">
+      <h3>{{ t('movingAround.environmentalConditions.accessibleSeating.title') }}</h3>
+      <p v-if="!settings.signLanguage"
+         v-html=" t('movingAround.environmentalConditions.accessibleSeating.description')"></p>
+      <AdditionalImage :img-src="Seating"></AdditionalImage>
       <!--
       TODo change
 -->
@@ -57,12 +57,13 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
           :controls="true"
       />
     </div>
-    <div v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.accessibleRestrooms'))" class="_topic">
-      <div class="flex">
-        <h3>{{ t('movingAround.environmentalConditions.accessibleRestrooms.title') }}</h3>
-        <AdditionalImage img-src="Restrooms"></AdditionalImage>
-      </div>
-      <p v-if="!settings.signLanguage" v-html=" t('movingAround.environmentalConditions.accessibleRestrooms.description')"></p>
+    <div
+        v-if="filter.mobility || filter.cognitive  || filter.keywords?.includes($t('filter.keywords.accessibleRestrooms'))"
+        class="_topic">
+      <h3>{{ t('movingAround.environmentalConditions.accessibleRestrooms.title') }}</h3>
+      <p v-if="!settings.signLanguage"
+         v-html=" t('movingAround.environmentalConditions.accessibleRestrooms.description')"></p>
+      <AdditionalImage :img-src="restrooms"></AdditionalImage>
       <!--
       TODo change
 -->
@@ -97,7 +98,8 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
     />
     <div v-if="filter.mobility" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.title') }}</h3>
-      <p v-if="!settings.signLanguage" v-html=" t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.description')"></p>
+      <p v-if="!settings.signLanguage"
+         v-html=" t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.description')"></p>
       <!--
       TODo change
 -->
@@ -110,7 +112,8 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
     </div>
     <div v-if="filter.blind  || filter.keywords?.includes($t('filter.keywords.wayfindingSupport'))" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.title') }}</h3>
-      <p v-if="!settings.signLanguage" v-html=" t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.description') "></p>
+      <p v-if="!settings.signLanguage"
+         v-html=" t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.description') "></p>
       <!--
       TODo change
 -->
@@ -148,6 +151,7 @@ import noisesFirst from '@/assets/images/NoisesFirst.png';
 import noisesSec from '@/assets/images/noisesSec.png';
 import museumMapFirst from '@/assets/images/museumMapFirst.png';
 import museumMapSec from '@/assets/images/museumMapSec.png';
+import restrooms from '@/assets/images/restrooms.png';
 import NVideo from "@/components/general/NVideo.vue";
 import videoSrc from "@/assets/SL/BeforeVisit.webm";
 

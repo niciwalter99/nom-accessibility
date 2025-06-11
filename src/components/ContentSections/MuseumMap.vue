@@ -25,7 +25,7 @@
             <p class="_label">{{ item.label }}</p>
           </div>
         </div>
-        <template v-if="lg">
+        <template v-if="lg || settings.largeText">
           <div class="lg-controls">
             <select
                 v-if="infoTypes.length > 1"
@@ -132,6 +132,7 @@ import blue from '@/assets/images/blue.svg';
 import dots from '@/assets/images/dots.svg';
 import lines from '@/assets/images/lines.png';
 import red from '@/assets/images/red.svg';
+import {settings} from "@/storage.js";
 
 const legendLabels = computed(() => {
   if (selectedInfo.value === 'Noises') {
@@ -218,6 +219,7 @@ const fullScreenIcon = computed(() => {
 }
 
 ._legend-item {
+  @apply my-1;
   display: flex;
   align-items: center;
   gap: 0.2rem;
@@ -228,7 +230,6 @@ const fullScreenIcon = computed(() => {
   }
 
   ._label {
-    width: 100px;
     font-size: 0.875rem;
   }
 }
@@ -249,13 +250,21 @@ const fullScreenIcon = computed(() => {
     position: relative;
     align-items: center;
     background: white;
+    width: 100%;
   }
 }
 
 .controls {
   display: block;
-  width: 100%;
+  width: 10rem;
+  flex-shrink: 0;
   margin-right: 1rem;
+}
+
+.map-image img {
+  flex: 1 1 0%; /* take up remaining space */
+  min-width: 0;  /* prevent overflow from content like images */
+  overflow: hidden;
 }
 
 .lg-controls {
@@ -286,7 +295,6 @@ const fullScreenIcon = computed(() => {
   flex-direction: column;
   display: flex;
   flex-wrap: nowrap;
-
 }
 
 button {
@@ -303,7 +311,5 @@ button.active {
   font-weight: bold;
 }
 
-.map-image img {
-  width: 100%;
-}
+
 </style>

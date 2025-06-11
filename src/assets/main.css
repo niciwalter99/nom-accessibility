@@ -20,7 +20,7 @@ h3 {
 }
 
 p, div {
-    font-size: 1.25rem;
+    @apply text-xl;
 }
 
 @media (max-width: 1024px) {
@@ -97,6 +97,21 @@ ul {
     }
        .cursor-large .cc-default {
         cursor: url('@/assets/icons/cc-default-cursor.png') 14 2, auto;
+    }
+
+    .cc-pointer {
+        @apply cursor-pointer;
+    }
+
+    a {
+        @apply cursor-pointer;
+    }
+    button {
+        @apply cursor-pointer;
+    }
+
+    .cc-default {
+        @apply cursor-default;
     }
 
 

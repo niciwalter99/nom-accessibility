@@ -6,13 +6,13 @@ export function useThemeDetection() {
     function getThemeFromBody() {
         const classList = document.body.classList
         if (classList.contains('high-contrast')) return 'high-contrast'
-        if (classList.contains('color-blind')) return 'color-blind'
         return 'default'
     }
 
     let observer
 
     onMounted(() => {
+        theme.value = getThemeFromBody();
         observer = new MutationObserver(() => {
             theme.value = getThemeFromBody()
         })

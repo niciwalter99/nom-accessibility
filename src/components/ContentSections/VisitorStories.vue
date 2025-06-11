@@ -4,24 +4,20 @@
     <div class="grid-wrapper">
       <div class="testimonial-grid">
         <TestimonialCard
-            :image="girl"
             text="The museum was easy to get around in my wheelchair, and I loved spending time at the aquariums."
-            name="Ina Fake"
+            name="No name"
         />
         <TestimonialCard
-            :image="girl"
             text="I appreciated the clear signage and helpful staff throughout the museum."
-            name="John Doe"
+            name="No name"
         />
         <TestimonialCard
-            :image="girl"
-            text="The audio guides were fantastic and made the experience very enjoyable."
-            name="Jane Smith"
+            text="The accessible guided tour with tactile elements was great!"
+            name="No name"
         />
         <TestimonialCard
-            :image="girl"
-            text="The museum's accessibility features exceeded my expectations!"
-            name="Alex Johnson"
+            text="I really liked the atmoshpere, I felt very welcome at the museum!"
+            name="No name"
         />
       </div>
     </div>

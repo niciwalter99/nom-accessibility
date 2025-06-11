@@ -17,10 +17,8 @@
       />
     </div>
     <div v-if="filter.deaf || filter.blind || filter.keywords?.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
-      <div class="flex">
         <h3>{{ t('experienceTheExhibition.alternativeFormats.title') }}</h3>
-        <additional-image :img-src="tactile"></additional-image>
-      </div>
+      <additional-image :img-src="tactile"></additional-image>
       <p v-if="!settings.signLanguage" v-html=" t('experienceTheExhibition.alternativeFormats.description')"></p>
       <!--
       TODo change
@@ -33,10 +31,8 @@
       />
     </div>
     <div v-if="filter.cognitive || filter.blind || filter.hearing  || filter.keywords?.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
-      <div class="flex">
         <h3>{{ t('experienceTheExhibition.interactiveAndTactileElements.title') }}</h3>
-        <additional-image img-src="EarthQuakeSimulator"></additional-image>
-      </div>
+      <additional-image :img-src="earthquake"></additional-image>
       <p v-if="!settings.signLanguage" v-html=" t('experienceTheExhibition.interactiveAndTactileElements.description')"></p>
       <!--
       TODo change
@@ -103,6 +99,7 @@
 <script setup>
 import Newsletter from "@/components/general/Newsletter.vue";
 import tactile from "@/assets/images/Tactile.png";
+import earthquake from "@/assets/images/earthquake.png";
 import {settings} from "@/storage.js";
 
 defineProps({

@@ -1,20 +1,17 @@
 <template>
-  <div class="testimonial-card high-contrast:border">
-    <img :src="image" :alt="`Photo of ${name}`" class="testimonial-image"/>
-    <div class="testimonial-content">
-      <div class="quote-icon">❝</div>
-      <p class="testimonial-text">{{ text }}</p>
-      <p class="testimonial-name">{{ name }}</p>
+  <div class="flex max-w-md items-start rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <img src="@/assets/icons/quotes.svg" class="w-10 h-10 mr-5 p-2 border-mgrey-lighten-5 border rounded-full ">
+    <div>
+      <p class="text-sm font-semibold text-gray-900 mb-2 ">
+        {{ text }}
+      </p>
+      <p class="text-sm text-gray-500">{{ name }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  image: {
-    type: String,
-    required: true
-  },
   text: {
     type: String,
     required: true
@@ -26,58 +23,8 @@ defineProps({
 });
 </script>
 
+
 <style scoped>
-.testimonial-card {
-  display: flex;
-  align-items: center;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  gap: 1rem;
-  max-width: 800px;
-  padding-right: 1rem;
-}
 
-.testimonial-image {
-  border-radius: 8px;
-  height: 100%;
-}
 
-.testimonial-content {
-  flex: 1;
-  position: relative;
-}
-
-.quote-icon {
-  box-shadow: 0px 0px 1px 0px rgba(56, 54, 48, 0.10) inset;
-  position: absolute;
-  top: 50%;
-  left: -2.5rem;
-  transform: translate(0, -50%);
-  font-size: 2rem;
-  width: 3rem;
-  height: 3rem;
-  color: #bbb;
-  background-color: white;
-  border-radius: 50%;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.testimonial-text {
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-  line-height: 1.5;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.testimonial-name {
-  margin-left: 1rem;
-  font-size: 0.95rem;
-  color: #666;
-}
 </style>
