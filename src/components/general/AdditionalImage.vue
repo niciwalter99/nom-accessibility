@@ -25,7 +25,7 @@ const props = defineProps({
 <style scoped>
 
 ._wrapper {
-  margin: 1rem 3rem;
+  margin: 5px 10px;
   border-radius: 40px;
 }
 

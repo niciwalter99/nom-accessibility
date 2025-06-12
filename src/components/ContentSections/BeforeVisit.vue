@@ -45,9 +45,7 @@
         t('beforeVisit.visitorVolume.description') "></p>
       <a>{{ t('beforeVisit.visitorVolume.link') }}</a>
     </div>
-<!--
     <activity-chart></activity-chart>
--->
     <div class="my-4">
       <h3>{{ t('beforeVisit.specialServices.silentHours.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html="t('beforeVisit.specialServices.silentHours.description')"></p>

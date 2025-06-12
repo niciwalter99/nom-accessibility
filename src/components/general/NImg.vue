@@ -1,6 +1,7 @@
 <template>
   <div class="image-loader flex content-center justify-center w-full h-full">
-    <div v-if="isLoading" class="loading-container">
+    <div v-if="isLoading" class="loading-container"
+         :style="{ height: placeholderHeight+ 'px' }">
       <div class="spinner"></div>
     </div>
 
@@ -32,6 +33,10 @@ const props = defineProps({
   imageClass: {
     type: String,
     default: ''
+  },
+  placeholderHeight: {
+    type: Number,
+    default: 100
   }
 
 })

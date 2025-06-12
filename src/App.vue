@@ -7,7 +7,7 @@
         class="w-full h-full object-cover"
     />
     <div class="absolute inset-0 bg-black opacity-25"></div>
-    <div class="absolute bottom-16 left-16 text-white">
+    <div class="absolute bottom-6 left-6 lg:bottom-16 lg:left-16 text-white">
       <h3 class="image-header">{{ t('navBar.accessibility') }}</h3>
       <p class="image-desc">{{ t('navBar.imageDesc') }}</p>
     </div>

@@ -1,21 +1,34 @@
 <template>
-  <div class="flex flex-col lg:flex-row subscribe-container">
-    <div class="subscribe-box">
-      <img :src="mailIcon">
+  <div class="flex flex-col lg:flex-row items-center gap-6 my-4">
+    <div class="flex items-center border border-gray-300 rounded-lg px-2 py-2 max-w-screen">
+      <img :src="mailIcon" alt="Mail Icon" class="hidden lg:block w-6 h-6 mr-2" />
       <input
           v-model="email"
           type="email"
           :placeholder="$t('experienceTheExhibition.newsletter.email')"
-          class="email-input"
+          class="text-base focus:outline-none bg-transparent high-contrast:placeholder-yellow-300 placeholder-gray-500"
       />
-      <button class="join-button hc-exception high-contrast:bg-black high-contrast:text-yellow-300 high-contrast:border high-contrast-hover:bg-yellow" >{{ t('experienceTheExhibition.newsletter.join') }}</button>
+
+      <button
+          class="px-2 py-2 rounded-lg text-white text-base bg-mblue-base
+               hc-exception high-contrast:bg-black high-contrast:text-yellow-300
+               high-contrast:border high-contrast-hover:bg-yellow-300
+               high-contrast-hover:text-black"
+      >
+        {{ t('experienceTheExhibition.newsletter.join') }}
+      </button>
     </div>
-    <a href=" https://www.instagram.com/naturkundemuseumkarlsruhe/" class="social-link">
-      <img src="@/assets/icons/instagram.svg" alt="Instagram" class="instagram-icon" />
+
+    <a
+        href="https://www.instagram.com/naturkundemuseumkarlsruhe/"
+        class="flex lg:flex-col items-center text-base text-gray-800 underline px-2 py-1 rounded-lg hover:bg-mgrey-lighten-3"
+    >
+      <img src="@/assets/icons/instagram.svg" alt="Instagram" class="w-6 h-6 mr-2" />
       <span>@nkm.karlsruhe</span>
     </a>
   </div>
 </template>
+
 
 <script setup>
 import {computed, ref} from 'vue';
@@ -41,65 +54,4 @@ const mailIcon = computed(() => {
 });
 </script>
 
-<style scoped>
-@reference "@/assets/main.css";
 
-.subscribe-container {
-  align-items: center;
-  gap: 1.5rem;
-  font-family: sans-serif;
-  margin: 1rem 0;
-}
-
-.subscribe-box {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 0.5rem;
-}
-
-.email-icon {
-  margin-right: 0.5rem;
-  font-size: 1.2rem;
-  color: #666;
-}
-
-.email-input {
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  flex: 1;
-  margin-left: 0.6rem;
-  min-width: 200px;
-}
-
-.join-button {
-  @apply bg-mblue-base high-contrast:bg-black high-contrast:text-yellow-300 high-contrast:border high-contrast-hover:bg-yellow-300 high-contrast-hover:text-black;
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 8px;
-  font-size: 16px;
-  margin-left: 0.5rem;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
-  color: #333;
-  text-decoration: underline;
-  padding: 0.4rem;
-}
-
-.social-link:hover {
-  @apply bg-mgrey-lighten-3;
-  border-radius: 8px;
-}
-
-.instagram-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 0.5rem;
-}
-</style>

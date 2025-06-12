@@ -88,44 +88,48 @@
 
   <div class="my-4">
     <div class="bg-mbeige-base flex  flex-col items-center p-6 rounded-xl mx-auto high-contrast:border">
-      <div class="flex space-x-6 mb-6">
-        <button
-            v-for="day in days"
-            :key="day"
-            @click="(selectedDay = day)"
-            class="text-gray-800 relative pb-1"
-            :class="{
-    'font-semibold underline': selectedDay === day,
-    'text-gray-500': selectedDay !== day,
-  }"
-        >
-          {{ day }}
-        </button>
+      <div class="w-full overflow-x-auto mb-6">
+        <div class="flex justify-center space-x-6 px-2">
+          <button
+              v-for="day in days"
+              :key="day"
+              @click="selectedDay = day"
+              class="text-gray-800 relative pb-1 whitespace-nowrap"
+              :class="{
+          'font-semibold underline': selectedDay === day,
+          'text-gray-500': selectedDay !== day
+        }"
+          >
+            {{ day }}
+          </button>
+        </div>
       </div>
 
-      <div class="relative flex border-t border-gray-300 pt-6 h-50 my-auto">
-        <div v-if="selectedDay === 'Mo'" class="text-center text-gray-600 text-sm w-full">
-          Closed on Mondays
-        </div>
-        <div v-else class="flex gap-4 justify-between items-end">
-          <div
-              v-for="(height, idx) in activity[selectedDay]"
-              :key="idx"
-              class="flex flex-col items-center w-full"
-          >
-            <div class="flex-1 flex items-end">
-              <div
-                  class=" bg-gray-500 w-3 rounded-md hc-exception high-contrast:bg-yellow-300"
-                  :style="{ height: height + 'px' }"
-              ></div>
-            </div>
-            <!-- Label under the bar -->
-            <div class="text-xs mt-2 text-gray-700 h-[25px]">
-              {{ timeLabels[idx] }}
+      <div class="relative border-t border-gray-300 pt-6 w-full overflow-x-auto">
+        <div class="flex justify-center gap-4 items-end content-end  h-[200px] overflow-y-hidden">
+          <div v-if="selectedDay === 'Mo'" class="text-center text-gray-600 text-sm w-full">
+            Closed on Mondays
+          </div>
+          <div v-else class="flex gap-4 items-end">
+            <div
+                v-for="(height, idx) in activity[selectedDay]"
+                :key="idx"
+                class="flex flex-col items-center justify-end"
+            >
+              <div class="flex-1 flex items-end">
+                <div
+                    class="bg-gray-500 w-3 rounded-md hc-exception high-contrast:bg-yellow-300"
+                    :style="{ height: height + 'px' }"
+                ></div>
+              </div>
+              <div class="text-xs mt-2 text-gray-700 h-[40px] whitespace-nowrap">
+                {{ timeLabels[idx] }}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>

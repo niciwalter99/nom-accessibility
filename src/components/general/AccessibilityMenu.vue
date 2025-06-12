@@ -22,56 +22,24 @@
       </svg>
     </button>
 
+    <Teleport to="body" v-if="isMobile && isOpen">
     <transition name="fade">
-      <ul
-          v-if="isOpen"
-          :class="isMobile ? mobileDropdownClasses : desktopDropdownClasses"
-          class="focus:outline-none w-64"
-      >
-        <li class="block lg:hidden text-right px-4 py-2 border-b border-gray-200">
-          <button class="text-sm text-mgrey-darken-2" @click="closeDropdown">✕ Close</button>
-        </li>
-
-        <li
-            @click="activate('textSize')"
-            class="block px-4 py-2 hover:bg-mgrey-lighten-4"
-        >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <img :src="fontIcon" class="w-3" />
-              <span class="!text-base">Increase Text Size</span>
-            </div>
-            <img v-if="settings.largeText" :src="doneIcon" class="w-3 ml-4" />
-          </div>
-        </li>
-
-        <li
-            @click="activate('highContrast')"
-            class="block px-4 py-2 text-sm hover:bg-mgrey-lighten-4"
-        >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <img :src="contrastIcon" class="w-3" />
-              <span class="!text-base">High Contrast</span>
-            </div>
-            <img v-if="settings.highContrast" :src="doneIcon" class="w-3 ml-4" />
-          </div>
-        </li>
-
-        <li
-            @click="activate('largeCursor')"
-            class="block px-4 py-2 text-sm hover:bg-mgrey-lighten-4"
-        >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <img :src="cursorIcon" class="w-3" />
-              <span class="!text-base">Large Cursor</span>
-            </div>
-            <img v-if="settings.largeCursor" :src="doneIcon" class="w-3 ml-4" />
-          </div>
-        </li>
-      </ul>
+      <AccessibilityDropdown
+          :isOpen="isOpen"
+          :isMobile="isMobile"
+          @activate="activate"
+          @close="closeDropdown"/>
     </transition>
+    </Teleport>
+    <template v-else>
+      <transition name="fade">
+        <AccessibilityDropdown
+            :isOpen="isOpen"
+            :isMobile="isMobile"
+            @activate="activate"
+            @close="closeDropdown"/>
+      </transition>
+    </template>
   </div>
 </template>
 
@@ -80,6 +48,7 @@ import {ref, onMounted, onBeforeUnmount, computed} from 'vue';
 import {useI18n} from "vue-i18n";
 import {useThemeDetection} from "@/composables/useThemeDetection.js";
 import {settings} from '@/storage.js'
+import AccessibilityDropdown from "@/components/general/AccessibilityDropdown.vue";
 
 const {t} = useI18n();
 
@@ -109,39 +78,7 @@ const icon = computed(() => {
 
   return new URL('@/assets/icons/accessibility.svg', import.meta.url).href
 });
-const fontIcon = computed(() => {
-  if (theme.value === 'high-contrast') {
-    return new URL('@/assets/icons/font-hc.svg', import.meta.url).href
-  }
-  return new URL('@/assets/icons/font.svg', import.meta.url).href
-});
-const contrastIcon = computed(() => {
-  if (theme.value === 'high-contrast') {
-    return new URL('@/assets/icons/contrast-hc.svg', import.meta.url).href
-  }
 
-  return new URL('@/assets/icons/contrast.svg', import.meta.url).href
-});
-const doneIcon = computed(() => {
-  if (theme.value === 'high-contrast') {
-    return new URL('@/assets/icons/done-hc.svg', import.meta.url).href
-  }
-  return new URL('@/assets/icons/done.svg', import.meta.url).href
-});
-const cursorIcon = computed(() => {
-  if (theme.value === 'high-contrast') {
-    return new URL('@/assets/icons/cursor-hc.svg', import.meta.url).href
-  }
-
-  return new URL('@/assets/icons/cursor.svg', import.meta.url).href
-});
-const eyeIcon = computed(() => {
-  if (theme.value === 'high-contrast') {
-    return new URL('@/assets/icons/eye-hc.svg', import.meta.url).href
-  }
-
-  return new URL('@/assets/icons/eye.svg', import.meta.url).href
-});
 
 function activate(option) {
   activeOption.value = option
@@ -160,6 +97,7 @@ function activate(option) {
     settings.value.largeText ? document.documentElement.classList.add('large-text') :
         document.documentElement.classList.remove('large-text');
   }
+  window.location.reload()
 }
 
 function handleClickOutside(event) {

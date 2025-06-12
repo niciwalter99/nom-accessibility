@@ -131,10 +131,10 @@ export default {
             caption: "I head to the entry. A ramp for wheelchair access is on the right."
         },
         step2: {
-            caption: "I walk into the entry hall. I go the left to the entry desk. I can open the door normally or with the electric door opener on the right."
+            caption: "I walk into the entry hall to the left. I can open the door normally or with the electric door opener on the right."
         },
         step3: {
-            caption: "Here, I talk to the staff and ask for a ticket. I can give them my disability card if I have one. Then I pay. Usually the staff only speaks German."
+            caption: "Here, I ask for a ticket. I can give them my disability card if I have one. Usually the staff only speaks German."
         },
         step4: {
             caption: "When I want to store my belongings I go to the lockers. They are right next to the stairs. There are also the restrooms."
@@ -174,7 +174,7 @@ export default {
                 caption: "I go to the exit in the middle."
             },
             step6: {
-                caption: "Later I can use this device for paying. However, it is not easily accessible for wheelchair users. Normally there is a person behind a cash desk on the left who can help."
+                caption: "Later I can use this device for paying. There is also a person behind a cash desk on the left who can help."
             },
             step7: {
                 caption: "I take the elevator on the right side."
@@ -316,7 +316,7 @@ export default {
             },
         },
         newsletter: {
-            email: "Enter your email address" ,
+            email: "Enter your email" ,
             join: "Join",
         }
     },
