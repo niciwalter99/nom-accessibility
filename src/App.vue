@@ -42,6 +42,7 @@
             id="content"
             class=" mx-auto w-full max-w-[650px] antialiased"
             @highlight-filter="highlightFilter"
+            @open-filter-modal="openFilterModal"
             :show-quick-filter="showFilter"
         ></Content>
       </div>
@@ -67,6 +68,11 @@ const filter = ref(null);
 const highlightFilter = () => {
   if (filter.value) {
     filter.value.highlightFilter();
+  }
+};
+const openFilterModal = () => {
+  if (filter.value) {
+    filter.value.openFilterModal();
   }
 };
 

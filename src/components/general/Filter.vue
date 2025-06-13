@@ -4,7 +4,7 @@
       <p class="mb-2" id="filter-region">{{ t('filter.pickTopics') }}  </p>
       <button
           class="block md:hidden p-3 flex items-center bg-mblue-base rounded-full high-contrast:border text-lg text-white -4 mb-2"
-          @click="showFilterOverlay = true"
+          @click="openFilterModal"
       >
         <img src="@/assets/icons/filter.svg" alt="Filter Icon: Currently selected filter." class="w-5 h-5 mr-2">
         <span v-if="activeFilterLabels.length || filter.keywords.length" :aria-label="getFilterSummary(filter.keywords, activeFilterLabels)">
@@ -21,7 +21,7 @@
         class="fixed inset-0 z-50 bg-white p-4 overflow-auto md:hidden"
     >
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-base font-semibold">Filter</h2>
+        <h2 class="text-base font-semibold" id="filter-header">Filter</h2>
         <button
             class="text-sm"
             @click="closeModal"
@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import {ref, computed} from 'vue'
+import {ref, computed, nextTick} from 'vue'
 import {useI18n} from 'vue-i18n'
 import FilterContent from './FilterContent.vue'
 import {filter} from '@/storage.js'
@@ -85,6 +85,17 @@ function getTruncatedFilterSummary(keywords = [], activeLabels = [], maxLength =
   return combined.length > maxLength ? combined.slice(0, maxLength) + '...' : combined
 }
 
+const openFilterModal = () => {
+  showFilterOverlay.value = true
+  nextTick(() => {
+    const filterRegion = document.getElementById('filter-header');
+    if (filterRegion) {
+      filterRegion.setAttribute('tabindex', '0');
+      filterRegion.focus();
+    }
+  });
+}
+
 const closeModal = () => {
   showFilterOverlay.value = false
   document.getElementById('filter-region').setAttribute('tabindex', '-1');
@@ -94,6 +105,6 @@ const closeModal = () => {
 function truncate(text, maxLength = 25) {
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
 }
-defineExpose({ highlightFilter })
+defineExpose({ highlightFilter, openFilterModal })
 
 </script>

@@ -1,11 +1,6 @@
 <template>
 
   <div v-if="hasActiveFilter">
-    <!--    <quick-filter
-            v-if="showQuickFilter"
-            class="fixed top-20  transition-transform duration-300"
-            :style="{ zIndex: 10, transform: showQuickFilter ? 'translateY(0)' : 'translateY(-100%)' }"
-        ></quick-filter>-->
     <BeforeVisit
         ref="beforeVisit"
     ></BeforeVisit>
@@ -26,8 +21,13 @@
         <p class="">Pick topics to see accessibility information</p>
         <div class="mt-2">
           <button
-              class="bg-mblue-base text-white rounded-md px-2 py-1 text-lg font-bold mr-6 hover:bg-mblue-darken-1 high-contrast:border"
+              class="hidden md:block bg-mblue-base text-white rounded-md px-2 py-1 text-lg font-bold mr-6 hover:bg-mblue-darken-1 high-contrast:border"
               @click="$emit('highlightFilter')"
+          >Pick topics
+          </button>
+          <button
+              class="block md:hidden bg-mblue-base text-white rounded-md px-2 py-1 text-lg font-bold mr-6 hover:bg-mblue-darken-1 high-contrast:border"
+              @click="openFilterModal"
           >Pick topics
           </button>
           <button
@@ -60,15 +60,12 @@ import BeforeVisit from "@/components/ContentSections/BeforeVisit.vue";
 import {computed, nextTick, ref} from "vue";
 import {scrollToPosition} from "@/utils/scroll.js";
 
-const {t} = useI18n();
-
-import {filter, settings} from '@/storage.js'
+import {filter} from '@/storage.js'
 import ReachingTheMuseum from "@/components/ContentSections/ReachingTheMuseum.vue";
 import MovingAround from "@/components/ContentSections/MovingAround.vue";
 import ExperienceTheExhibition from "@/components/ContentSections/ExperienceTheExhibition.vue";
 import FAQ from "@/components/ContentSections/FAQ.vue";
 import VisitorStories from "@/components/ContentSections/VisitorStories.vue";
-import QuickFilter from "@/components/general/QuickFilter.vue";
 import {useI18n} from "vue-i18n";
 
 const beforeVisit = ref(null);
@@ -76,6 +73,12 @@ const beforeVisit = ref(null);
 const hasActiveFilter = computed(() => {
   return filter.value.blind || filter.value.deaf || filter.value.mobility || filter.value.cognitive || (filter.value.keywords != null && filter.value.keywords.length > 0);
 });
+
+const emit = defineEmits(['open-filter-modal']);
+
+const openFilterModal = () => {
+  emit('open-filter-modal');
+}
 
 const scrollToFilter = () => {
   const filterSection = document.getElementById('filter');

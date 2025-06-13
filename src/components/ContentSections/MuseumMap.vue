@@ -156,16 +156,42 @@ const changeFloor = (floor) => {
 
 const mapContainer = ref(null);
 
+const isFakeFullscreen = ref(false);
 const toggleFullscreen = () => {
   const el = mapContainer.value;
   if (!el) return;
 
-  if (!document.fullscreenElement) {
-    el.requestFullscreen().catch(err => {
-      console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-    });
+  const isMobile = window.innerWidth < 1024;
+  const hasNativeFS = !!(
+      el.requestFullscreen ||
+      el.webkitRequestFullscreen ||
+      el.mozRequestFullScreen ||
+      el.msRequestFullscreen
+  );
+
+  if ((isMobile && !hasNativeFS)) {
+    isFakeFullscreen.value = !isFakeFullscreen.value;
+    el.classList.toggle('fullscreen-fallback', isFakeFullscreen.value);
   } else {
-    document.exitFullscreen();
+    if (!document.fullscreenElement &&
+        !document.webkitFullscreenElement &&
+        !document.mozFullScreenElement &&
+        !document.msFullscreenElement) {
+
+      const request = el.requestFullscreen ||
+          el.webkitRequestFullscreen ||
+          el.mozRequestFullScreen ||
+          el.msRequestFullscreen;
+
+      request?.call(el);
+    } else {
+      const exit = document.exitFullscreen ||
+          document.webkitExitFullscreen ||
+          document.mozCancelFullScreen ||
+          document.msExitFullscreen;
+
+      exit?.call(document);
+    }
   }
 };
 
@@ -215,6 +241,16 @@ const fullScreenIcon = computed(() => {
 
 .fullscreen-btn:hover {
   @apply rounded-sm bg-mgrey-lighten-3;
+}
+
+.fullscreen-fallback {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: #000; /* Optional, depending on content */
 }
 
 ._legend-item {

@@ -1,16 +1,16 @@
 <template>
-  <div class="image-loader flex content-center justify-center w-full h-full">
+  <div
+      ref="imageRef"
+      @click="toggleFullscreen"
+      class="image-loader flex content-center justify-center w-full h-full">
     <div v-if="isLoading" class="loading-container"
          :style="{ height: placeholderHeight+ 'px' }">
       <div class="spinner"></div>
     </div>
-
     <img
-        ref="imageRef"
         v-else
         :src="src"
         :alt="alt"
-        @click="toggleFullscreen"
         v-bind="$attrs"
         :class="[imageClass, {'cursor-zoom-out': isFullscreen}, {'cursor-zoom-in': !isFullscreen}]"
     />
@@ -51,21 +51,42 @@ watch(() => props.src, () => {
 const isFullscreen = ref(false);
 const imageRef = ref(null);
 
+const isFakeFullscreen = ref(false);
 const toggleFullscreen = () => {
-  if (!isFullscreen.value) {
-    enterFullscreen(imageRef.value);
-  } else {
-    exitFullscreen();
-  }
-};
+  const el = imageRef.value;
+  if (!el) return;
 
-const enterFullscreen = (el) => {
-  if (el.requestFullscreen) {
-    el.requestFullscreen();
-  } else if (el.webkitRequestFullscreen) {
-    el.webkitRequestFullscreen();
-  } else if (el.msRequestFullscreen) {
-    el.msRequestFullscreen();
+  const isMobile = window.innerWidth < 1024;
+  const hasNativeFS = !!(
+      el.requestFullscreen ||
+      el.webkitRequestFullscreen ||
+      el.mozRequestFullScreen ||
+      el.msRequestFullscreen
+  );
+
+  if ((isMobile && !hasNativeFS)) {
+    isFakeFullscreen.value = !isFakeFullscreen.value;
+    el.classList.toggle('fullscreen-fallback', isFakeFullscreen.value);
+  } else {
+    if (!document.fullscreenElement &&
+        !document.webkitFullscreenElement &&
+        !document.mozFullScreenElement &&
+        !document.msFullscreenElement) {
+
+      const request = el.requestFullscreen ||
+          el.webkitRequestFullscreen ||
+          el.mozRequestFullScreen ||
+          el.msRequestFullscreen;
+
+      request?.call(el);
+    } else {
+      const exit = document.exitFullscreen ||
+          document.webkitExitFullscreen ||
+          document.mozCancelFullScreen ||
+          document.msExitFullscreen;
+
+      exit?.call(document);
+    }
   }
 };
 
@@ -109,6 +130,27 @@ onMounted(() => {
   border-top: 4px solid #38363099;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+.fullscreen-fallback {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4); /* less dark */
+  backdrop-filter: blur(4px); /* optional blur */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullscreen-fallback img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 @keyframes spin {
