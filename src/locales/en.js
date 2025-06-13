@@ -69,14 +69,14 @@ export default {
         },
         visitorVolume: {
             title: 'Visitor volume',
-            description: 'The museum tends to be busiest on Friday afternoons, as well as throughout the day on Saturdays and Sundays. Weekdays are usually quieter and more relaxed. For a detailed overview, see the graphic below. Occasionally, we also offer designated',
+            description: 'The museum tends to be busiest on Friday afternoons, as well as throughout the day on Saturdays and Sundays. Weekdays are usually quieter and more relaxed. For a detailed overview, see the graphic below. Occasionally, we also offer designated <a href="https://www.smnk.de/information/veranstaltungskalender/?tx_psbeventmanager_em%5Baction%5D=list&tx_psbeventmanager_em%5Bcontroller%5D=Event&cHash=04b9d8618dac37baf78e42f6fdbd28d9" target="_blank"> silent hours </a>.',
             link: 'silent hour events'
         },
         specialServices: {
             title: 'Special services',
             silentHours: {
                 title: 'Silent hours',
-                description: 'We offer silent hours for all visitors who prefer a calmer museum experience. During these times, we limit the number of guests allowed in the museum to reduce noise and crowding. Silent hours are ideal for anyone seeking a more relaxed visit. You can find upcoming Silent hours listed in our <a href="https://www.naturkundemuseum-karlsruhe.de/en/event-calendar" target="_blank">event calendar</a>',
+                description: 'We offer silent hours for all visitors who prefer a calmer museum experience. During these times, we limit the number of guests allowed in the museum to reduce noise and crowding. Silent hours are ideal for anyone seeking a more relaxed visit. You can find upcoming Silent hours listed in our <a href="https://www.smnk.de/information/veranstaltungskalender/?tx_psbeventmanager_em%5Baction%5D=list&tx_psbeventmanager_em%5Bcontroller%5D=Event&cHash=04b9d8618dac37baf78e42f6fdbd28d9" target="_blank">event calendar</a>',
                 slText: 'Show silent hours in our event calendar'
             },
             guidedTours: {
@@ -304,11 +304,11 @@ export default {
                 description: "We offer inclusive tours for blind and deaf persons. We also offer tours in plain language. For deaf persons we offer tours in sign language. For blind persons we offer tours with descriptive language and tactile elements. At the moment, we don’t offer guided tours for hard of hearing people that include additional hearing support technologies. " +
                     "However, if you have your own equpiment we can integrate it into our guided tours. " +
                     "Non disabled People are also welcome to join these tours. " +
-                    "You can learn more about our upcoming guided tours here."
+                    "You can learn more about our upcoming guided tours <a href=\"https://www.smnk.de/information/veranstaltungskalender/?tx_psbeventmanager_em%5Baction%5D=list&tx_psbeventmanager_em%5Bcontroller%5D=Event&cHash=04b9d8618dac37baf78e42f6fdbd28d9\" target=\"_blank\"> here. </a>"
             },
             digitalEvents: {
                 title: "Digital Events",
-                description: "You can find recorded guided tours from the Corona period on our website. However, currently we don't offer online tours anymore."
+                description: "You can find recorded guided tours from the Corona period on our <a href='https://naturkundemuseum-karlsruhe.digital/de/home'>website </a>. However, currently we don't offer online tours anymore."
             },
             stayUpToDate: {
                 title: "Stay up to date",

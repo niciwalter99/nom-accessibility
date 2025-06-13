@@ -51,7 +51,7 @@ const variantClass = {
 }
 
 .nav-button--primary {
-  @apply bg-mblue-base text-white hover:bg-mblue-darken-1
+  @apply bg-mblue-darken-1 text-white hover:bg-mblue-darken-1
   high-contrast:bg-black high-contrast:bg-yellow-300 high-contrast:text-black
   high-contrast-hover:bg-black high-contrast-hover:text-yellow-300 high-contrast-hover:border;
 }

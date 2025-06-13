@@ -5,6 +5,7 @@
         :key="props.imgSrc"
         :src="props.imgSrc"
         ref="imageRef"
+        role="presentation"
         class="max-w-full rounded-lg shadow-lg"
     />
   </div>

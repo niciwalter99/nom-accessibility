@@ -1,5 +1,5 @@
 <template>
-  <section id="visitor-stories" class="max-w-[650px]">
+  <section id="visitor-stories" class="max-w-[650px]"  role="region" aria-label="Visitor stories">
     <h1 class="my-4">What other visitors say</h1>
     <div class="grid-wrapper">
       <div class="testimonial-grid">

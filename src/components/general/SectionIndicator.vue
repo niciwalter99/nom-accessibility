@@ -1,7 +1,10 @@
 <template>
   <aside aria-hidden="true">
     <div class="search-box">
-      <button>
+      <button
+      aria-hidden="true"
+      aria-label="delete search term"
+      >
 
       <img
           v-if="searchTerm !== ''"
@@ -12,11 +15,17 @@
       <input
           v-model="searchTerm"
           @input="onSearchInput"
-          class="search-input rounded-lg" type="text" placeholder="Search for a keyword"/>
+          class="search-input rounded-lg" type="text" placeholder="Search for a keyword"
+          aria-label="Search for a keyword"
+        aria-hidden="true"
+      />
       <p v-if="searchTerm !== ''" class="search-items"> {{ foundSearchTerms }} hits</p>
-      <button>
+      <button
+      aria-label="go to next occurence"
+      >
         <img v-if="searchTerm !== '' && foundSearchTerms > 0" :src="nextIcon"
              class="next-item"
+             aria-label="go to next occurence"
              @click="goToNextWord"
         >
       </button>
@@ -27,6 +36,7 @@
         {{ completeWordBaseTerms }} results found without filters.
       </p>
       <button class="show-all"
+              aria-label="show all information"
               @click="showAllInformation"
       > Show
       </button>
@@ -98,10 +108,9 @@ import {useI18n} from "vue-i18n";
 import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 import {scrollToPosition} from "@/utils/scroll.js";
 import {filter} from "@/storage.js";
-import {useColorMode} from "@vueuse/core";
+import {useThemeDetection} from "@/composables/useThemeDetection.js";
 
 const {t, locale, messages} = useI18n();
-import {useThemeDetection} from "@/composables/useThemeDetection.js";
 const observedElements = new Set();
 
 let mutationObserver;
@@ -133,13 +142,11 @@ const observeSections = () => {
   const experienceExhibition = document.getElementById('experience-the-exhibition');
   const faq = document.getElementById('faq');
   const visitorStories = document.getElementById('visitor-stories');
-  console.log(movingAround);
 
   if (beforeVisit && reachingMuseum && movingAround && faq && visitorStories && experienceExhibition) {
     observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            console.log("Observing sections for intersection changes", entry.target.id);
             if (entry.isIntersecting) {
               currentSectionID.value = entry.target.id;
             }
@@ -266,7 +273,6 @@ function onSearchInput() {
     const frag = document.createDocumentFragment();
     let lastIndex = 0;
     const text = textNode.nodeValue;
-    console.log(textNode);
  /*   if(textNode.Key.contains('sensoryPlan')) {
       return;
     }*/
@@ -316,8 +322,6 @@ function goToNextWord() {
   scrollToTermOccurence.value += 1;
   scrollToTermOccurence.value %= words.length;
   const nextWord = words[scrollToTermOccurence.value];
-  console.log(nextWord);
-  console.log(nextWord.closest('details'));
   if (nextWord) {
     const detailsParent = nextWord.closest('details');
     if (detailsParent && !detailsParent.open) {
@@ -354,10 +358,7 @@ function searchWordBase(keyword) {
 
   search(currentTranslations);
 
-  const totalOccurrences = results.reduce((sum, entry) => sum + entry.count, 0);
-  console.log(results);
-
-  return totalOccurrences;
+  return results.reduce((sum, entry) => sum + entry.count, 0);
 }
 
 const deleteSearchTerm = () => {

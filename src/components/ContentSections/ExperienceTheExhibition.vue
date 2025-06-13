@@ -1,5 +1,5 @@
 <template>
-  <section id="experience-the-exhibition" class="max-w-[650px]">
+  <section id="experience-the-exhibition" class="max-w-[650px]"  role="region" aria-label="Experience the exhibition" >
     <h1>{{ t('experienceTheExhibition.title') }}</h1>
     <p>{{ t('experienceTheExhibition.intro') }}</p>
     <h2>{{ t('experienceTheExhibition.interactingWithContent.title') }}</h2>

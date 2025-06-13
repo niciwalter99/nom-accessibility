@@ -1,5 +1,5 @@
 <template>
-  <section id="faq" class="max-w-[650px]">
+  <section id="faq" class="max-w-[650px]"  role="region" aria-label="Frequently asked Questions">
     <h1 class="my-4">{{ t('faq.title') }}</h1>
     <div class="flex flex-col gap-4">
       <details v-for="item in faqItems" :key="item.q">
@@ -39,7 +39,7 @@ const faqItems = [
   {
     q: 'faq.questions.cafeteria',
     a: 'faq.answers.cafeteria',
-    img: new URL('@/assets/images/Cafeteria.JPG', import.meta.url).href,
+    img: new URL('@/assets/images/Cafeteria.jpg', import.meta.url).href,
   },
   { q: 'faq.questions.restrooms', a: 'faq.answers.restrooms' },
   { q: 'faq.questions.guidedTours', a: 'faq.answers.guidedTours' },

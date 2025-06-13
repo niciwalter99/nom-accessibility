@@ -1,7 +1,4 @@
 <template>
-  <!--
-    Alternative format for screenreader
-  -->
   <div class="sr-only">
     <div v-html="altText"></div>
   </div>
@@ -9,7 +6,9 @@
 
   <div class="map-viewer high-contrast:border" ref="mapContainer" aria-hidden="true">
     <div class="_inner ">
-      <button class="fullscreen-btn" @click="toggleFullscreen">
+      <button class="fullscreen-btn" @click="toggleFullscreen"
+      aria-label="Toggle full screen mode"
+      >
         <img class="icon" :src="fullScreenIcon">
       </button>
       <div class="controls">

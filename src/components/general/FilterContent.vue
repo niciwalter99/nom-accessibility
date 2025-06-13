@@ -3,10 +3,9 @@
       id="filterContainer"
       class="px-4 py-5 sm:p-6 bg-mblue-lighten-4 overflow-x-hidden high-contrast:border rounded-lg max-w-3xl"
   >
-    <p class="mb-2 text-base sm:text-lg">{{ t('filter.pickTopics') }}</p>
-    <p class="mb-4 text-sm sm:text-base text-mblue-darken-1">{{ t('filter.filterInfo') }}</p>
+    <p class="mb-2 text-base sm:text-lg" ref="filterHeading">{{ t('filter.pickTopics') }}</p>
+    <p class="mb-4 text-sm sm:text-base text-mblue-darken-1" aria-hidden="true">{{ t('filter.filterInfo') }}</p>
 
-    <!-- Responsive Grid: no fixed cols on mobile -->
     <div class="grid auto-rows-fr gap-4 sm:grid-cols-2 md:grid-cols-3 w-full">
       <div
           v-for="option in options"
@@ -21,21 +20,21 @@
             : 'bg-white border-mblue-lighten-3 border hover:border-mblue-base'
         ]"
       >
-        <div class="relative group">
+        <div class="flex flex-col items-start relative group">
           <div v-if="option.selected" class="absolute top-1 right-1">
-            <img :src="selectedIcon" class="w-5 h-5" aria-hidden="true" />
+            <img :src="selectedIcon" class="w-5 h-5" aria-hidden="true"/>
           </div>
-          <span class="text-xl sm:text-2xl hc-exception high-contrast:bg-yellow-300">
+          <span class="text-xl sm:text-2xl hc-exception high-contrast:bg-yellow-300" aria-hidden="true">
             {{ option.icon }}
           </span>
-          <div class="label !text-lg font-semibold text-mgrey-darken-4">
+          <button class="label !text-lg font-semibold text-mgrey-darken-4">
             {{ t(`filter.options.${option.label}`) }}
-          </div>
+          </button>
         </div>
       </div>
 
-      <!-- Add Keyword Box -->
       <div
+          ref="keywordButtonRef"
           :class="[
           'relative w-full cc-pointer rounded-lg p-2 sm:p-3 items-start transition hover:bg-mgreyno-lighten-6',
           'hc-exception high-contrast:bg-black high-contrast:border-yellow-300 high-contrast-hover:bg-yellow-300',
@@ -46,33 +45,40 @@
           @click="handleKeyWordClick"
           id="addKeyword"
       >
-        <span class="text-xl hc-exception high-contrast:bg-yellow-300">➕</span>
+        <span class="text-xl hc-exception high-contrast:bg-yellow-300" aria-hidden="true">➕</span>
         <div>
           <button class="flex flex-col items-start font-semibold text-lg text-mgrey-darken-4">
             {{ t('filter.addKeyword') }}
-            <p class="keywords !text-xs text-mgrey-base break-words">
+            <p class="keywords !text-xs text-mgrey-base break-words"
+               :aria-label="'Selected keywords: ' + KeywordsInFilter">
               {{ KeywordsInFilter }}
             </p>
           </button>
 
-          <KeywordModal :show="showModal" :keywords="keywords" @close="handleClose" />
+          <KeywordModal :show="showModal" :keywords="keywords" @close="handleClose"/>
         </div>
       </div>
     </div>
   </div>
+  <div id="screenreader-filter-status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 </template>
 
 <script setup>
-import { ref, computed, nextTick, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useThemeDetection } from '@/composables/useThemeDetection.js'
+import {ref, computed, nextTick, watch} from 'vue'
+import {useI18n} from 'vue-i18n'
+import {useThemeDetection} from '@/composables/useThemeDetection.js'
 import KeywordModal from '@/components/general/KeywordModal.vue'
-import { filter } from '@/storage.js'
-import { scrollToPosition } from '@/utils/scroll.js'
+import {filter} from '@/storage.js'
+import {scrollToPosition} from '@/utils/scroll.js'
+import {SRMessage} from "@/composables/ScreenReaderStatus.js";
 
-const { t } = useI18n()
-const { theme } = useThemeDetection()
+const keywordButtonRef = ref(null)
+
+
+const {t} = useI18n()
+const {theme} = useThemeDetection()
 const showModal = ref(false)
+const filterHeading = ref(false)
 
 const keywords = [
   t('filter.keywords.crowd'),
@@ -89,6 +95,10 @@ const keywords = [
 function handleClose(selected) {
   showModal.value = false
   filter.value.keywords = selected
+  nextTick(() => {
+    keywordButtonRef.value.setAttribute('tabindex', '-1');
+    keywordButtonRef.value?.focus()
+  })
 }
 
 const handleKeyWordClick = () => {
@@ -107,6 +117,7 @@ const options = computed(() => [
     selected: filter.value.mobility,
     toggle() {
       filter.value.mobility = !filter.value.mobility
+      updateFilterForSR('mobility', filter.value.mobility)
     },
     label: 'limitedMobility',
     icon: '🧑‍🦽'
@@ -115,6 +126,7 @@ const options = computed(() => [
     selected: filter.value.blind,
     toggle() {
       filter.value.blind = !filter.value.blind
+      updateFilterForSR('blind', filter.value.blind)
     },
     label: 'blindLowVision',
     icon: '🧑‍🦯'
@@ -123,6 +135,7 @@ const options = computed(() => [
     selected: filter.value.deaf,
     toggle() {
       filter.value.deaf = !filter.value.deaf
+      updateFilterForSR('deaf', filter.value.deaf)
     },
     label: 'deafHardHearing',
     icon: '🤟'
@@ -131,11 +144,33 @@ const options = computed(() => [
     selected: filter.value.cognitive,
     toggle() {
       filter.value.cognitive = !filter.value.cognitive
+      updateFilterForSR('cognitive Differences', filter.value.cognitive)
     },
     label: 'cognitiveDifferences',
     icon: '🎨'
   }
 ])
+
+const updateFilterForSR = (filterName, isActive) => {
+  console.log('update filtere');
+  let message = "";
+  if (isActive) {
+    message += `Filter for ${filterName} is now active.`;
+  } else {
+    message += `Filter for ${filterName} is now inactive.`;
+  }
+  const f = filter.value
+  const keywords = (f.keywords.length > 0);
+  const activeFilters = [f.blind, f.deaf, f.mobility, f.cognitive, keywords].filter(Boolean).length
+  if (activeFilters === 0) {
+    message += ("Currently there are no filters active")
+  } else if (activeFilters === 1) {
+    message += "Currently there is one filter active"
+  } else {
+    message += `Currently there are ${activeFilters} filters active`
+  }
+  SRMessage(message, 'screenreader-filter-status');
+}
 
 const selectedIcon = computed(() =>
     theme.value === 'high-contrast'
@@ -144,7 +179,11 @@ const selectedIcon = computed(() =>
 )
 
 function highlightFilter() {
-  const filterElements = [...options.value, { label: 'addKeyword' }]
+
+  filterHeading.value.setAttribute('tabindex', '-1');
+  filterHeading.value.focus();
+
+  const filterElements = [...options.value, {label: 'addKeyword'}]
   for (const option of filterElements) {
     const el = document.getElementById(option.label)
     if (el) {
@@ -194,10 +233,10 @@ watch(
         scrollToFilter()
       }
     },
-    { deep: true }
+    {deep: true}
 )
 
-defineExpose({ highlightFilter })
+defineExpose({highlightFilter})
 </script>
 
 <style scoped>

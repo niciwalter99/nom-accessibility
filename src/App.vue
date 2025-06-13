@@ -1,4 +1,8 @@
 <template>
+<!--
+  <div id="screenreader-status" aria-live="polite" class="sr-only"/>
+-->
+  <hr>
   <NavigationBar></NavigationBar>
   <div class="relative w-full h-96">
     <img

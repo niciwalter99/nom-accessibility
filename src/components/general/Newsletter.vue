@@ -1,22 +1,22 @@
 <template>
   <div class="flex flex-col lg:flex-row items-center gap-6 my-4">
-    <div class="flex items-center border border-gray-300 rounded-lg px-2 py-2 max-w-screen">
+    <div class="flex items-center border border-mgrey-base rounded-lg px-2 py-2 max-w-screen">
       <img :src="mailIcon" alt="Mail Icon" class="hidden lg:block w-6 h-6 mr-2" />
       <input
           v-model="email"
+          aria-label="Email input for newsletter subscription"
           type="email"
+          autocomplete="email"
           :placeholder="$t('experienceTheExhibition.newsletter.email')"
-          class="text-base focus:outline-none bg-transparent high-contrast:placeholder-yellow-300 placeholder-gray-500"
+          class="text-base focus:outline-none bg-transparent high-contrast:placeholder-yellow-300 placeholder-mgrey-base"
       />
 
-      <button
-          class="px-2 py-2 rounded-lg text-white text-base bg-mblue-base
-               hc-exception high-contrast:bg-black high-contrast:text-yellow-300
-               high-contrast:border high-contrast-hover:bg-yellow-300
-               high-contrast-hover:text-black"
+      <n-button
+          class="px-2 py-2 rounded-lg"
+          variant="primary"
       >
         {{ t('experienceTheExhibition.newsletter.join') }}
-      </button>
+      </n-button>
     </div>
 
     <a
@@ -34,6 +34,7 @@
 import {computed, ref} from 'vue';
 import { useI18n } from 'vue-i18n';
 import {useThemeDetection} from "@/composables/useThemeDetection.js";
+import NButton from "@/components/general/NButton.vue";
 
 const {t} = useI18n();
 

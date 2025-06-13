@@ -1,7 +1,7 @@
 <template>
 
 
-  <section id="before-visit" class="max-w-[650px]">
+  <section id="before-visit" class="max-w-[650px]" role="region" aria-label="Before Visit">
     <h1>{{ t('beforeVisit.title') }}</h1>
     <div class="bg-mbeige-base high-contrast:border rounded-md p-4">
       💡 <b>{{ t('beforeVisit.note') }}</b>
@@ -43,7 +43,6 @@
       <h3>{{ t('beforeVisit.visitorVolume.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html="
         t('beforeVisit.visitorVolume.description') "></p>
-      <a>{{ t('beforeVisit.visitorVolume.link') }}</a>
     </div>
     <activity-chart></activity-chart>
     <div class="my-4">
@@ -56,7 +55,7 @@
             :autoplay="false"
             :controls="true"
         />
-        <a>{{ t('beforeVisit.specialServices.silentHours.slText') }}</a>
+        <a href="https://www.smnk.de/information/veranstaltungskalender/?tx_psbeventmanager_em%5Baction%5D=list&tx_psbeventmanager_em%5Bcontroller%5D=Event&cHash=04b9d8618dac37baf78e42f6fdbd28d9">{{ t('beforeVisit.specialServices.silentHours.slText') }}</a>
       </p>
     </div>
   </section>
@@ -78,7 +77,7 @@ defineProps({
 });
 
 import ActivityChart from "@/components/ContentSections/ActivityChart.vue";
-import EntryDesk from "@/assets/images/EntryDesk.JPG"
+import EntryDesk from "@/assets/images/EntryDesk.jpg"
 import {useI18n} from "vue-i18n";
 import NVideo from "@/components/general/NVideo.vue";
 

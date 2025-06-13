@@ -1,15 +1,17 @@
 <template>
 
   <div v-if="hasActiveFilter">
-<!--    <quick-filter
-        v-if="showQuickFilter"
-        class="fixed top-20  transition-transform duration-300"
-        :style="{ zIndex: 10, transform: showQuickFilter ? 'translateY(0)' : 'translateY(-100%)' }"
-    ></quick-filter>-->
-    <BeforeVisit></BeforeVisit>
+    <!--    <quick-filter
+            v-if="showQuickFilter"
+            class="fixed top-20  transition-transform duration-300"
+            :style="{ zIndex: 10, transform: showQuickFilter ? 'translateY(0)' : 'translateY(-100%)' }"
+        ></quick-filter>-->
+    <BeforeVisit
+        ref="beforeVisit"
+    ></BeforeVisit>
     <ReachingTheMuseum></ReachingTheMuseum>
     <MovingAround
-    :filter="filter"
+        :filter="filter"
     ></MovingAround>
     <experience-the-exhibition
         :filter="filter"
@@ -18,7 +20,8 @@
     <visitor-stories></visitor-stories>
   </div>
   <template v-else>
-    <div class="relative bg-mbeige-base rounded-md flex flex-col content-start items-start w-full min-h-screen min-h-full high-contrast:border">
+    <div
+        class="relative bg-mbeige-base rounded-md flex flex-col content-start items-start w-full min-h-screen min-h-full high-contrast:border">
       <div class="mt-10 z-10 ml-4 text-3xl text-mgrey-darken-2 max-w-[500px]">
         <p class="">Pick topics to see accessibility information</p>
         <div class="mt-2">
@@ -54,8 +57,9 @@ defineProps({
 })
 
 import BeforeVisit from "@/components/ContentSections/BeforeVisit.vue";
-import {computed} from "vue";
+import {computed, nextTick, ref} from "vue";
 import {scrollToPosition} from "@/utils/scroll.js";
+
 const {t} = useI18n();
 
 import {filter, settings} from '@/storage.js'
@@ -67,8 +71,10 @@ import VisitorStories from "@/components/ContentSections/VisitorStories.vue";
 import QuickFilter from "@/components/general/QuickFilter.vue";
 import {useI18n} from "vue-i18n";
 
+const beforeVisit = ref(null);
+
 const hasActiveFilter = computed(() => {
-  return filter.value.blind || filter.value.deaf || filter.value.mobility || filter.value.cognitive || (filter.value.keywords != null  && filter.value.keywords.length > 0);
+  return filter.value.blind || filter.value.deaf || filter.value.mobility || filter.value.cognitive || (filter.value.keywords != null && filter.value.keywords.length > 0);
 });
 
 const scrollToFilter = () => {
@@ -83,9 +89,15 @@ const showAllInformation = () => {
   filter.value.deaf = true;
   filter.value.mobility = true;
   filter.value.cognitive = true;
+
+  nextTick(() => {
+    const beforeVisit = document.getElementById('before-visit');
+    beforeVisit.setAttribute('tabindex', '-1');
+    beforeVisit.focus();
+  });
 }
 
-const { theme } = useThemeDetection()
+const {theme} = useThemeDetection()
 const icon = computed(() => {
   if (theme.value === 'high-contrast') {
     return new URL('@/assets/icons/ai-technology-hc.svg', import.meta.url).href

@@ -1,5 +1,5 @@
 <template>
-  <section id="moving-around" class="max-w-[650px]">
+  <section id="moving-around" class="max-w-[650px]"  role="region" aria-label="Moving around" >
     <h1 class="my-4">{{ t('movingAround.title') }}</h1>
     <h2 v-if="filter.mobility || filter.cognitive">
       {{ t('movingAround.environmentalConditions.title') }}</h2>

@@ -1,5 +1,6 @@
 <template>
   <div
+      role="banner"
       :class="{ 'navbar--hidden': !showNavbar }"
       class="navbar top-0 z-20 h-20 flex justify-between items-center px-6 bg-white border border-white border-b-mgrey-lighten-3"
   >
@@ -17,7 +18,9 @@
     <button
         @click="isMobileMenuOpen = !isMobileMenuOpen"
         class="lg:hidden focus:outline-none"
-        aria-label="Toggle menu"
+        aria-label="Toggle navigation menu"
+        :aria-expanded="isMobileMenuOpen.toString()"
+        aria-controls="mobile-menu"
     >
       <svg
           v-if="!isMobileMenuOpen"
@@ -27,7 +30,7 @@
           viewBox="0 0 24 24"
           stroke="currentColor"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
       <svg
           v-else
@@ -37,12 +40,14 @@
           viewBox="0 0 24 24"
           stroke="currentColor"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
 
     <nav
         class="hidden lg:flex items-center space-x-6 text-base text-mgrey-darken-2"
+        role="navigation"
+        aria-label="Main Navigation"
     >
       <AccessibilityMenu />
       <LanguageButtons />
@@ -50,7 +55,10 @@
 
     <div
         v-if="isMobileMenuOpen"
+        id="mobile-menu"
         class="absolute top-20 left-0 w-full bg-white shadow-md border-t border-gray-200 flex flex-col px-6 py-4 space-y-4 lg:hidden"
+        role="navigation"
+        aria-label="Mobile Navigation"
     >
       <AccessibilityMenu />
       <LanguageButtons />
@@ -79,9 +87,6 @@ function handleScroll() {
 
   if (currentScroll > lastScroll && currentScroll > 60) {
     showNavbar.value = false
-/*
-    isMobileMenuOpen.value = false
-*/
   } else if (currentScroll < lastScroll) {
     showNavbar.value = true
   }

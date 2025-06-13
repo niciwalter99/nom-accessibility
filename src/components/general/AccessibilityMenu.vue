@@ -3,6 +3,7 @@
     <button
         @click="toggleDropdown"
         class="inline-flex justify-between space-x-2 items-center !text-base hover:underline"
+        aria-label="Accessibility Menu: change the visual interface and adapt it to your needs"
     >
       <img :src="icon" class="h-5 w-5" aria-hidden="true" />
       {{ t('navBar.accessibilityMenu') }}

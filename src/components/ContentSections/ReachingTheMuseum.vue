@@ -1,8 +1,8 @@
 <template>
-  <section id="reaching-the-museum" class="max-w-[650px]">
+  <section id="reaching-the-museum" class="max-w-[650px]" role="region" aria-label="Reaching the museum">
     <h1>{{ t('reachingTheMuseum.title') }}</h1>
     <h2>{{ t('reachingTheMuseum.gettingToMuseum.title') }}</h2>
-    <p v-if="!settings.signLanguage" v-html=" t('reachingTheMuseum.gettingToMuseum.description') "</p>
+    <p v-if="!settings.signLanguage" v-html=" t('reachingTheMuseum.gettingToMuseum.description') "/>
     <vue3-video-player
         v-if="settings.signLanguage"
         :src="reachingMuseumVideo"
@@ -26,7 +26,7 @@
     </ul>
 
     <h2 class="my-4">{{ t('reachingTheMuseum.detailedDescription.title') }}</h2>
-    <div class="w-full flex gap-8 mb-4">
+    <div class="w-full flex gap-8 mb-4" role="region">
       <SocialStory :forkedSteps="steps" start-path="start"/>
     </div>
     <div class="my-4">
@@ -51,7 +51,7 @@ import reachingMuseumVideo from "@/assets/SL/reachingMuseum.webm";
 import lockerVideo from "@/assets/SL/Locker.webm";
 
 import MS from "@/assets/images/SocialStory/MS.png";
-import M3 from "@/assets/images/SocialStory/M3.png";
+import M3 from "@/assets/images/SocialStory/M3.jpg";
 import M4 from "@/assets/images/SocialStory/M4.png";
 import M1 from "@/assets/images/SocialStory/M1.png";
 import M5 from "@/assets/images/SocialStory/M5.png";
@@ -60,9 +60,9 @@ import M6 from "@/assets/images/SocialStory/M6.png";
 import ET1 from "@/assets/images/SocialStory/ET1.png";
 import ET2 from "@/assets/images/SocialStory/ET2.png";
 import ET3 from "@/assets/images/SocialStory/ET3.png";
-import ET4 from "@/assets/images/SocialStory/ET4.png";
+import ET4 from "@/assets/images/SocialStory/ET4.jpg";
 import ET5 from "@/assets/images/SocialStory/ET5.png";
-import ET6 from "@/assets/images/SocialStory/ET6.png";
+import ET6 from "@/assets/images/SocialStory/ET6.jpg";
 import ETS from "@/assets/images/SocialStory/ETS.png";
 import map1 from "@/assets/images/SocialStory/map1.svg";
 import map4 from "@/assets/images/SocialStory/map4.svg";
@@ -84,8 +84,8 @@ import TE1 from "@/assets/images/SocialStory/TE1.png";
 import TE2 from "@/assets/images/SocialStory/TE2.png";
 import TE3 from "@/assets/images/SocialStory/TE3.png";
 import TE4 from "@/assets/images/SocialStory/TE4.png";
-import TE5 from "@/assets/images/SocialStory/TE5.png";
-import TE6 from "@/assets/images/SocialStory/TE6.png";
+import TE5 from "@/assets/images/SocialStory/TE5.jpg";
+import TE6 from "@/assets/images/SocialStory/TE6.jpg";
 import ME3 from "@/assets/images/SocialStory/ME3.svg";
 import ME4 from "@/assets/images/SocialStory/ME4.svg";
 import ME5 from "@/assets/images/SocialStory/ME5.svg";

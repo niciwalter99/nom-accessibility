@@ -1,5 +1,5 @@
 <template>
-  <div class="sr-only">
+<!--  <div class="sr-only">
     <h2>{{ $t('visitorActivity.title') }}</h2>
 
     <details>
@@ -84,7 +84,7 @@
         <li>18:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
       </ul>
     </details>
-  </div>
+  </div>-->
 
   <div class="my-4">
     <div class="bg-mbeige-base flex  flex-col items-center p-6 rounded-xl mx-auto high-contrast:border">
@@ -93,7 +93,7 @@
           <button
               v-for="day in days"
               :key="day"
-              @click="selectedDay = day"
+              @click="selectDay(day)"
               class="text-gray-800 relative pb-1 whitespace-nowrap"
               :class="{
           'font-semibold underline': selectedDay === day,
@@ -105,7 +105,7 @@
         </div>
       </div>
 
-      <div class="relative border-t border-gray-300 pt-6 w-full overflow-x-auto">
+      <div class="relative border-t border-gray-300 pt-6 w-full overflow-x-auto" aria-hidden="true">
         <div class="flex justify-center gap-4 items-end content-end  h-[200px] overflow-y-hidden">
           <div v-if="selectedDay === 'Mo'" class="text-center text-gray-600 text-sm w-full">
             Closed on Mondays
@@ -136,6 +136,7 @@
 
 <script setup>
 import {ref} from 'vue'
+import {SRMessage} from "@/composables/ScreenReaderStatus.js";
 
 const days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 const selectedDay = ref('Tu')
@@ -145,10 +146,43 @@ const activity = {
   Mo: [40, 60, 90, 110, 130, 100, 80],
   Tu: [10, 30, 50, 80, 110, 90, 70],
   We: [20, 40, 70, 100, 120, 90, 60],
-  Th: [30, 60, 90, 110, 130, 110, 90],
-  Fr: [40, 70, 100, 120, 140, 110, 80],
-  Sa: [20, 50, 80, 90, 100, 80, 60],
-  Su: [10, 30, 60, 80, 90, 70, 50],
+  Th: [20, 50, 80, 90, 100, 80, 60],
+  Fr: [10, 30, 60, 80, 90, 70, 50],
+  Sa: [30, 60, 90, 110, 130, 110, 90],
+  Su: [40, 70, 100, 120, 140, 110, 80],
+}
+
+const selectDay = (day) => {
+  selectedDay.value = day
+
+  switch (day) {
+    case 'Mo':
+      SRMessage('Monday is closed');
+      break;
+    case 'Tu':
+      // Example: Tu activity data
+      SRMessage('Tuesday is normally not very crowded. Peak times are around 13:00 and 16:00.');
+
+      break;
+    case 'We':
+      SRMessage('Wednesday is normally not very crowded. Peak times are around 13:00 and 16:00.');
+      break;
+    case 'Th':
+      SRMessage('Thursday is normally not very crowded. Peak times are around 13:00 and 16:00.');
+      break;
+    case 'Fr':
+      SRMessage('Friday is normally moderately crowded. Peak times are around 14:00 and 17:00.');
+      break;
+    case 'Sa':
+      SRMessage('Saturday is normally more crowded. Peak times are around 12:00 and 17:00.');
+      break;
+    case 'Su':
+      SRMessage('Sunday is normally more crowded. Peak times are around 12:00 and 17:00.');
+      break;
+    default:
+      console.warn('Unknown day selected:', day);
+      break;
+  }
 }
 
 const timeLabels = ['9:00', ' ', '12:00', '', '15:00', '', '18:00']

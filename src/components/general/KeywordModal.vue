@@ -1,5 +1,8 @@
 <template>
-  <div v-if="show" class="modal-overlay hc-exception">
+  <div v-if="show" class="modal-overlay hc-exception"
+       aria-label="Filter"
+       aria-modal="true"
+  >
     <div class="modal-content high-contrast:border-2">
       <h2>Include selected keywords:</h2>
       <div class="keywords">
@@ -8,6 +11,7 @@
             :key="index"
             :class="['hc-exception','keyword-pill', 'high-contrast:border',  selectedSet?.includes(keyword)? 'selected' : '']"
             @click.prevent="toggleKeyword(keyword)"
+            :aria-label=" selectedSet?.includes(keyword)? `${keyword} is selected`: `${keyword} is not selected`"
         >
           {{ keyword }}
         </button>
@@ -31,6 +35,7 @@ import { defineEmits, computed} from 'vue';
 const emit = defineEmits(['close']);
 
 import {filter} from '@/storage.js'
+import {SRMessage} from "@/composables/ScreenReaderStatus.js";
 const selectedSet = computed(() => filter.value.keywords ?? []);
 
 function toggleKeyword(keyword) {

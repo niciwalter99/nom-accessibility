@@ -1,15 +1,13 @@
-<!-- File: Filter.vue -->
 <template>
-  <div>
-    <!-- Mobile: Active Filters Summary Button -->
+  <section role="region" aria-label="Filter">
     <template class="block md:hidden mx-4 border border-mblue-lighten-3 bg-mblue-lighten-4 p-4 rounded-lg">
-      <p class="mb-2"> {{ t('filter.pickTopics') }} </p>
+      <p class="mb-2" id="filter-region">{{ t('filter.pickTopics') }}  </p>
       <button
           class="block md:hidden p-3 flex items-center bg-mblue-base rounded-full high-contrast:border text-lg text-white -4 mb-2"
           @click="showFilterOverlay = true"
       >
-        <img src="@/assets/icons/filter.svg" alt="Filter Icon" class="w-5 h-5 mr-2">
-        <span v-if="activeFilterLabels.length || filter.keywords.length">
+        <img src="@/assets/icons/filter.svg" alt="Filter Icon: Currently selected filter." class="w-5 h-5 mr-2">
+        <span v-if="activeFilterLabels.length || filter.keywords.length" :aria-label="getFilterSummary(filter.keywords, activeFilterLabels)">
         {{ getTruncatedFilterSummary(filter.keywords, activeFilterLabels) }}    </span>
         <span v-else>
         Select filter
@@ -17,28 +15,31 @@
       </button>
     </template>
 
-    <!-- Mobile: Fullscreen Filter Overlay -->
     <div
         v-if="showFilterOverlay"
+        role="dialog" aria-modal="true"
         class="fixed inset-0 z-50 bg-white p-4 overflow-auto md:hidden"
     >
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-base font-semibold">Filter</h2>
         <button
             class="text-sm"
-            @click="showFilterOverlay = false"
+            @click="closeModal"
         >
           ✕ Close
         </button>
       </div>
 
-      <FilterContent @close="showFilterOverlay = false"/>
+      <FilterContent
+          @close="closeModal"/>
     </div>
 
     <div class="hidden md:block">
-      <FilterContent/>
+      <FilterContent
+          ref="filterContent"
+      />
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -49,6 +50,11 @@ import {filter} from '@/storage.js'
 
 const {t} = useI18n()
 const showFilterOverlay = ref(false)
+const filterContent = ref(null);
+
+function highlightFilter() {
+  filterContent.value.highlightFilter();
+}
 
 const activeFilterLabels = computed(() => {
   const labels = []
@@ -59,7 +65,7 @@ const activeFilterLabels = computed(() => {
   return labels
 })
 
-function getTruncatedFilterSummary(keywords = [], activeLabels = [], maxLength = 30) {
+const getFilterSummary = (keywords, activeLabels) => {
   const keywordStr = Array.isArray(keywords) && keywords.length > 0 ? keywords.join(', ') : ''
   const labelStr = Array.isArray(activeLabels) && activeLabels.length > 0 ? activeLabels.join(', ') : ''
 
@@ -70,11 +76,24 @@ function getTruncatedFilterSummary(keywords = [], activeLabels = [], maxLength =
   } else {
     combined = keywordStr || labelStr
   }
+  return combined
+}
+
+function getTruncatedFilterSummary(keywords = [], activeLabels = [], maxLength = 30) {
+ const combined = getFilterSummary(keywords, activeLabels);
 
   return combined.length > maxLength ? combined.slice(0, maxLength) + '...' : combined
+}
+
+const closeModal = () => {
+  showFilterOverlay.value = false
+  document.getElementById('filter-region').setAttribute('tabindex', '-1');
+ document.getElementById('filter-region').focus();
 }
 
 function truncate(text, maxLength = 25) {
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
 }
+defineExpose({ highlightFilter })
+
 </script>

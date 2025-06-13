@@ -15,7 +15,7 @@
     <li @click="emit('activate', 'textSize')" class="block px-4 py-2 hover:bg-mgrey-lighten-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <img :src="fontIcon" class="w-3" />
+          <img :src="fontIcon" class="w-3" aria-hidden="true" />
           <span class="!text-base">Increase Text Size</span>
         </div>
         <img v-if="settings.largeText" :src="doneIcon" class="w-3 ml-4" />
@@ -25,7 +25,7 @@
     <li @click="emit('activate', 'highContrast')" class="block px-4 py-2 text-sm hover:bg-mgrey-lighten-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <img :src="contrastIcon" class="w-3" />
+          <img :src="contrastIcon" class="w-3" aria-hidden="true"  />
           <span class="!text-base">High Contrast</span>
         </div>
         <img v-if="settings.highContrast" :src="doneIcon" class="w-3 ml-4" />
@@ -35,7 +35,7 @@
     <li @click="emit('activate', 'largeCursor')" class="block px-4 py-2 text-sm hover:bg-mgrey-lighten-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <img :src="cursorIcon" class="w-3" />
+          <img :src="cursorIcon" class="w-3"  aria-hidden="true" />
           <span class="!text-base">Large Cursor</span>
         </div>
         <img v-if="settings.largeCursor" :src="doneIcon" class="w-3 ml-4" />
