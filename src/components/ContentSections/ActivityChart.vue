@@ -1,91 +1,4 @@
 <template>
-<!--  <div class="sr-only">
-    <h2>{{ $t('visitorActivity.title') }}</h2>
-
-    <details>
-      <summary>{{ $t('visitorActivity.days.monday') }}</summary>
-      <p>{{ $t('visitorActivity.closed') }}</p>
-    </details>
-
-    <details>
-      <summary>{{ $t('visitorActivity.days.tuesday') }}</summary>
-      <ul>
-        <li>9:00 – {{ $t('visitorActivity.levels.veryQuiet') }}</li>
-        <li>10:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-        <li>12:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-        <li>13:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>15:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>16:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>18:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>{{ $t('visitorActivity.days.wednesday') }}</summary>
-      <ul>
-        <li>9:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-        <li>10:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-        <li>12:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-        <li>13:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>15:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>16:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>18:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>{{ $t('visitorActivity.days.thursday') }}</summary>
-      <ul>
-        <li>9:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-        <li>10:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-        <li>12:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>13:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>15:00 – {{ $t('visitorActivity.levels.peakCrowded') }}</li>
-        <li>16:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>18:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>{{ $t('visitorActivity.days.friday') }}</summary>
-      <ul>
-        <li>9:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-        <li>10:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-        <li>12:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>13:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>15:00 – {{ $t('visitorActivity.levels.peakCrowded') }}</li>
-        <li>16:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>18:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>{{ $t('visitorActivity.days.saturday') }}</summary>
-      <ul>
-        <li>9:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-        <li>10:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-        <li>12:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>13:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>15:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>16:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>18:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>{{ $t('visitorActivity.days.sunday') }}</summary>
-      <ul>
-        <li>9:00 – {{ $t('visitorActivity.levels.veryQuiet') }}</li>
-        <li>10:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-        <li>12:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-        <li>13:00 – {{ $t('visitorActivity.levels.busy') }}</li>
-        <li>15:00 – {{ $t('visitorActivity.levels.veryBusy') }}</li>
-        <li>16:00 – {{ $t('visitorActivity.levels.moderate') }}</li>
-        <li>18:00 – {{ $t('visitorActivity.levels.quiet') }}</li>
-      </ul>
-    </details>
-  </div>-->
-
   <div class="my-4">
     <div class="bg-mbeige-base flex  flex-col items-center p-6 rounded-xl mx-auto high-contrast:border">
       <div class="w-full overflow-x-auto mb-6">
@@ -141,7 +54,6 @@ import {SRMessage} from "@/composables/ScreenReaderStatus.js";
 const days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 const selectedDay = ref('Tu')
 
-// Static example data: bar heights in px
 const activity = {
   Mo: [40, 60, 90, 110, 130, 100, 80],
   Tu: [10, 30, 50, 80, 110, 90, 70],
@@ -160,7 +72,6 @@ const selectDay = (day) => {
       SRMessage('Monday is closed');
       break;
     case 'Tu':
-      // Example: Tu activity data
       SRMessage('Tuesday is normally not very crowded. Peak times are around 13:00 and 16:00.');
 
       break;
@@ -188,6 +99,4 @@ const selectDay = (day) => {
 const timeLabels = ['9:00', ' ', '12:00', '', '15:00', '', '18:00']
 </script>
 
-<style scoped>
-/* Optional: Customize scrollbar, transitions etc. */
-</style>
+

@@ -57,7 +57,7 @@ export default {
         },
         admission: {
             title: 'Admission & Entry',
-            description: 'If you have a disability ID, you pay less to enter. <br aria-hidden=”true”> If the ID contains a “B” or “H”, one person can come with you for free. <br aria-hidden=”true”> You can access everything without stairs.',
+            description: 'If you have a disability ID, you pay less to enter. <br aria-hidden=”true”> If the ID contains a “B” or “H”, one person can come with you for free. <br aria-hidden=”true”> You can access everything without stairs. You can bring your service animal.',
         },
         support: {
             title: 'Need support during your visit?',

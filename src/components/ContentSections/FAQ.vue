@@ -31,7 +31,6 @@ import {useThemeDetection} from "@/composables/useThemeDetection.js";
 
 const { t } = useI18n()
 
-// FAQ item structure
 const faqItems = [
   { q: 'faq.questions.purchaseTickets', a: 'faq.answers.purchaseTickets' },
   { q: 'faq.questions.timeLimit', a: 'faq.answers.timeLimit' },

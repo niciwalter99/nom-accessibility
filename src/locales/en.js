@@ -57,7 +57,7 @@ export default {
         admission: {
             title: 'Admission & Entry',
             description: 'All visitors with a valid disability ID receive reduced admission, regardless of the degree of disability.\n' +
-                'If the ID includes the designation “B” or “H”, one accompanying person is granted free entry. A designated, step-free entrance is available to all visitors.'
+                'If the ID includes the designation “B” or “H”, one accompanying person is granted free entry. A designated, step-free entrance is available to all visitors. Service animals are allowed.'
         },
         support: {
             title: 'Need support during your visit?',

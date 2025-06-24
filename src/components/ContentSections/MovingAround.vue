@@ -8,9 +8,6 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <h3>{{ t('movingAround.environmentalConditions.lightingAndSensoryComfort.title') }}</h3>
       <p v-if="!settings.signLanguage" class="mb-4"
          v-html=" t('movingAround.environmentalConditions.lightingAndSensoryComfort.description') "></p>
-      <!--
-            TODo change
-      -->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -31,9 +28,6 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <p v-if="!settings.signLanguage"
          v-html=" t('movingAround.environmentalConditions.spaciousLayout.description')"></p>
       <AdditionalImage :img-src="Layout"></AdditionalImage>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -47,9 +41,6 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <p v-if="!settings.signLanguage"
          v-html=" t('movingAround.environmentalConditions.accessibleSeating.description')"></p>
       <AdditionalImage :img-src="Seating"></AdditionalImage>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -64,9 +55,6 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <p v-if="!settings.signLanguage"
          v-html=" t('movingAround.environmentalConditions.accessibleRestrooms.description')"></p>
       <AdditionalImage :img-src="restrooms"></AdditionalImage>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -78,9 +66,6 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
     <div class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.museumLayout.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html=" t('movingAround.navigatingTheMuseum.museumLayout.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -100,9 +85,6 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.title') }}</h3>
       <p v-if="!settings.signLanguage"
          v-html=" t('movingAround.navigatingTheMuseum.mobilityFriendlyAccess.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -114,9 +96,6 @@ filter.keywords?.includes($t('filter.keywords.lighting'))" class="_topic">
       <h3>{{ t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.title') }}</h3>
       <p v-if="!settings.signLanguage"
          v-html=" t('movingAround.navigatingTheMuseum.supportForBlindOrLowVisionVisitors.description') "></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"

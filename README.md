@@ -1,5 +1,26 @@
-# Vue 3 + Vite
+# Prototype: Accessibility Information Website for NKM 
+This is a prototype for an accessibility information website for the NKM (Naturkundemuseum). The website is designed to provide information about accessibility features
+and services for disabled visitors. 
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Run the prototype
+To run the project locally:
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+1. **Install dependencies** (requires Node.js and npm installed, tested with Node.js v22.13.1, npm v10.2.2):
+
+   ```bash
+   npm install
+   ```
+
+2. **Start the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+The Vite development server will start, and the app will be available at:
+
+```
+http://localhost:5173
+```
+
+> If that port is taken, Vite will automatically use the next available one.

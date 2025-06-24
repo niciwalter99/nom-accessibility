@@ -81,7 +81,6 @@ import {useScreenSize} from '@/composables/screenSize.js';
 import {info} from "autoprefixer";
 import {useThemeDetection} from "@/composables/useThemeDetection.js";
 
-// Props
 const props = defineProps({
   infoTypes: {
     type: Array,
@@ -94,19 +93,6 @@ const props = defineProps({
   images: {
     type: Object,
     required: true
-    /*
-      Format example:
-      {
-        Noises: {
-          '1st floor': 'path/to/noise1.png',
-          '2nd floor': 'path/to/noise2.png'
-        },
-        Lighting: {
-          '1st floor': 'path/to/light1.png',
-          '2nd floor': 'path/to/light2.png'
-        }
-      }
-    */
   },
   showLegend: {
     type: Boolean,

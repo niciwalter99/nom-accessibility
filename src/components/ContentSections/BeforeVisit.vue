@@ -10,9 +10,6 @@
       {{ t('beforeVisit.or') }}
       <a :href="'mailto: nkm@karlsruhe.de' ">nkm@karlsruhe.de</a>.
       {{ t('beforeVisit.voiceCalls') }}
-<!--
-      <p v-html=" t('beforeVisit.descriptionAppendix')"></p>
--->
     </div>
     <div class="my-4">
       <h2 class="my-2">{{ t('beforeVisit.generalInfo.title') }}</h2>

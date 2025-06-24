@@ -6,9 +6,6 @@
     <div v-if="filter.cognitive || filter.blind" class="_topic">
       <h3>{{ t('experienceTheExhibition.learnInDifferentWays.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html=" t('experienceTheExhibition.learnInDifferentWays.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -20,9 +17,6 @@
         <h3>{{ t('experienceTheExhibition.alternativeFormats.title') }}</h3>
       <additional-image :img-src="tactile"></additional-image>
       <p v-if="!settings.signLanguage" v-html=" t('experienceTheExhibition.alternativeFormats.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -34,9 +28,6 @@
         <h3>{{ t('experienceTheExhibition.interactiveAndTactileElements.title') }}</h3>
       <additional-image :img-src="earthquake"></additional-image>
       <p v-if="!settings.signLanguage" v-html=" t('experienceTheExhibition.interactiveAndTactileElements.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -47,9 +38,6 @@
     <div v-if="filter.mobility  || filter.keywords?.includes($t('filter.keywords.accessibleExhibitionContent'))" class="_topic">
       <h3>{{ t('experienceTheExhibition.ergonomicPerceivableInformation.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html=" t('experienceTheExhibition.ergonomicPerceivableInformation.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -60,9 +48,6 @@
     <div v-if="filter.cognitive || filter.blind || filter.hearing  || filter.keywords?.includes($t('filter.keywords.qrCodes'))" class="_topic">
       <h3>{{ t('experienceTheExhibition.qrCodes.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html=" t('experienceTheExhibition.qrCodes.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
@@ -74,9 +59,6 @@
     <div class="_topic">
       <h3>{{ t('experienceTheExhibition.guiding.inclusiveGuidedTours.title') }}</h3>
       <p v-if="!settings.signLanguage" v-html="t('experienceTheExhibition.guiding.inclusiveGuidedTours.description')"></p>
-      <!--
-      TODo change
--->
       <vue3-video-player
           v-if="settings.signLanguage"
           :src="lockerVideo"
