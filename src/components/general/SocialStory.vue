@@ -1,5 +1,5 @@
 <template>
-  <section role="region" aria-label="Detailed Description">
+  <section role="region" aria-label="Detailed Description" class="w-full">
     <div
         ref="container"
         class="bg-mbeige-base border border-mgrey-lighten-3 rounded-lg shadow-md p-[16px] w-full relative flex flex-col content-center content-between justify-between"
