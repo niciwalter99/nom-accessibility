@@ -25,7 +25,7 @@ export default {
             limitedMobility: 'Limited mobility',
             blindLowVision: 'Blind or low vision',
             deafHardHearing: 'Deaf or hard of hearing',
-            cognitiveDifferences: 'Cognitive differences & Neurodivergent',
+            cognitiveDifferences: 'Cognitive differences & Neurodivergence',
             cognitiveDifferencesSubtext: 'Neurodiverse people, learning disabilities, etc.'
         },
         "keywords": {

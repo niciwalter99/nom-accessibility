@@ -27,7 +27,7 @@
           <span class="text-xl sm:text-2xl hc-exception high-contrast:bg-yellow-300" aria-hidden="true">
             {{ option.icon }}
           </span>
-          <button class="label !text-lg font-semibold text-mgrey-darken-4">
+          <button class="label w-full text-left !text-lg font-semibold text-mgrey-darken-4">
             {{ t(`filter.options.${option.label}`) }}
           </button>
         </div>
