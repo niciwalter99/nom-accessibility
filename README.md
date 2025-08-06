@@ -2,6 +2,10 @@
 This is a prototype for an accessibility information website for the NKM (Naturkundemuseum). The website is designed to provide information about accessibility features
 and services for disabled visitors. 
 
+
+# Test prototype on web
+You can find a hosted prototype on the website http://5.78.136.148/.
+
 # Run the prototype
 To run the project locally:
 
